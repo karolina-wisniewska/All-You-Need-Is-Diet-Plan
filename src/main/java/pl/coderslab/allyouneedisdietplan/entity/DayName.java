@@ -9,17 +9,17 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "day_names")
-@Data
 public class DayName {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "TINYINT")
+  @Column(columnDefinition = "tinyint")
   private Integer id;
 
-  @Column(columnDefinition="VARCHAR(10)")
+  @Column(columnDefinition="varchar(10)")
   @NotNull
   private String name;
 }

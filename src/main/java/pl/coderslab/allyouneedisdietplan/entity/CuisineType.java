@@ -10,18 +10,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "cuisine_types")
-@Data
 public class CuisineType {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "TINYINT")
+  @Column(columnDefinition = "tinyint")
   private Integer id;
 
-  @Column(columnDefinition="VARCHAR(30)")
-  @NotBlank
+  @Column(columnDefinition="varchar(30)")
   @NotNull
   private String name;
 }

@@ -9,17 +9,17 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "healths")
-@Data
 public class Health {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "TINYINT")
+  @Column(columnDefinition = "tinyint")
   private Integer id;
 
-  @Column(columnDefinition="VARCHAR(30)")
+  @Column(columnDefinition="varchar(30)")
   @NotNull
   private String name;
 }

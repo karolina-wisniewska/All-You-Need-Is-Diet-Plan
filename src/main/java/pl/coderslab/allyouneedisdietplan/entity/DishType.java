@@ -9,9 +9,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "dish_types")
-@Data
 public class DishType {
 
   @Id

@@ -17,36 +17,36 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "user_details")
-@Data
 public class UserDetails {
 
   @Id
   @Column(name = "user_id")
   private Long id;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY)
   @MapsId
   @JoinColumn(name = "user_id")
   private User user;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Gender gender;
 
-  @Column(columnDefinition="TINYINT UNSIGNED")
+  @Column(columnDefinition="tinyint unsigned")
   private Integer age;
 
-  @Column(columnDefinition="TINYINT UNSIGNED")
+  @Column(columnDefinition="tinyint unsigned")
   private Integer height;
 
-  @Column(columnDefinition="DOUBLE(5,2)")
+  @Column(columnDefinition="double(5,2)")
   private Double dreamWeight;
 
   @Column(name = "success_date")
   private LocalDateTime successDate;
 
-  @Column(name = "daily_calories", columnDefinition="TINYINT UNSIGNED")
+  @Column(name = "daily_calories", columnDefinition="tinyint unsigned")
   private Integer dailyCalories;
 
   @ManyToOne(fetch = FetchType.LAZY)

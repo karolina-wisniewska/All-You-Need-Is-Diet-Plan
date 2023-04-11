@@ -9,16 +9,16 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "recipes")
-@Data
 public class Recipe {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(columnDefinition="VARCHAR(255)")
+  @Column(columnDefinition="varchar(255)")
   @NotNull
   private String externalLink;
 }

@@ -22,12 +22,10 @@ public class User {
   private Long id;
 
   @Column(columnDefinition="VARCHAR(30)")
-  @NotBlank
   @NotNull
   private String login;
 
   @Column(columnDefinition="TEXT")
-  @NotBlank
   @NotNull
   private String password;
 

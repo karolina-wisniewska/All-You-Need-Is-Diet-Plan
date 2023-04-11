@@ -18,8 +18,7 @@ public class Plan {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
   @ManyToOne
+  @NotNull
   private User user;
-
 }

@@ -12,6 +12,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

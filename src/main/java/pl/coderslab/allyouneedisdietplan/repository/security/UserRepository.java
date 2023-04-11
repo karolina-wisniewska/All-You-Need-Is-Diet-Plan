@@ -6,5 +6,5 @@ import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-  User findUserByLogin(String login);
+  User findUserByUserName(String userName);
 }

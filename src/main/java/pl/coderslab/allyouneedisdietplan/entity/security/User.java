@@ -34,7 +34,7 @@ public class User {
   @Length(min = 5, message = "*Your user name must have at least 5 characters")
   @NotEmpty(message = "*Please provide a user name")
   @NotNull
-  private String login;
+  private String userName;
 
   @Column(columnDefinition="text")
   @Length(min = 5, message = "*Your password must have at least 5 characters")

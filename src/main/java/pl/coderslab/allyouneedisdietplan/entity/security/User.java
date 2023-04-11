@@ -30,7 +30,7 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(columnDefinition="varchar(30)")
+  @Column(columnDefinition="varchar(30)", name = "user_name")
   @Length(min = 5, message = "*Your user name must have at least 5 characters")
   @NotEmpty(message = "*Please provide a user name")
   @NotNull

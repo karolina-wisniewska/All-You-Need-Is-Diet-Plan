@@ -18,5 +18,5 @@ public class Role {
   private int id;
 
   @Column(columnDefinition="varchar(20)")
-  private String role;
+  private String name;
 }

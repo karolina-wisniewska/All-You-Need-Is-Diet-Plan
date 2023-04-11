@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.allyouneedisdietplan.entity.security.Role;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.model.CurrentUser;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.util.ArrayList;
@@ -27,22 +28,22 @@ public class MyUserDetailsService implements UserDetailsService {
   @Transactional
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
     User user = userService.findUserByUserName(userName);
+    if (user == null) {
+      throw new UsernameNotFoundException(userName);
+    }
     List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
-    return buildUserForAuthentication(user, authorities);
+    return new CurrentUser(user.getUserName(),user.getPassword(),
+            authorities, user);
   }
 
 
   private List<GrantedAuthority> getUserAuthority(Set<Role> userRoles) {
     Set<GrantedAuthority> roles = new HashSet<>();
     for (Role role : userRoles) {
-      roles.add(new SimpleGrantedAuthority(role.getRole()));
+      roles.add(new SimpleGrantedAuthority(role.getName()));
     }
     List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
     return grantedAuthorities;
   }
 
-  private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-    return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-            user.getActive(), true, true, true, authorities);
-  }
 }

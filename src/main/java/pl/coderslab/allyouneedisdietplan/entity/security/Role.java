@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -18,5 +19,6 @@ public class Role {
   private int id;
 
   @Column(columnDefinition="varchar(20)")
+  @NotNull
   private String name;
 }

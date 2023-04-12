@@ -13,26 +13,42 @@
 <body>
 <form th:action="@{/user/home}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home</button>
-</form><br/>
+</form>
+<br/>
 
 <div class="container">
-    <form th:action="@{/login}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading">Add User Details</h3>
+    <form th:action="@{/login}" method="post" class="form-signin" th:object="${userDetails}">
+        <h3 class="form-signin-heading">User Details</h3>
         <br/>
-
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="hidden" name="id" value="${id}"/>
 
-        <label for="gender">Gender</label>
-        <input type="radio" id="gender" name="user_name" items="${genders}"
-               class="form-control"/> <br/>
-        <input type="password" th:placeholder="Password"
-               id="password" name="password" class="form-control"/> <br/>
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20px; color: #FF1C19;">User Name or Password invalid, please verify</p>
+        <label>Gender:</label>
+        <div th:each="gender: ${genders}">
+            <div>
+                <input type="radio" th:field="*{gender}" th:value="${gender.id}">
+                <label th:text="${gender.name}"></label>
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-                th:text="Login"></button>
+
+        <label>Age:</label>
+        <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
+
+        <label>Height:</label>
+        <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
+
+        <label>Dream weight:</label>
+        <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
+
+<!--        <div th:each="level: ${activityLevels}">
+            <label>Activity level:</label>
+            <select th:field="*{activityLevel}" th:value="${level.value}"/>
+            <label th:text="${level.name}"></label><br/>
+        </div>-->
+
+
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Add User Details" type="Submit"
+        >Save User Details
+        </button>
     </form>
 </div>
 </body>

@@ -1,4 +1,4 @@
-insert into roles (name) VALUES ('ROLE_USER');
+insert into roles(name) VALUES ('ROLE_USER');
 
 insert into cuisine_types(name) values ('american'), ('asian'), ('british'), ('caribbean'), ('central europe'), ('chinese'), ('eastern europe'), ('french'),('greek'), ('indian'), ('italian'), ('japanese'), ('korean'), ('kosher'), ('mediterranean'), ('mexican'), ('middle eastern'), ('nordic'), ('south american'), ('south east asian'), ('world');
 
@@ -14,3 +14,4 @@ insert into dish_types(name) values ('alcohol cocktail'), ('biscuits and cookies
 
 insert into genders(name) values ('male'), ('female');
 
+insert into activity_levels(name, value) values ('extremely inactive', 1.4), ('sedentary', 1.6), ('moderately active', 1.75), ('vigorously active', 2), ('extremely active', 2.4);

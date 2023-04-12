@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
@@ -16,23 +17,21 @@ public class WebSecurityConfiguration {
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-//  private final MyUserDetailsService userDetailsService;
+
+  @Bean
+  public SpringSecurityDialect securityDialect() {
+    return new SpringSecurityDialect();
+  }
 
   @Bean
   protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http.
             authorizeHttpRequests()
-            .requestMatchers("/").permitAll()
-            .requestMatchers("/login").permitAll()
-            .requestMatchers("/registration").permitAll()
-            .requestMatchers("/resources/**").permitAll()
-            .requestMatchers("/static/**").permitAll()
-            .requestMatchers("/css/**").permitAll()
-            .requestMatchers("/js/**").permitAll()
-            .requestMatchers("/images/**").permitAll()
+            .requestMatchers("/", "/login", "/registration").permitAll()
+            .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
             .requestMatchers("/user/**").hasAuthority("ROLE_USER").anyRequest()
-            .authenticated().and().csrf().disable().formLogin()
+            .authenticated().and().formLogin()
             .loginPage("/login").failureUrl("/login?error=true")
             .defaultSuccessUrl("/user/home")
             .usernameParameter("user_name")

@@ -12,12 +12,12 @@
 
 <body>
 <form th:action="@{/user/home}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home</button>
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
 </form>
 <br/>
 
 <div class="container">
-    <form th:action="@{/home}" method="post" class="form-signin" th:object="${userDetails}">
+    <form th:action="@{/user/details}" method="post" class="form-signin" th:object="${userDetails}">
         <h3 class="form-signin-heading">User Details</h3>
         <input type="hidden" name="id" value="${id}"/>
         <label>Gender:</label>
@@ -30,11 +30,17 @@
         <br/>
         <label>Age:</label>
         <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
+        <label
+                th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                class="validation-message"></label>
         <br/>
-        <label>Height:</label>
+        <label>Height (cm):</label>
         <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
         <br/>
-        <label>Dream weight:</label>
+        <label>Current weight (kg):</label>
+        <input type="number" name="currentWeight" min="0" max="200" step="0.1"/><br/>
+        <br/>
+        <label>Dream weight (kg):</label>
         <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
         <br/>
         <div>

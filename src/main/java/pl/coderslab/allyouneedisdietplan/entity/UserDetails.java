@@ -11,8 +11,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDateTime;
@@ -38,10 +40,12 @@ public class UserDetails {
   private Gender gender;
 
   @Column(columnDefinition="tinyint unsigned")
+  @Range(min = 18, max = 100, message = "{age.out.of.range.error}")
   @NotNull
   private Integer age;
 
   @Column(columnDefinition="tinyint unsigned")
+  @Range(min = 100, max = 200, message = "{height.out.of.range.error}")
   @NotNull
   private Integer height;
 

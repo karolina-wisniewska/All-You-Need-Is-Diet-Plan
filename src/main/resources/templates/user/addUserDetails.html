@@ -17,7 +17,7 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/login}" method="post" class="form-signin" th:object="${userDetails}">
+    <form th:action="@{/home}" method="post" class="form-signin" th:object="${userDetails}">
         <h3 class="form-signin-heading">User Details</h3>
         <input type="hidden" name="id" value="${id}"/>
         <label>Gender:</label>
@@ -43,7 +43,7 @@
                     <select th:field="*{activityLevel}">
                         <option th:each="level : ${activityLevels}"
                                 th:text="${level.name + ' - ' + level.description}"
-                                th:value="${level.value}">
+                                th:value="${level.id}">
                     </select>
                 </div>
             </label>
@@ -52,10 +52,34 @@
         <div>
             <label>Cuisine Type:
                 <div>
-                    <select th:field="*{activityLevel}">
-                        <option th:each="level : ${activityLevels}"
-                                th:text="${level.name + ' - ' + level.description}"
-                                th:value="${level.value}">
+                    <select th:field="*{cuisineType}">
+                        <option th:each="type : ${cuisineTypes}"
+                                th:text="${type.name}"
+                                th:value="${type.id}">
+                    </select>
+                </div>
+            </label>
+        </div>
+        <br/>
+        <div>
+            <label>Health and allergies:
+                <div>
+                    <select th:field="*{healths}" multiple="multiple" size="10">
+                        <option th:each="health : ${healths}"
+                                th:text="${health.name}"
+                                th:value="${health.id}">
+                    </select>
+                </div>
+            </label>
+        </div>
+        <br/>
+        <div>
+            <label>Diets:
+                <div>
+                    <select th:field="*{diets}" multiple="multiple" size="4">
+                        <option th:each="diet : ${diets}"
+                                th:text="${diet.name}"
+                                th:value="${diet.id}">
                     </select>
                 </div>
             </label>

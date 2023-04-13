@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
@@ -33,15 +34,19 @@ public class UserDetails {
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @NotNull
   private Gender gender;
 
   @Column(columnDefinition="tinyint unsigned")
+  @NotNull
   private Integer age;
 
   @Column(columnDefinition="tinyint unsigned")
+  @NotNull
   private Integer height;
 
   @Column(columnDefinition="double(5,2)")
+  @NotNull
   private Double dreamWeight;
 
   @Column(name = "success_date")
@@ -52,6 +57,7 @@ public class UserDetails {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "activity_level_id")
+  @NotNull
   private ActivityLevel activityLevel;
 
   @ManyToOne(fetch = FetchType.LAZY)

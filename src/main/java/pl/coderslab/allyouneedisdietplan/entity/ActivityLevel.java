@@ -24,5 +24,8 @@ public class ActivityLevel {
   private String name;
 
   @Column(columnDefinition="double(3,2)")
+  @NotNull
   private Double value;
+
+  private String description;
 }

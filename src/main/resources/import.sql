@@ -14,4 +14,4 @@ insert into dish_types(name) values ('alcohol cocktail'), ('biscuits and cookies
 
 insert into genders(name) values ('male'), ('female');
 
-insert into activity_levels(name, value) values ('extremely inactive', 1.4), ('sedentary', 1.6), ('moderately active', 1.75), ('vigorously active', 2), ('extremely active', 2.4);
+insert into activity_levels(name, value, description) values ('extremely inactive', 1.4, 'cerebral palsy patient'), ('sedentary', 1.6, 'office worker getting little or no exercise'), ('moderately active', 1.75, 'construction worker or person running one hour daily'), ('vigorously active', 2, 'agricultural worker (non mechanized) or person swimming two hours daily'), ('extremely active', 2.4, 'competitive cyclist');

@@ -33,10 +33,8 @@ public class LatestWeight {
   @NotNull
   private Double weight;
 
-  @NotNull
   private LocalDateTime weightingDate;
 
   @ManyToOne
-  @NotNull
   private User user;
 }

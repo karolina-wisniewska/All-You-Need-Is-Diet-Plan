@@ -22,8 +22,11 @@ import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DietService;
 import pl.coderslab.allyouneedisdietplan.service.GenderService;
 import pl.coderslab.allyouneedisdietplan.service.HealthService;
+import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,6 +37,8 @@ public class UserController {
   private final CuisineTypeService cuisineTypeService;
   private final HealthService healthService;
   private final DietService dietService;
+  private final UserService userService;
+  private final UserDetailsService userDetailsService;
 
   @GetMapping(value = "/user/home")
   public String home() {
@@ -46,10 +51,14 @@ public class UserController {
     return "user/addUserDetails";
   }
   @PostMapping(value = "/user/details")
-  public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, @Valid LatestWeight latestWeight, BindingResult latestWeightResult) {
+  public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, @Valid LatestWeight latestWeight, BindingResult latestWeightResult, Principal principal) {
     if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
       return "user/addUserDetails";
     }
+    userDetails.setUser(userService.findUserByUserName(principal.getName()));
+    userDetailsService.save(userDetails);
+    latestWeight.setWeightingDate(LocalDateTime.now());
+    latestWeight.setUser(userService.findUserByUserName(principal.getName()));
     return "redirect:/user/home";
   }
 

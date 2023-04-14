@@ -27,6 +27,9 @@
                 <label th:text="${gender.name}"></label>
             </div>
         </div>
+        <label
+                th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                class="validation-message"></label>
         <br/>
         <label>Age:</label>
         <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
@@ -37,9 +40,14 @@
         <label>Height (cm):</label>
         <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
         <br/>
-        <label>Current weight (kg):</label>
-        <input type="number" name="currentWeight" min="0" max="200" step="0.1"/><br/>
-        <br/>
+        <div th:object="${latestWeight}">
+            <label>Current weight (kg):</label>
+            <input type="number" th:field="*{weight}" min="0" max="300" step="0.1"/><br/>
+            <label
+                    th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
+                    class="validation-message"></label>
+            <br/>
+        </div>
         <label>Dream weight (kg):</label>
         <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
         <br/>
@@ -91,7 +99,6 @@
             </label>
         </div>
         <br/>
-
         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Add User Details" type="Submit"
         >Save User Details
         </button>

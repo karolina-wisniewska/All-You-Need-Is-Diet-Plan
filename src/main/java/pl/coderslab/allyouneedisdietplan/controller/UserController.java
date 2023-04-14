@@ -13,6 +13,7 @@ import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.Health;
+import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.repository.GenderRepository;
@@ -38,16 +39,15 @@ public class UserController {
   public String home() {
     return "user/home";
   }
-
   @GetMapping(value = "/user/details")
   public String showAddUserDetailsForm(Model model) {
     model.addAttribute("userDetails", new UserDetails());
+    model.addAttribute("latestWeight", new LatestWeight());
     return "user/addUserDetails";
   }
-
   @PostMapping(value = "/user/details")
-  public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult result) {
-    if(result.hasErrors()){
+  public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, @Valid LatestWeight latestWeight, BindingResult latestWeightResult) {
+    if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
       return "user/addUserDetails";
     }
     return "user/addUserDetails";

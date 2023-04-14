@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -50,6 +52,8 @@ public class UserDetails {
   private Integer height;
 
   @Column(columnDefinition="double(5,2)")
+  @DecimalMax(value = "200.0", message = "{weight.too.high.error}")
+  @DecimalMin(value = "0.0", message = "{weight.too.low.error}")
   @NotNull
   private Double dreamWeight;
 

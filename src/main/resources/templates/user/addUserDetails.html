@@ -18,90 +18,85 @@
 
 <div class="container">
     <form th:action="@{/user/details}" method="post" class="form-signin" th:object="${userDetails}">
-        <h3 class="form-signin-heading">User Details</h3>
+        <h3 class="form-signin-heading">Add User Details</h3>
         <input type="hidden" name="id" value="${id}"/>
-        <label>Gender:</label>
-        <div th:each="gender: ${genders}">
-            <div>
-                <input type="radio" th:field="*{gender}" th:value="${gender.id}">
-                <label th:text="${gender.name}"></label>
+        <label>Gender:
+            <div th:each="gender: ${genders}">
+                    <input type="radio" th:field="*{gender}" th:value="${gender.id}">
+                    <label th:text="${gender.name}"></label>
             </div>
-        </div>
-        <label
-                th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
-                class="validation-message"></label>
-        <br/>
-        <label>Age:</label>
-        <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
-        <label
-                th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
-                class="validation-message"></label>
-        <br/>
-        <label>Height (cm):</label>
-        <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
-        <br/>
+            <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Age:
+            <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
+            <label th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Height (cm):
+            <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
+            <label th:if="${#fields.hasErrors('height')}" th:errors="*{height}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
         <div th:object="${latestWeight}">
-            <label>Current weight (kg):</label>
-            <input type="number" th:field="*{weight}" min="0" max="300" step="0.1"/><br/>
-            <label
-                    th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
-                    class="validation-message"></label>
-            <br/>
-        </div>
-        <label>Dream weight (kg):</label>
-        <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
-        <br/>
-        <div>
-            <label>Activity Level:
-                <div>
-                    <select th:field="*{activityLevel}">
-                        <option th:each="level : ${activityLevels}"
-                                th:text="${level.name + ' - ' + level.description}"
-                                th:value="${level.id}">
-                    </select>
-                </div>
+            <label>Current weight (kg):
+                <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
+                <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
+                       class="validation-message"></label>
             </label>
         </div>
         <br/>
-        <div>
-            <label>Cuisine Type:
-                <div>
-                    <select th:field="*{cuisineType}">
-                        <option th:each="type : ${cuisineTypes}"
-                                th:text="${type.name}"
-                                th:value="${type.id}">
-                    </select>
-                </div>
-            </label>
-        </div>
-        <br/>
-        <div>
-            <label>Health and allergies:
-                <div>
-                    <select th:field="*{healths}" multiple="multiple" size="10">
-                        <option th:each="health : ${healths}"
-                                th:text="${health.name}"
-                                th:value="${health.id}">
-                    </select>
-                </div>
-            </label>
-        </div>
-        <br/>
-        <div>
-            <label>Diets:
-                <div>
-                    <select th:field="*{diets}" multiple="multiple" size="4">
-                        <option th:each="diet : ${diets}"
-                                th:text="${diet.name}"
-                                th:value="${diet.id}">
-                    </select>
-                </div>
-            </label>
-        </div>
-        <br/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Add User Details" type="Submit"
-        >Save User Details
-        </button>
+        <label>Dream weight (kg):
+            <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
+            <label th:if="${#fields.hasErrors('dreamWeight')}" th:errors="*{dreamWeight}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Activity Level:
+            <div>
+                <select th:field="*{activityLevel}">
+                    <option th:each="level : ${activityLevels}"
+                            th:text="${level.name + ' - ' + level.description}"
+                            th:value="${level.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Cuisine Type:
+            <div>
+                <select th:field="*{cuisineType}">
+                    <option th:each="type : ${cuisineTypes}"
+                            th:text="${type.name}"
+                            th:value="${type.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Health and allergies (multiple choice):
+            <div>
+                <select th:field="*{healths}" multiple="multiple" size="10">
+                    <option th:each="health : ${healths}"
+                            th:text="${health.name}"
+                            th:value="${health.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Diets (multiple choice):
+            <div>
+                <select th:field="*{diets}" multiple="multiple" size="4">
+                    <option th:each="diet : ${diets}"
+                            th:text="${diet.name}"
+                            th:value="${diet.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit"
+        >Save User Details</button>
     </form>
 </div>
 </body>

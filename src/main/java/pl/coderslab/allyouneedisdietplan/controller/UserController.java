@@ -50,7 +50,7 @@ public class UserController {
     if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
       return "user/addUserDetails";
     }
-    return "user/addUserDetails";
+    return "redirect:/user/home";
   }
 
   @ModelAttribute("genders")

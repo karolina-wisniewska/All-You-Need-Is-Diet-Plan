@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>User Page</title>
+    <title>Home Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -15,7 +15,6 @@
 <div class="container">
 
     <form th:action="@{/logout}" method="get">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Logout
         </button>
@@ -26,15 +25,65 @@
             <div class="panel-heading">
                 <span th:utext="Welcome"></span> <span sec:authentication="name"></span>
             </div>
-            <div class="panel-body">
+            <div th:if="${userDetails == null}" class="panel-body">
                 <div>What is your dream weight?</div>
-              <br/>
+                <br/>
                 <div>
-                    <ul>Let us know you better, so we can:
+                    <ul>Let us know you better so that we can:
                         <li>suggest you a diet plan that suits your needs</li>
                         <li>show you when you will achieve your dream weight</li>
                     </ul>
                 </div>
+                <form th:action="@{/user/details}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add User Details
+                    </button>
+                </form>
+            </div>
+            <div th:if="${userDetails != null}" class="panel-body">
+                <div>Your total metabolic rate is: (calculated TMR) kcal/day</div>
+                <div>Your calculated daily intake of calories: (calculated daily calories) kcal</div>
+                <br/>
+                <div>Your latest weight: kg</div>
+                <div>Your dream weight: <span th:text="${userDetails.dreamWeight}"></span> kg</div>
+                <div>Your activity level: <span th:text="${userDetails.activityLevel.name}"></span></div>
+                <br/>
+                <div>You will achieve your dream weight on...</div>
+                <br/>
+                <form th:action="@{/user/weight/add}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add Latest Weight
+                    </button>
+                </form>
+                <br/>
+                <form th:action="@{/user/weight/history}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Show Weight History
+                    </button>
+                </form>
+                <br/>
+                <ul>Your preferences:
+                    <li th:each="health : ${userDetails.healths}">allergies and health issues:
+                        <div th:text="${health.name}"></div>
+                    </li>
+                    <li th:text="${'cuisine type: ' + userDetails.cuisineType.name}"></li>
+                    <li th:each="diet : ${userDetails.diets}">diets:
+                        <div th:text="${diet.name}"></div>
+                    </li>
+                </ul>
+                <br/>
+                <form th:action="@{/user/details/edit}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Edit User Details
+                    </button>
+                </form>
+                <br/>
+                <form th:action="@{/user/plan}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Your Last Diet Plan
+                    </button>
+                </form>
+                <br/>
+                <form th:action="@{/user/plan/add}" method="get">
+                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">New Diet Plan
+                    </button>
+                </form>
+
             </div>
         </div>
     </div>

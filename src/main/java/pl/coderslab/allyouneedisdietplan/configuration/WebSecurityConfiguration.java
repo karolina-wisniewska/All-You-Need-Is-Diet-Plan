@@ -30,8 +30,9 @@ public class WebSecurityConfiguration {
             authorizeHttpRequests()
             .requestMatchers("/", "/login", "/registration").permitAll()
             .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
-            .requestMatchers("/user/**").hasAuthority("ROLE_USER").anyRequest()
-            .authenticated().and().formLogin()
+            .requestMatchers("/user/**").hasRole("USER").anyRequest()
+            .authenticated().and()
+            .formLogin()
             .loginPage("/login").failureUrl("/login?error=true")
             .defaultSuccessUrl("/user/home")
             .usernameParameter("user_name")
@@ -43,12 +44,5 @@ public class WebSecurityConfiguration {
 
     return http.build();
   }
-
-//  @Bean
-//  public WebSecurityCustomizer webSecurityCustomizer() {
-//    return (web) -> web
-//            .ignoring()
-//            .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-//  }
 
 }

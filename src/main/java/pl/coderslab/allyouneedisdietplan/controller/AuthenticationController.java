@@ -12,7 +12,7 @@ import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 @RequiredArgsConstructor
 @Controller
-public class LoginController {
+public class AuthenticationController {
 
   public final String successMessage = "User has been registered successfully";
   public final String userError = "There is already a user registered with the user name provided";

@@ -21,8 +21,8 @@
         <h3 class="form-signin-heading">Add User Details</h3>
         <label>Gender:
             <div th:each="gender: ${genders}">
-                    <input type="radio" th:field="*{gender}" th:value="${gender.id}">
-                    <label th:text="${gender.name}"></label>
+                <input type="radio" th:field="*{gender}" th:value="${gender.id}">
+                <label th:text="${gender.name}"></label>
             </div>
             <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
                    class="validation-message"></label>
@@ -94,8 +94,7 @@
             </div>
         </label>
         <br/><br/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit"
-        >Save User Details</button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Save User Details</button>
     </form>
 </div>
 </body>

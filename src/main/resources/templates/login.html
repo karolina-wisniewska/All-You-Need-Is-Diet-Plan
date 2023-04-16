@@ -24,7 +24,6 @@
                class="form-control"/> <br/>
         <input type="password" th:placeholder="Password"
                id="password" name="password" class="form-control"/> <br/>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div align="center" th:if="${param.error}">
             <p style="font-size: 20px; color: #FF1C19;">User Name or Password invalid, please verify</p>
         </div>

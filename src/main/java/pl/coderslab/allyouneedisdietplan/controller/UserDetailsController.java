@@ -20,6 +20,7 @@ import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DietService;
 import pl.coderslab.allyouneedisdietplan.service.GenderService;
 import pl.coderslab.allyouneedisdietplan.service.HealthService;
+import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
@@ -37,6 +38,7 @@ public class UserDetailsController {
   private final DietService dietService;
   private final UserService userService;
   private final UserDetailsService userDetailsService;
+  private final LatestWeightService latestWeightService;
 
   @GetMapping(value = "/user/details")
   public String showAddUserDetailsForm(Model model) {
@@ -51,8 +53,10 @@ public class UserDetailsController {
     }
     userDetails.setUser(userService.findUserByUserName(principal.getName()));
     userDetailsService.save(userDetails);
+
     latestWeight.setWeightingDate(LocalDateTime.now());
     latestWeight.setUser(userService.findUserByUserName(principal.getName()));
+    latestWeightService.save(latestWeight);
     return "redirect:/user/home";
   }
 

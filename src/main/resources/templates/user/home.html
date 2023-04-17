@@ -41,13 +41,13 @@
             </div>
             <div th:if="${userDetails != null}" class="panel-body">
                 <div>Your total metabolic rate is: (calculated TMR) kcal/day</div>
-                <div>Your calculated daily intake of calories: (calculated daily calories) kcal</div>
+                <div>Suggested daily intake of calories: (calculated daily calories) kcal</div>
                 <br/>
-                <div>Your latest weight: kg</div>
+                <div>Your latest weight: <span th:text="${latestWeight.weight}"></span> kg</div>
                 <div>Your dream weight: <span th:text="${userDetails.dreamWeight}"></span> kg</div>
                 <div>Your activity level: <span th:text="${userDetails.activityLevel.name}"></span></div>
                 <br/>
-                <div>You will achieve your dream weight on...</div>
+                <div>You will achieve your dream weight on (calculated success date)</div>
                 <br/>
                 <form th:action="@{/user/weight/add}" method="get">
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add Latest Weight
@@ -60,12 +60,16 @@
                 </form>
                 <br/>
                 <ul>Your preferences:
-                    <li th:each="health : ${userDetails.healths}">allergies and health issues:
-                        <div th:text="${health.name}"></div>
-                    </li>
                     <li th:text="${'cuisine type: ' + userDetails.cuisineType.name}"></li>
-                    <li th:each="diet : ${userDetails.diets}">diets:
+                    <li>allergies and health issues:
+                        <span th:each="health : ${userDetails.healths}">
+                        <div th:text="${health.name}"></div>
+                        </span>
+                    </li>
+                    <li>diets:
+                        <span th:each="diet : ${userDetails.diets}">
                         <div th:text="${diet.name}"></div>
+                        </span>
                     </li>
                 </ul>
                 <br/>

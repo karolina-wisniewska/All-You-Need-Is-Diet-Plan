@@ -35,6 +35,6 @@ public class LatestWeight {
 
   private LocalDateTime weightingDate;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private User user;
 }

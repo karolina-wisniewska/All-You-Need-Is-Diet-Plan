@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User Details Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<form th:action="@{/user/home}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
+</form>
+<br/>
+
+<div class="container">
+    <form th:action="@{/user/details/edit}" method="post" class="form-signin" th:object="${userDetails}">
+        <h3 class="form-signin-heading">Edit User Details</h3>
+        <input type="hidden" th:field="*{id}">
+        <label>Gender:
+            <div th:each="gender: ${genders}">
+                <input type="radio" th:field="*{gender}" th:value="${gender.id}">
+                <label th:text="${gender.name}"></label>
+            </div>
+            <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Age:
+            <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
+            <label th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Height (cm):
+            <input type="number" th:field="*{height}" min="0" max="200" step="1"/><br/>
+            <label th:if="${#fields.hasErrors('height')}" th:errors="*{height}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Dream weight (kg):
+            <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
+            <label th:if="${#fields.hasErrors('dreamWeight')}" th:errors="*{dreamWeight}"
+                   class="validation-message"></label>
+        </label>
+        <br/><br/>
+        <label>Activity Level:
+            <div>
+                <select th:field="*{activityLevel}">
+                    <option th:each="level : ${activityLevels}"
+                            th:text="${level.name + ' - ' + level.description}"
+                            th:value="${level.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Cuisine Type:
+            <div>
+                <select th:field="*{cuisineType}">
+                    <option th:each="type : ${cuisineTypes}"
+                            th:text="${type.name}"
+                            th:value="${type.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Health and allergies (multiple choice):
+            <div>
+                <select th:field="*{healths}" multiple="multiple" size="10">
+                    <option th:each="health : ${healths}"
+                            th:text="${health.name}"
+                            th:value="${health.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Diets (multiple choice):
+            <div>
+                <select th:field="*{diets}" multiple="multiple" size="4">
+                    <option th:each="diet : ${diets}"
+                            th:text="${diet.name}"
+                            th:value="${diet.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Save User Details</button>
+    </form>
+</div>
+</body>
+</html>

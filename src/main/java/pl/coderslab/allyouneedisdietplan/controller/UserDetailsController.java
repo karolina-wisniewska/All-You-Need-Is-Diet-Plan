@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.allyouneedisdietplan.entity.ActivityLevel;
 import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.Diet;
@@ -15,6 +16,7 @@ import pl.coderslab.allyouneedisdietplan.entity.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.Health;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.service.ActivityLevelService;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DietService;
@@ -60,6 +62,22 @@ public class UserDetailsController {
     return "redirect:/user/home";
   }
 
+  @GetMapping(value = "/user/details/edit")
+  public String showEditUserDetailsForm(Model model, Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    model.addAttribute("userDetails", userDetailsService.findByUser(currentUser));
+    return "user/editUserDetails";
+  }
+
+  @PostMapping(value = "/user/details/edit")
+  public String processEditUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, Principal principal) {
+    if(userDetailsResult.hasErrors()){
+      return "user/editUserDetails";
+    }
+    userDetails.setUser(userService.findUserByUserName(principal.getName()));
+    userDetailsService.save(userDetails);
+    return "redirect:/user/home";
+  }
   @ModelAttribute("genders")
   List<Gender> genders() {
     return genderService.findAll();

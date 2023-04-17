@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
@@ -33,6 +34,7 @@ public class LatestWeight {
   @NotNull
   private Double weight;
 
+  @PastOrPresent
   private LocalDateTime weightingDate;
 
   @ManyToOne(fetch = FetchType.LAZY)

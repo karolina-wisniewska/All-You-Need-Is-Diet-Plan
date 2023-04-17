@@ -43,7 +43,7 @@ public class LatestWeightController {
 
   @GetMapping(value = "/user/weight/edit")
   public String showEditLatestWeightForm(Model model, @RequestParam Long id) {
-    model.addAttribute("latestWeight", new LatestWeight());
+    model.addAttribute("latestWeight", latestWeightService.findById(id));
     return "weight/edit";
   }
 
@@ -52,6 +52,7 @@ public class LatestWeightController {
     if (result.hasErrors()) {
       return "weight/edit";
     }
+    latestWeightService.save(latestWeight);
     return "redirect:/user/home";
   }
 }

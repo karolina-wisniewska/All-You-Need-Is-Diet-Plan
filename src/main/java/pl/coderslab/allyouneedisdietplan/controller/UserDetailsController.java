@@ -73,7 +73,6 @@ public class UserDetailsController {
     if(userDetailsResult.hasErrors()){
       return "userDetails/edit";
     }
-    userDetails.setUser(userService.findUserByUserName(principal.getName()));
     userDetailsService.save(userDetails);
     return "redirect:/user/home";
   }

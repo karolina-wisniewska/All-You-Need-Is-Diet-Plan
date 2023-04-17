@@ -1,5 +1,6 @@
 package pl.coderslab.allyouneedisdietplan.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   @Override
   public LatestWeight findFirstByUserOrderByIdDesc(User user) {
     return latestWeightRepository.findFirstByUserOrderByIdDesc(user);
+  }
+
+  @Override
+  public LatestWeight findById(Long id) {
+    return latestWeightRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
 
 }

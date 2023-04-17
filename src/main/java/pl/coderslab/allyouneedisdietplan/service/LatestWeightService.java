@@ -11,7 +11,7 @@ public interface LatestWeightService {
   List<LatestWeight> findAll();
 
   void save(LatestWeight latestWeight);
-
   LatestWeight findFirstByUserOrderByIdDesc(User user);
+  LatestWeight findById(Long id);
 
 }

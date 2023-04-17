@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.allyouneedisdietplan.entity.ActivityLevel;
 import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.Diet;
@@ -46,12 +45,12 @@ public class UserDetailsController {
   public String showAddUserDetailsForm(Model model) {
     model.addAttribute("userDetails", new UserDetails());
     model.addAttribute("latestWeight", new LatestWeight());
-    return "user/addUserDetails";
+    return "userDetails/add";
   }
   @PostMapping(value = "/user/details")
   public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, @Valid LatestWeight latestWeight, BindingResult latestWeightResult, Principal principal) {
     if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
-      return "user/addUserDetails";
+      return "userDetails/add";
     }
     userDetails.setUser(userService.findUserByUserName(principal.getName()));
     userDetailsService.save(userDetails);
@@ -66,13 +65,13 @@ public class UserDetailsController {
   public String showEditUserDetailsForm(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     model.addAttribute("userDetails", userDetailsService.findByUser(currentUser));
-    return "user/editUserDetails";
+    return "userDetails/edit";
   }
 
   @PostMapping(value = "/user/details/edit")
   public String processEditUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, Principal principal) {
     if(userDetailsResult.hasErrors()){
-      return "user/editUserDetails";
+      return "userDetails/edit";
     }
     userDetails.setUser(userService.findUserByUserName(principal.getName()));
     userDetailsService.save(userDetails);

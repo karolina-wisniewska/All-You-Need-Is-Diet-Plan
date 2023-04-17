@@ -22,8 +22,8 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   private final LatestWeightRepository latestWeightRepository;
 
   @Override
-  public List<LatestWeight> findAll() {
-    return latestWeightRepository.findAll();
+  public List<LatestWeight> findByUser(User user) {
+    return latestWeightRepository.findByUser(user);
   }
 
   @Override

@@ -55,4 +55,11 @@ public class LatestWeightController {
     latestWeightService.save(latestWeight);
     return "redirect:/user/home";
   }
+
+  @GetMapping(value="/user/weight/history")
+  public String showWeightHistory(){
+    return "weight/history";
+  }
+
+
 }

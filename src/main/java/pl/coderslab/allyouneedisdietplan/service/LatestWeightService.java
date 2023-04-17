@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface LatestWeightService {
 
-  List<LatestWeight> findAll();
-
+  List<LatestWeight> findByUser(User user);
   void save(LatestWeight latestWeight);
   LatestWeight findFirstByUserOrderByIdDesc(User user);
   LatestWeight findById(Long id);

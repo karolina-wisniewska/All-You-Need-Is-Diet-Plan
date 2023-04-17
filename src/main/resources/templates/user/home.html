@@ -62,11 +62,13 @@
                 <ul>Your preferences:
                     <li th:text="${'cuisine type: ' + userDetails.cuisineType.name}"></li>
                     <li>allergies and health issues:
+                        <span th:if="${userDetails.healths.isEmpty()}">none</span>
                         <span th:each="health : ${userDetails.healths}">
                         <div th:text="${health.name}"></div>
                         </span>
                     </li>
                     <li>diets:
+                        <span th:if="${userDetails.diets.isEmpty()}">none</span>
                         <span th:each="diet : ${userDetails.diets}">
                         <div th:text="${diet.name}"></div>
                         </span>

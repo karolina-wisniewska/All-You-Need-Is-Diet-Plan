@@ -11,13 +11,13 @@
 </head>
 
 <body>
-<form th:action="@{/user/home}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
+<form th:action="@{/user/weight/history}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Weight History</button>
 </form>
 <br/>
 <div class="container">
-    <form th:action="@{/user/weight}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading">Add new weight</h3>
+    <form th:action="@{/user/weight/edit}" method="POST" class="form-signin">
+        <h3 class="form-signin-heading">Edit weight</h3>
         <br/>
         <div th:object="${latestWeight}">
             <input type="hidden" th:field="*{id}">

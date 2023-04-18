@@ -13,4 +13,5 @@ public interface LatestWeightRepository extends JpaRepository<LatestWeight, Long
 
   LatestWeight findFirstByUserOrderByIdDesc(User user);
   List<LatestWeight> findByUserOrderByWeightingDateAsc(User user);
+  List<LatestWeight> findByUserOrderByWeightingDateDesc(User user);
 }

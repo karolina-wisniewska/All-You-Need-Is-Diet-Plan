@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.repository.LatestWeightRepository;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -38,7 +36,7 @@ public class LatestWeightController {
     User currentUser = userService.findUserByUserName(principal.getName());
     latestWeight.setUser(currentUser);
     latestWeightService.save(latestWeight);
-    return "redirect:/user/home";
+    return "redirect:/user/weight/history";
   }
 
   @GetMapping(value = "/user/weight/edit")
@@ -53,11 +51,18 @@ public class LatestWeightController {
       return "weight/edit";
     }
     latestWeightService.save(latestWeight);
-    return "redirect:/user/home";
+    return "redirect:/user/weight/history";
+  }
+  @GetMapping(value = "/user/weight/delete")
+  public String showEditLatestWeightForm(@RequestParam Long id) {
+    latestWeightService.deleteById(id);
+  return "redirect:/user/weight/history";
   }
 
-  @GetMapping(value="/user/weight/history")
-  public String showWeightHistory(){
+  @GetMapping(value = "/user/weight/history")
+  public String showWeightHistory(Model model, Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    model.addAttribute("latestWeightsDesc", latestWeightService.findByUserOrderByWeightingDateDesc(currentUser));
     return "weight/history";
   }
 

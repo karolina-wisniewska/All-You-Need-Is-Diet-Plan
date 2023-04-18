@@ -27,6 +27,11 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   }
 
   @Override
+  public List<LatestWeight> findByUserOrderByWeightingDateDesc(User user) {
+    return latestWeightRepository.findByUserOrderByWeightingDateDesc(user);
+  }
+
+  @Override
   public void save(LatestWeight latestWeight) {
     latestWeightRepository.save(latestWeight);
   }
@@ -39,6 +44,11 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   @Override
   public LatestWeight findById(Long id) {
     return latestWeightRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
+
+  @Override
+  public void deleteById(Long id) {
+    latestWeightRepository.deleteById(id);
   }
 
 }

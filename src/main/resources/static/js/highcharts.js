@@ -3,8 +3,8 @@ $(document).ready(
         $.ajax({
             url : "/get-data",
             success : function(result) {
-                var date = JSON.parse(result).date;
-                var weight = JSON.parse(result).weight;
+                const date = JSON.parse(result).date;
+                const weight = JSON.parse(result).weight;
                 drawLineChart(date, weight);
             }
         });

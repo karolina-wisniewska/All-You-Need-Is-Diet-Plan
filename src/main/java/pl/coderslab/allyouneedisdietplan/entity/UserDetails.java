@@ -60,8 +60,8 @@ public class UserDetails {
   @Column(name = "success_date")
   private LocalDateTime successDate;
 
-  @Column(name = "daily_calories", columnDefinition="tinyint unsigned")
-  private Integer dailyCalories;
+  @Column(name = "daily_calories", columnDefinition="int unsigned")
+  private Long dailyCalories;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "activity_level_id")

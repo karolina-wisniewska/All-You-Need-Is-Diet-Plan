@@ -41,23 +41,26 @@ public class UserDetailsController {
   private final UserDetailsService userDetailsService;
   private final LatestWeightService latestWeightService;
 
-  @GetMapping(value = "/user/details")
+  @GetMapping(value = "/user/details/add")
   public String showAddUserDetailsForm(Model model) {
     model.addAttribute("userDetails", new UserDetails());
     model.addAttribute("latestWeight", new LatestWeight());
     return "userDetails/add";
   }
-  @PostMapping(value = "/user/details")
+  @PostMapping(value = "/user/details/add")
   public String processAddUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, @Valid LatestWeight latestWeight, BindingResult latestWeightResult, Principal principal) {
     if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
       return "userDetails/add";
     }
+    User currentUser = userService.findUserByUserName(principal.getName());
+    latestWeight.setWeightingDate(LocalDateTime.now());
+    latestWeight.setUser(currentUser);
+    latestWeightService.save(latestWeight);
+
     userDetails.setUser(userService.findUserByUserName(principal.getName()));
+    userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
     userDetailsService.save(userDetails);
 
-    latestWeight.setWeightingDate(LocalDateTime.now());
-    latestWeight.setUser(userService.findUserByUserName(principal.getName()));
-    latestWeightService.save(latestWeight);
     return "redirect:/user/home";
   }
 
@@ -69,10 +72,11 @@ public class UserDetailsController {
   }
 
   @PostMapping(value = "/user/details/edit")
-  public String processEditUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult, Principal principal) {
+  public String processEditUserDetailsForm(@Valid UserDetails userDetails, BindingResult userDetailsResult) {
     if(userDetailsResult.hasErrors()){
       return "userDetails/edit";
     }
+    userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
     userDetailsService.save(userDetails);
     return "redirect:/user/home";
   }

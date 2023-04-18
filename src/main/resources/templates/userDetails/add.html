@@ -17,7 +17,7 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/user/details}" method="post" class="form-signin" th:object="${userDetails}">
+    <form th:action="@{/user/details/add}" method="post" class="form-signin" th:object="${userDetails}">
         <h3 class="form-signin-heading">Add User Details</h3>
         <label>Gender:
             <div th:each="gender: ${genders}">

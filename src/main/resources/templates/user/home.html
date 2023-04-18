@@ -34,14 +34,13 @@
                         <li>show you when you will achieve your dream weight</li>
                     </ul>
                 </div>
-                <form th:action="@{/user/details}" method="get">
+                <form th:action="@{/user/details/add}" method="get">
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add User Details
                     </button>
                 </form>
             </div>
             <div th:if="${userDetails != null}" class="panel-body">
-                <div>Your total metabolic rate is: (calculated TMR) kcal/day</div>
-                <div>Suggested daily intake of calories: (calculated daily calories) kcal</div>
+                <div>Suggested daily intake of calories: <span th:text="${userDetails.dailyCalories}"></span> kcal</div>
                 <br/>
                 <div>Your latest weight: <span th:text="${latestWeight.weight}"></span> kg</div>
                 <div>Your dream weight: <span th:text="${userDetails.dreamWeight}"></span> kg</div>

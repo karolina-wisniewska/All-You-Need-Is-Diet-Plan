@@ -13,6 +13,7 @@ import pl.coderslab.allyouneedisdietplan.service.HealthService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -53,6 +54,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
     double basalMetabolicRate = a + (b * currentWeight) + (c * userDetails.getHeight()) - (d * userDetails.getAge());
     return Math.round(basalMetabolicRate * userDetails.getActivityLevel().getValue() + e);
+  }
+
+  @Override
+  public LocalDateTime calculateSuccessDate(UserDetails userDetails) {
+    return null;
   }
 
 

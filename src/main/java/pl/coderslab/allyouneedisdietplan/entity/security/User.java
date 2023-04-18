@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 
@@ -52,5 +53,6 @@ public class User {
 
   @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
   @PrimaryKeyJoinColumn
+  @ToString.Exclude
   private UserDetails userDetails;
 }

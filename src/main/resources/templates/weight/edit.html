@@ -21,6 +21,7 @@
         <br/>
         <div th:object="${latestWeight}">
             <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{user}">
             <label>Current weight (kg):
                 <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
                 <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"

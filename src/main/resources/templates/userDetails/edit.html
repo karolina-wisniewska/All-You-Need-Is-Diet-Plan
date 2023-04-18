@@ -20,6 +20,7 @@
     <form th:action="@{/user/details/edit}" method="post" class="form-signin" th:object="${userDetails}">
         <h3 class="form-signin-heading">Edit User Details</h3>
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{user}">
         <input type="hidden" th:field="*{dailyCalories}">
         <label>Gender:
             <div th:each="gender: ${genders}">

@@ -12,5 +12,5 @@ import java.util.List;
 public interface LatestWeightRepository extends JpaRepository<LatestWeight, Long> {
 
   LatestWeight findFirstByUserOrderByIdDesc(User user);
-  List<LatestWeight> findByUser(User user);
+  List<LatestWeight> findByUserOrderByWeightingDateAsc(User user);
 }

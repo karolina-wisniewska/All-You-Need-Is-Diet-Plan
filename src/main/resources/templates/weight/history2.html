@@ -3,11 +3,18 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Login Form</title>
+    <title>Wight history</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://code.highcharts.com/css/highcharts.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 </head>
 
 <body>
@@ -16,9 +23,12 @@
 </form>
 <br/>
 <div class="container">
-     <form th:action="@{/user/weight}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading">Add new weight</h3>
-        <br/>
+    <h3 class="form-signin-heading">Add new weight</h3>
+    <br/>
+    <figure class="highcharts-figure">
+        <div id="container-bar"></div>
+    </figure>
+    <form th:action="@{/user/weight}" method="POST" class="form-signin">
          <div th:object="${latestWeight}">
              <label>Current weight (kg):
                  <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
@@ -36,5 +46,6 @@
         <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add weight</button>
     </form>
 </div>
+<script type="text/javascript" src="/js/highcharts.js"></script>
 </body>
 </html>

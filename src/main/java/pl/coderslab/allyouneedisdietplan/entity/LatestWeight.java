@@ -35,6 +35,7 @@ public class LatestWeight {
   private Double weight;
 
   @PastOrPresent(message = "{date.from.future.error}")
+  @NotNull
   private LocalDateTime weightingDate;
 
   @ManyToOne(fetch = FetchType.LAZY)

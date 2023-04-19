@@ -46,7 +46,7 @@
                 <div>Your dream weight: <b th:text="${userDetails.dreamWeight}"></b> kg</div>
                 <div>Your activity level: <b th:text="${userDetails.activityLevel.name}"></b></div>
                 <br/>
-                <div>You will achieve your dream weight on (calculated success date)</div>
+                <div>You will achieve your dream weight on <b th:text="${successDate}"></b></div>
                 <br/>
                 <form th:action="@{/user/weight/history}" method="get">
                     <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Show Weight History

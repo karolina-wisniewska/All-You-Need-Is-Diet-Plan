@@ -44,7 +44,9 @@ public class UserDetailsController {
   @GetMapping(value = "/user/details/add")
   public String showAddUserDetailsForm(Model model) {
     model.addAttribute("userDetails", new UserDetails());
-    model.addAttribute("latestWeight", new LatestWeight());
+    LatestWeight latestWeight = new LatestWeight();
+    latestWeight.setWeightingDate(LocalDateTime.now());
+    model.addAttribute("latestWeight", latestWeight);
     return "userDetails/add";
   }
   @PostMapping(value = "/user/details/add")
@@ -53,7 +55,6 @@ public class UserDetailsController {
       return "userDetails/add";
     }
     User currentUser = userService.findUserByUserName(principal.getName());
-    latestWeight.setWeightingDate(LocalDateTime.now());
     latestWeight.setUser(currentUser);
     latestWeightService.save(latestWeight);
 

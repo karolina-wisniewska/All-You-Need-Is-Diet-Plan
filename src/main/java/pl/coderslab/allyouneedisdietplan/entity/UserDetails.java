@@ -57,9 +57,6 @@ public class UserDetails {
   @NotNull
   private Double dreamWeight;
 
-  @Column(name = "success_date")
-  private LocalDateTime successDate;
-
   @Column(name = "daily_calories", columnDefinition="int unsigned")
   private Long dailyCalories;
 

@@ -10,5 +10,5 @@ public interface UserDetailsService {
   void save(UserDetails userDetails);
   UserDetails findByUser(User user);
   Long calculateDailyCalories(UserDetails userDetails);
-  LocalDateTime calculateSuccessDate(UserDetails userDetails);
+  String calculateSuccessDate(UserDetails userDetails);
 }

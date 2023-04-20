@@ -12,6 +12,7 @@ import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
+import pl.coderslab.allyouneedisdietplan.model.RecipeResourceList;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
@@ -38,7 +39,7 @@ public class PlanController {
   @GetMapping(value = "/user/plan/showDetails")
   @ResponseBody
   public String getSingleRecipe() {
-    String url = "https://api.edamam.com/api/recipes/v2?q=chicken&type=public&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
+    String url = "https://api.edamam.com/api/recipes/v2/b79327d05b8e5b838ad6cfd9576b30b6?type=public&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
     RestTemplate restTemplate = new RestTemplate();
     RecipeResource recipe = restTemplate.getForObject(url, RecipeResource.class);
     System.out.println("Recipe: " + recipe);
@@ -50,8 +51,9 @@ public class PlanController {
   public String getListOfRecipes() {
     String url = "https://api.edamam.com/api/recipes/v2?q=chicken&type=public&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
     RestTemplate restTemplate = new RestTemplate();
-    RecipeResource recipe = restTemplate.getForObject(url, RecipeResource.class);
-    System.out.println("Recipe: " + recipe);
-    return "Recipe details";
+    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
+    List<RecipeResource> recipes = response.getHits();
+    System.out.println("Udało się?");
+    return "Recipe list";
   }
 }

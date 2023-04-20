@@ -6,11 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResourceList;
+import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
@@ -23,6 +25,9 @@ import java.util.List;
 public class PlanController {
   private final UserService userService;
   private final PlanService planService;
+  private final UserDetailsService userDetailsService;
+  private final MealTypeService mealTypeService;
+
 
   @GetMapping(value = "/user/plan/new")
   public String getRecipesForPlan(Model model, Principal principal) {
@@ -55,6 +60,16 @@ public class PlanController {
     List<RecipeResource> recipes = response.getHits();
     System.out.println("Udało się?");
     return "Recipe list";
+  }
+
+  @GetMapping(value = "/user/plan/url")
+  @ResponseBody
+  public String getMealUrl(Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+    List<MealType> mealTypes = mealTypeService.findAll();
+    String url = planService.getRequestUrl(mealTypes.get(0), currentUserDetails);
+    return url;
   }
 
 

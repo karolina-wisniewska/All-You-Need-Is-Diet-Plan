@@ -4,7 +4,7 @@ insert into cuisine_types(name) values ('american'), ('asian'), ('british'), ('c
 
 insert into day_names(name) values ('Monday'), ('Tuesday'), ('Wednesday'), ('Thursday'), ('Friday'), ('Saturday'), ('Sunday');
 
-insert into meal_types(name) values ('breakfast'), ('brunch'), ('lunch/dinner'), ('snack'), ('teatime');
+insert into meal_types(name, fraction) values ('breakfast', 0.3), ('brunch', 0.4), ('lunch/dinner', 0.3)/*, ('snack', 0.1), ('teatime', 0.1)*/;
 
 insert into healths(name) values ('alcohol-free'), ('celery-free'), ('crustacean-free'), ('dairy-free'), ('egg-free'), ('fish-free'), ('fodmap-free'), ('gluten-free'), ('immuno-supportive'), ('keto-friendly'), ('kidney-friendly'), ('kosher'), ('low-potassium'), ('low-sugar'), ('lupine-free'), ('Mediterranean'), ('mollusk-free'), ('mustard-free'), ('No-oil-added'), ('paleo'), ('peanut-free'), ('pecatarian'), ('pork-free'), ('red-meat-free'), ('sesame-free'), ('shellfish-free'), ('soy-free'), ('sugar-conscious'), ('sulfite-free'), ('tree-nut-free'), ('vegan'), ('vegetarian'), ('wheat-free');
 

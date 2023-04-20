@@ -22,4 +22,8 @@ public class MealType {
   @Column(columnDefinition="varchar(30)")
   @NotNull
   private String name;
+
+  @Column(columnDefinition="double(3,2)")
+  @NotNull
+  private Double fraction;
 }

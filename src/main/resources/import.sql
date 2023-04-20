@@ -10,7 +10,7 @@ insert into healths(name) values ('alcohol-free'), ('celery-free'), ('crustacean
 
 insert into diets(name) values ('balanced'), ('high-fiber'), ('high-protein'), ('low-carb'), ('low-fat'), ('low-sodium');
 
-insert into dish_types(name) values ('alcohol cocktail'), ('biscuits and cookies'), ('bread'), ('cereals'), ('condiments and sauces'), ('desserts'), ('drinks'), ('egg'), ('ice cream and custard'), ('pancake'), ('pasta'), ('pastry'), ('pies and tarts'), ('pizza'), ('preps'), ('preserve'), ('salad'), ('sandwiches'), ('seafood'), ('side dish'), ('soup'), ('special occasions'), ('starter'), ('sweets');
+insert into dish_types(name) values ('biscuits and cookies'), ('bread'), ('cereals'), ('condiments and sauces'), ('desserts'), ('drinks'), ('egg'), ('ice cream and custard'), ('pancake'), ('pasta'), ('pastry'), ('pies and tarts'), ('pizza'), ('preps'), ('preserve'), ('salad'), ('sandwiches'), ('seafood'), ('side dish'), ('soup'), ('special occasions'), ('starter'), ('sweets');
 
 insert into genders(name) values ('male'), ('female');
 

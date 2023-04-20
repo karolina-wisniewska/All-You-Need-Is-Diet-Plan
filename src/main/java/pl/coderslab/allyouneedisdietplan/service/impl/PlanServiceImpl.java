@@ -28,8 +28,6 @@ public class PlanServiceImpl implements PlanService {
   public Long getMealCalories(MealType mealType, UserDetails userDetails) {
     return Math.round(userDetails.getDailyCalories()*mealType.getFraction());
   }
-
-
   @Override
   public String getRequestUrl(MealType mealType, UserDetails userDetails) {
     String url = "https://api.edamam.com/api/recipes/v2?type=public&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6&random=true";

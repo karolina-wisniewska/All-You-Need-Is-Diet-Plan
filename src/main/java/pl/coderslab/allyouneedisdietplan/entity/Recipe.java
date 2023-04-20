@@ -20,5 +20,9 @@ public class Recipe {
 
   @Column(columnDefinition="varchar(255)")
   @NotNull
+  private String label;
+
+  @Column(columnDefinition="varchar(255)")
+  @NotNull
   private String externalLink;
 }

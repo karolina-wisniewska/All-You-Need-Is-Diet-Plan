@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
+import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
@@ -36,6 +38,24 @@ public class PlanController {
     plan.setUser(currentUser);
     planService.save(plan);
 
+    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+    List<MealType> mealTypes = mealTypeService.findAll();
+    for(MealType mealType : mealTypes){
+      String url = planService.getRequestUrl(mealType, currentUserDetails);
+      RestTemplate restTemplate = new RestTemplate();
+      RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
+      List<RecipeResource> recipes = response.getHits();
+      for(int i=0; i <=6; i++){
+        Recipe recipe = new Recipe();
+        recipe.setLabel(recipes.get(i).getRecipe().getLabel());
+        recipe.setExternalLink(recipes.get(i).get_links().getSelf().getHref());
+        DietPlanItem dietPlanItem = new DietPlanItem();
+        dietPlanItem.setPlan(plan);
+        dietPlanItem.setRecipe(recipe);
+
+      }
+
+    }
 
     model.addAttribute("plan", plan);
     return "plan/new";
@@ -53,12 +73,14 @@ public class PlanController {
 
   @GetMapping(value = "/user/plan/test")
   @ResponseBody
-  public String getListOfRecipes() {
-    String url = "https://api.edamam.com/api/recipes/v2?q=chicken&type=public&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
+  public String getListOfRecipes(Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+    List<MealType> mealTypes = mealTypeService.findAll();
+    String url = planService.getRequestUrl(mealTypes.get(0), currentUserDetails);
     RestTemplate restTemplate = new RestTemplate();
     RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
     List<RecipeResource> recipes = response.getHits();
-    System.out.println("Udało się?");
     return "Recipe list";
   }
 

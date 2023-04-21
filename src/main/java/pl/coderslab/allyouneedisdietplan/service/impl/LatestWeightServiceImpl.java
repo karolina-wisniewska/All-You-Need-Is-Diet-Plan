@@ -4,12 +4,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.allyouneedisdietplan.entity.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.repository.GenderRepository;
 import pl.coderslab.allyouneedisdietplan.repository.LatestWeightRepository;
-import pl.coderslab.allyouneedisdietplan.service.GenderService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 
 import java.util.List;

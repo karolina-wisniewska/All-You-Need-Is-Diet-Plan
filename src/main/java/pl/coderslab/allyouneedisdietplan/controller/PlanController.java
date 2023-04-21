@@ -24,6 +24,7 @@ import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -46,13 +47,16 @@ public class PlanController {
 
     UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
     List<MealType> mealTypes = mealTypeService.findAll();
+    List<List<DietPlanItem>> resultItems = new ArrayList<>();
 
-    for(MealType mealType : mealTypes){
+    for(Integer j=0; j <mealTypes.size(); j++){
+      MealType mealType = mealTypes.get(j);
       String url = planService.getRequestUrl(mealType, currentUserDetails);
       RestTemplate restTemplate = new RestTemplate();
       RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
       List<RecipeResource> recipes = response.getHits();
 
+      List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
       for(Integer i=0; i <=6; i++){
         Recipe recipe = new Recipe();
         recipe.setLabel(recipes.get(i).getRecipe().getLabel());
@@ -68,12 +72,12 @@ public class PlanController {
         dietPlanItem.setDayName(dayName);
         dietPlanItemService.save(dietPlanItem);
 
+        resultItemsPerMeal.add(dietPlanItem);
       }
-
+      resultItems.add(resultItemsPerMeal);
     }
-
-    model.addAttribute("plan", plan);
-    return "plan/new";
+    model.addAttribute("resultItems", resultItems);
+    return "plan/show";
   }
 
   @GetMapping(value = "/user/plan/showDetails")
@@ -85,29 +89,5 @@ public class PlanController {
     System.out.println("Recipe: " + recipe);
     return "Recipe details";
   }
-
-  @GetMapping(value = "/user/plan/test")
-  @ResponseBody
-  public String getListOfRecipes(Principal principal) {
-    User currentUser = userService.findUserByUserName(principal.getName());
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
-    List<MealType> mealTypes = mealTypeService.findAll();
-    String url = planService.getRequestUrl(mealTypes.get(0), currentUserDetails);
-    RestTemplate restTemplate = new RestTemplate();
-    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
-    List<RecipeResource> recipes = response.getHits();
-    return "Recipe list";
-  }
-
-  @GetMapping(value = "/user/plan/url")
-  @ResponseBody
-  public String getMealUrl(Principal principal) {
-    User currentUser = userService.findUserByUserName(principal.getName());
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
-    List<MealType> mealTypes = mealTypeService.findAll();
-    String url = planService.getRequestUrl(mealTypes.get(0), currentUserDetails);
-    return url;
-  }
-
 
 }

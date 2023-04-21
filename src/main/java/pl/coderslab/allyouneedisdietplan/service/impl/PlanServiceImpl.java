@@ -8,6 +8,7 @@ import pl.coderslab.allyouneedisdietplan.entity.Health;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 
@@ -27,6 +28,11 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public void save(Plan plan) {
     planRepository.save(plan);
+  }
+
+  @Override
+  public Plan findFirstByUserOrderByIdDesc(User user) {
+    return planRepository.findFirstByUserOrderByIdDesc(user);
   }
 
   @Override

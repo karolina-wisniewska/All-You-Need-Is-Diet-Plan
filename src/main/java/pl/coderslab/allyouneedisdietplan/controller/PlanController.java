@@ -50,7 +50,7 @@ public class PlanController {
     List<MealType> mealTypes = mealTypeService.findAll();
     List<List<DietPlanItem>> resultItems = new ArrayList<>();
 
-    for(Integer j=0; j <mealTypes.size(); j++){
+    for (Integer j = 0; j < mealTypes.size(); j++) {
       MealType mealType = mealTypes.get(j);
       String url = planService.getRequestUrl(mealType, currentUserDetails);
       RestTemplate restTemplate = new RestTemplate();
@@ -58,13 +58,13 @@ public class PlanController {
       List<RecipeResource> recipes = response.getHits();
 
       List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
-      for(Integer i=0; i <=6; i++){
+      for (Integer i = 0; i <= 6; i++) {
         Recipe recipe = new Recipe();
         recipe.setLabel(recipes.get(i).getRecipe().getLabel());
         recipe.setExternalLink(recipes.get(i).get_links().getSelf().getHref());
         recipeService.save(recipe);
 
-        DayName dayName = dayNameService.findById(i+1);
+        DayName dayName = dayNameService.findById(i + 1);
 
         DietPlanItem dietPlanItem = new DietPlanItem();
         dietPlanItem.setPlan(plan);
@@ -73,6 +73,28 @@ public class PlanController {
         dietPlanItem.setDayName(dayName);
         dietPlanItemService.save(dietPlanItem);
 
+        resultItemsPerMeal.add(dietPlanItem);
+      }
+      resultItems.add(resultItemsPerMeal);
+    }
+    model.addAttribute("resultItems", resultItems);
+    return "plan/show";
+  }
+
+  @GetMapping(value = "/user/plan/load")
+  public String loadPlan(Model model, Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    Plan plan = planService.findFirstByUserOrderByIdDesc(currentUser);
+    List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanOrderByIdAsc(plan);
+
+    List<MealType> mealTypes = mealTypeService.findAll();
+    List<List<DietPlanItem>> resultItems = new ArrayList<>();
+
+    for (Integer j = 0; j < mealTypes.size(); j++) {
+      List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
+
+      for (Integer i = 0; i < 7; i++) {
+        DietPlanItem dietPlanItem = dietPlanItems.get(j*7 + i);
         resultItemsPerMeal.add(dietPlanItem);
       }
       resultItems.add(resultItemsPerMeal);

@@ -4,8 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
+import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.repository.DietPlanItemRepository;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,5 +19,10 @@ public class DietPlanItemServiceImpl implements DietPlanItemService {
   @Override
   public void save(DietPlanItem dietPlanItem) {
     dietPlanItemRepository.save(dietPlanItem);
+  }
+
+  @Override
+  public List<DietPlanItem> findByPlanOrderByIdAsc(Plan plan) {
+    return dietPlanItemRepository.findByPlanOrderByIdAsc(plan);
   }
 }

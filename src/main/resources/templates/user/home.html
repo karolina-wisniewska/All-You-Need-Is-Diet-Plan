@@ -12,14 +12,12 @@
 </head>
 
 <body>
+<form th:action="@{/logout}" method="get">
+    <button class="btn btn-md btn-danger btn-block" name="registration"
+            type="Submit">Logout
+    </button>
+</form>
 <div class="container">
-
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout
-        </button>
-    </form>
-
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -35,7 +33,7 @@
                     </ul>
                 </div>
                 <form th:action="@{/user/details/add}" method="get">
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Add User Details
+                    <button class="btn" name="Submit" type="Submit">Add User Details
                     </button>
                 </form>
             </div>
@@ -49,7 +47,7 @@
                 <div>You will achieve your dream weight on <b th:text="${successDate}"></b></div>
                 <br/>
                 <form th:action="@{/user/weight/history}" method="get">
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Show Weight History
+                    <button class="btn" name="Submit" type="Submit">Show Weight History
                     </button>
                 </form>
                 <br/>
@@ -70,17 +68,17 @@
                 </ul>
                 <br/>
                 <form th:action="@{/user/details/edit}" method="get">
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Edit User Details
+                    <button class="btn" name="Submit" type="Submit">Edit User Details
                     </button>
                 </form>
                 <br/>
                 <form th:action="@{/user/plan}" method="get">
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Your Last Diet Plan
+                    <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
                     </button>
                 </form>
                 <br/>
                 <form th:action="@{/user/plan/new}" method="get">
-                    <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">New Diet Plan
+                    <button class="btn" name="Submit" type="Submit">New Diet Plan
                     </button>
                 </form>
 

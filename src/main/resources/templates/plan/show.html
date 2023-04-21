@@ -5,10 +5,11 @@
 
 <head>
     <title>Home Page</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/plan.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://developer.edamam.com/attribution/badge.js"></script>
 </head>
 
 <body>
@@ -18,16 +19,16 @@
         <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
     </form>
 
-    <div class="panel-group" style="margin-top:40px">
+    <div class="plan-table" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span th:utext="Welcome"></span> <span sec:authentication="name"></span>
+                <span sec:authentication="name"></span>, here's your personal Diet Plan!
             </div>
             <div th:if="${resultItems != null}" class="panel-body">
-                <table id="example" class="table table-bordered" style="width: 100%">
+                <table id="example" class="table table-bordered" style="width: 100%; table-layout: fixed">
                     <thead>
                     <tr>
-                        <th>*</th>
+                        <th></th>
                         <th>Monday</th>
                         <th>Tuesday</th>
                         <th>Wednesday</th>
@@ -43,13 +44,22 @@
                         <td th:each="mealItem : ${resultItemsPerMeal}">
                             <div th:text="${mealItem.getRecipe().getLabel()}"></div>
                             <div>
-                                <a th:href="@{/user/plan/showDetails(url=${mealItem.getRecipe().getExternalLink()})}">Show Details</a>
+                                <form th:action="@{/user/plan/showDetails}" method="post" target="_blank">
+                                    <input type="hidden" name="url"
+                                           th:value="${mealItem.getRecipe().getExternalLink()}">
+                                    <button name="Submit" type="Submit">Recipe Details
+                                    </button>
+                                </form>
+                                <br>
+                                <a th:href="@{/user/plan/reload}">Try again</a>
+                                <br>
+                                <a th:href="@{/user/plan/choose}">Let me choose</a>
                             </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-<!--                OZNAKOWANIE EDAMAM -->
+                <div id="edamam-badge" data-color="white"></div>
             </div>
         </div>
     </div>

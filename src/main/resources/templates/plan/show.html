@@ -51,7 +51,8 @@
                                     </button>
                                 </form>
                                 <br>
-                                <a th:href="@{/user/plan/reload}">Try again</a>
+                                <a th:href="@{/user/plan/reload(id=${mealItem.getId()})}">Try
+                                    again</a>
                                 <br>
                                 <a th:href="@{/user/plan/choose}">Let me choose</a>
                             </div>

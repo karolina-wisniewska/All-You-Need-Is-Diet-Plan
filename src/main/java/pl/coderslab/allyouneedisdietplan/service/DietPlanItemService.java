@@ -8,4 +8,6 @@ import java.util.List;
 public interface DietPlanItemService {
   void save(DietPlanItem dietPlanItem);
   List<DietPlanItem> findByPlanOrderByIdAsc(Plan plan);
+
+  DietPlanItem findById(Long id);
 }

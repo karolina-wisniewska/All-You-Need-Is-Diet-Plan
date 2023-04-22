@@ -111,8 +111,24 @@ public class PlanController {
     return "redirect:" + redirectUrl;
   }
 
-  @PostMapping(value = "/user/plan/reload")
-  public String reloadSingleRecipe() {
-    return "plan/show";
+  @GetMapping(value = "/user/plan/reload")
+  public String reloadSingleRecipe(@RequestParam Long id, Principal principal) {
+    DietPlanItem itemToEdit = dietPlanItemService.findById(id);
+    User currentUser = userService.findUserByUserName(principal.getName());
+    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+
+    String url = planService.getRequestUrl(itemToEdit.getMealType(), currentUserDetails);
+    RestTemplate restTemplate = new RestTemplate();
+    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
+    List<RecipeResource> recipes = response.getHits();
+
+    Recipe recipe = new Recipe();
+    recipe.setLabel(recipes.get(0).getRecipe().getLabel());
+    recipe.setExternalLink(recipes.get(0).get_links().getSelf().getHref());
+    recipeService.save(recipe);
+
+    itemToEdit.setRecipe(recipe);
+    dietPlanItemService.save(itemToEdit);
+    return "redirect:load";
   }
 }

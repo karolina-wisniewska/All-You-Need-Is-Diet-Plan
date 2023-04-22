@@ -6,7 +6,7 @@ import pl.coderslab.allyouneedisdietplan.entity.Plan;
 
 import java.util.List;
 
-public interface DietPlanItemRepository extends JpaRepository<DietPlanItem, Integer> {
+public interface DietPlanItemRepository extends JpaRepository<DietPlanItem, Long> {
   List<DietPlanItem> findByPlanOrderByIdAsc(Plan plan);
 
 }

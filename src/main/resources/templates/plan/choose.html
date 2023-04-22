@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User Details Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<form th:action="@{/user/plan/load}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Last Plan</button>
+</form>
+<br/>
+
+<div class="container">
+    <form th:action="@{/user/plan/choose}" method="post" class="form-signin" th:object="${recipeDetails}">
+        <h3 class="form-signin-heading">What would you like to eat?</h3>
+        <input type="hidden" th:field="*{id}">
+        <label>Dish Type:
+            <div>
+                <select th:field="*{dishType}">
+                    <option th:each="type : ${dishTypes}"
+                            th:text="${type.name}"
+                            th:value="${type.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Meal Type:
+            <div>
+                <select th:field="*{mealType}">
+                    <option th:each="type : ${mealTypes}"
+                            th:text="${type.name}"
+                            th:value="${type.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Cuisine Type:
+            <div>
+                <select th:field="*{cuisineType}">
+                    <option text="none"
+                            th:value="0">
+                    <option th:each="type : ${cuisineTypes}"
+                            th:text="${type.name}"
+                            th:value="${type.id}">
+                </select>
+            </div>
+        </label>
+        <br/><br/>
+        <label>Do you feel like something specific?
+            <div>
+                <input type="text" th:field="*{query}">
+            </div>
+        </label>
+        <br/><br/>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Find something special!</button>
+    </form>
+</div>
+</body>
+</html>

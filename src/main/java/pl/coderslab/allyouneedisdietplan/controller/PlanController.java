@@ -12,12 +12,15 @@ import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
+import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
 import pl.coderslab.allyouneedisdietplan.model.RecipeResourceList;
+import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
+import pl.coderslab.allyouneedisdietplan.service.DishTypeService;
 import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
@@ -38,6 +41,8 @@ public class PlanController {
   private final RecipeService recipeService;
   private final DayNameService dayNameService;
   private final DietPlanItemService dietPlanItemService;
+  private final CuisineTypeService cuisineTypeService;
+  private final DishTypeService dishTypeService;
 
   @GetMapping(value = "/user/plan/new")
   public String getRecipesForPlan(Model model, Principal principal) {
@@ -129,6 +134,24 @@ public class PlanController {
 
     itemToEdit.setRecipe(recipe);
     dietPlanItemService.save(itemToEdit);
+    return "redirect:load";
+  }
+
+  @GetMapping(value = "/user/plan/choose")
+  public String showSingleRecipeForm(Model model) {
+    model.addAttribute("recipeDetails", new RecipeQuery());
+    model.addAttribute("cuisineTypes", cuisineTypeService.findAll());
+    model.addAttribute("dishTypes", dishTypeService.findAll());
+    model.addAttribute("mealTypes", mealTypeService.findAll());
+    return "plan/choose";
+  }
+
+  @PostMapping(value = "/user/plan/choose")
+  public String processSingleRecipeForm(Model model) {
+    model.addAttribute("recipeDetails", new RecipeQuery());
+    model.addAttribute("cuisineTypes", cuisineTypeService.findAll());
+    model.addAttribute("dishTypes", dishTypeService.findAll());
+    model.addAttribute("mealTypes", mealTypeService.findAll());
     return "redirect:load";
   }
 }

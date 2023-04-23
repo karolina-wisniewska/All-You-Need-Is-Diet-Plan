@@ -14,8 +14,8 @@ import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
-import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
-import pl.coderslab.allyouneedisdietplan.model.RecipeResourceList;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceList;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
@@ -61,7 +61,7 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public List<List<DietPlanItem>> getDietPlanItemsForPlan(User currentUser) {
     Plan plan = findByUser(currentUser);
-    if(plan == null) {
+    if (plan == null) {
       plan = new Plan();
     }
     plan.setUser(currentUser);
@@ -78,7 +78,7 @@ public class PlanServiceImpl implements PlanService {
       RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
       List<RecipeResource> recipes = response.getHits();
 
-      if(recipes.isEmpty()){
+      if (recipes.size() < 7) {
         return resultItems;
       }
       List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
@@ -87,13 +87,13 @@ public class PlanServiceImpl implements PlanService {
       for (Integer i = 0; i <= 6; i++) {
         Recipe recipe = new Recipe();
         recipe.setLabel(recipes.get(i).getRecipe().getLabel());
-        recipe.setExternalLink(recipes.get(i).get_links().getSelf().getHref());
+        recipe.setExternalLink(recipes.get(i).getLinks().getSelf().getHref());
         Recipe finalRecipe = recipeService.save(recipe);
 
         DayName dayName = dayNameService.findById(i + 1);
 
         DietPlanItem dietPlanItem = new DietPlanItem();
-        if(!dietPlanItems.isEmpty()){
+        if (!dietPlanItems.isEmpty()) {
           dietPlanItem = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType).get(i);
         }
 

@@ -1,6 +1,7 @@
-package pl.coderslab.allyouneedisdietplan.model;
+package pl.coderslab.allyouneedisdietplan.model.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -8,6 +9,8 @@ import lombok.Data;
 public class RecipeResource {
 
   private Recipe recipe;
-  private Link _links;
+
+  @JsonProperty("_links")
+  private Link links;
 
 }

@@ -12,8 +12,8 @@ import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
-import pl.coderslab.allyouneedisdietplan.model.RecipeResource;
-import pl.coderslab.allyouneedisdietplan.model.RecipeResourceList;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceList;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
@@ -83,7 +83,7 @@ public class PlanController {
 
     Recipe recipe = new Recipe();
     recipe.setLabel(recipes.get(0).getRecipe().getLabel());
-    recipe.setExternalLink(recipes.get(0).get_links().getSelf().getHref());
+    recipe.setExternalLink(recipes.get(0).getLinks().getSelf().getHref());
     Recipe finalRecipe = recipeService.save(recipe);
 
     itemToEdit.setRecipe(finalRecipe);
@@ -121,7 +121,7 @@ public class PlanController {
 
     Recipe recipe = new Recipe();
     recipe.setLabel(recipes.get(0).getRecipe().getLabel());
-    recipe.setExternalLink(recipes.get(0).get_links().getSelf().getHref());
+    recipe.setExternalLink(recipes.get(0).getLinks().getSelf().getHref());
     Recipe finalRecipe = recipeService.save(recipe);
 
     itemToEdit.setRecipe(finalRecipe);

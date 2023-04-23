@@ -1,4 +1,4 @@
-package pl.coderslab.allyouneedisdietplan.model;
+package pl.coderslab.allyouneedisdietplan.model.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

@@ -23,6 +23,7 @@
         <label>Dish Type:
             <div>
                 <select th:field="*{dishType}">
+                    <option th:value="0">no preference
                     <option th:each="type : ${dishTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">
@@ -33,6 +34,7 @@
         <label>Meal Type:
             <div>
                 <select th:field="*{mealType}">
+                    <option th:value="0">no preference
                     <option th:each="type : ${mealTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">
@@ -43,8 +45,7 @@
         <label>Cuisine Type:
             <div>
                 <select th:field="*{cuisineType}">
-                    <option text="none"
-                            th:value="0">
+                    <option th:value="0">no preference
                     <option th:each="type : ${cuisineTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">
@@ -52,13 +53,13 @@
             </div>
         </label>
         <br/><br/>
-        <label>Do you feel like something specific?
+        <label>Do you feel like any specific ingredient?
             <div>
                 <input type="text" th:field="*{query}">
             </div>
         </label>
         <br/><br/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Find something special!</button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Give me something special!</button>
     </form>
 </div>
 </body>

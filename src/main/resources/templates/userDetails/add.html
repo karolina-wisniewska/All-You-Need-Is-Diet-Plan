@@ -68,6 +68,7 @@
         <label>Cuisine Type:
             <div>
                 <select th:field="*{cuisineType}">
+                    <option th:value="0">no preference
                     <option th:each="type : ${cuisineTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">

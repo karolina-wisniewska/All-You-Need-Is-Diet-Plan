@@ -52,7 +52,9 @@
                 </form>
                 <br/>
                 <ul>Your preferences:
-                    <li>cuisine type: <b th:text="${userDetails.cuisineType.name}"/></li>
+                    <li>cuisine type: <span th:if="${userDetails.cuisineType == null}">none</span>
+                        <b th:if="${userDetails.cuisineType != null}" th:text="${userDetails.cuisineType.name}"/>
+                    </li>
                     <li>allergies and health issues:
                         <span th:if="${userDetails.healths.isEmpty()}">none</span>
                         <b th:each="health : ${userDetails.healths}">

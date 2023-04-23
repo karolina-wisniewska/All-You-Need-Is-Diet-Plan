@@ -7,5 +7,5 @@ import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Long> {
-  Plan findFirstByUserOrderByIdDesc(User user);
+  Plan findByUser(User user);
 }

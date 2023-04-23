@@ -32,7 +32,7 @@ public class PlanServiceImpl implements PlanService {
 
   @Override
   public Plan findFirstByUserOrderByIdDesc(User user) {
-    return planRepository.findFirstByUserOrderByIdDesc(user);
+    return planRepository.findByUser(user);
   }
 
   @Override

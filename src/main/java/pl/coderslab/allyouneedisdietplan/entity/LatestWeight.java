@@ -7,14 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDateTime;
@@ -36,6 +35,7 @@ public class LatestWeight {
 
   @PastOrPresent(message = "{date.from.future.error}")
   @NotNull
+  @DateTimeFormat(pattern = "MM.dd.yyyy. HH:mm a")
   private LocalDateTime weightingDate;
 
   @ManyToOne(fetch = FetchType.LAZY)

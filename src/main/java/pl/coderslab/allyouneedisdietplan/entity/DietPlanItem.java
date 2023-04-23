@@ -1,6 +1,5 @@
 package pl.coderslab.allyouneedisdietplan.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +20,7 @@ public class DietPlanItem {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @JoinColumn(name = "plan_id")
   @ManyToOne(fetch = FetchType.LAZY)
   @NotNull
   private Plan plan;

@@ -7,4 +7,6 @@ import java.util.List;
 public interface DayNameService {
   DayName findById(Integer id);
   List<DayName> findAll();
+
+  long count();
 }

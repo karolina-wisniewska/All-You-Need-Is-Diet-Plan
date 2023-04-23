@@ -78,7 +78,7 @@ public class PlanServiceImpl implements PlanService {
       RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
       List<RecipeResource> recipes = response.getHits();
 
-      if (recipes.size() < 7) {
+      if (recipes.size() < dayNameService.count()) {
         return resultItems;
       }
       List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
@@ -121,7 +121,7 @@ public class PlanServiceImpl implements PlanService {
       List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealTypes.get(j));
       List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
 
-      for (Integer i = 0; i <= 6; i++) {
+      for (Integer i = 0; i < dayNameService.count(); i++) {
         DietPlanItem dietPlanItem = dietPlanItems.get(i);
         resultItemsPerMeal.add(dietPlanItem);
       }

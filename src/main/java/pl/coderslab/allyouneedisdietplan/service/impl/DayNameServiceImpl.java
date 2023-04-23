@@ -25,4 +25,9 @@ public class DayNameServiceImpl implements DayNameService {
   public List<DayName> findAll() {
     return dayNameRepository.findAll();
   }
+
+  @Override
+  public long count() {
+    return dayNameRepository.count();
+  }
 }

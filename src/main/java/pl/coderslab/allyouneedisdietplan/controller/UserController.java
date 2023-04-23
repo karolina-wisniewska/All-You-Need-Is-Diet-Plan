@@ -28,7 +28,6 @@ public class UserController {
     UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
     model.addAttribute("userDetails", currentUserDetails);
 
-
     if (currentUser.getUserDetails() != null) {
       currentUserDetails.setDailyCalories(userDetailsService.calculateDailyCalories(currentUserDetails));
       LatestWeight latestWeight = latestWeightService.findFirstByUserOrderByIdDesc(currentUser);

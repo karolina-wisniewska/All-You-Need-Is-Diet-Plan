@@ -53,7 +53,7 @@
                                 <a th:href="@{/user/plan/reload(id=${mealItem.getId()})}">Try
                                     again</a>
                                 <br>
-                                <a th:href="@{/user/plan/choose}">Let me choose</a>
+                                <a th:href="@{/user/plan/choose(id=${mealItem.getId()}, mealId=${resultItemsPerMeal.get(0).getMealType().getId()})}">Let me choose</a>
                             </div>
                         </td>
                     </tr>

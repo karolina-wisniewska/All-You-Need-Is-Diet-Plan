@@ -14,15 +14,18 @@ public class RecipeServiceImpl implements RecipeService {
   private final RecipeRepository recipeRepository;
 
   @Override
-  public void save(Recipe recipe) {
-    if(!existsByExternalLink(recipe.getExternalLink())){
+  public Recipe save(Recipe recipe) {
+    Recipe foundRecipe = findByExternalLink(recipe.getExternalLink());
+    if(foundRecipe == null){
       recipeRepository.save(recipe);
+      return findByExternalLink(recipe.getExternalLink());
     }
+    return foundRecipe;
   }
 
   @Override
-  public boolean existsByExternalLink(String externalLink) {
-    return recipeRepository.existsByExternalLink(externalLink);
+  public Recipe findByExternalLink(String externalLink) {
+    return recipeRepository.findByExternalLink(externalLink);
   }
 }
 

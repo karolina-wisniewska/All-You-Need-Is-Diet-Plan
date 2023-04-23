@@ -1,5 +1,6 @@
 package pl.coderslab.allyouneedisdietplan.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,8 @@ public class MealTypeServiceImpl implements MealTypeService {
     return mealTypeRepository.findAll();
   }
 
+  @Override
+  public MealType findById(Integer id) {
+    return mealTypeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
 }

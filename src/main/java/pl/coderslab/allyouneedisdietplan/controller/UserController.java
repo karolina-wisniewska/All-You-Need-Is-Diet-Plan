@@ -8,6 +8,7 @@ import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
+import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
@@ -19,6 +20,7 @@ public class UserController {
   private final UserDetailsService userDetailsService;
   private final UserService userService;
   private final LatestWeightService latestWeightService;
+  private final PlanService planService;
 
   @GetMapping(value = "/user/home")
   public String home(Model model, Principal principal) {
@@ -32,6 +34,7 @@ public class UserController {
       LatestWeight latestWeight = latestWeightService.findFirstByUserOrderByIdDesc(currentUser);
       model.addAttribute("latestWeight", latestWeight);
       model.addAttribute("successDate", userDetailsService.calculateSuccessDate(currentUser.getUserDetails()));
+      model.addAttribute("userPlan", planService.findByUser(currentUser));
     }
     return "user/home";
   }

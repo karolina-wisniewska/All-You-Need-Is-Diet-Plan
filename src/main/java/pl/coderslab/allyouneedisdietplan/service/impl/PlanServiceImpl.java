@@ -9,6 +9,7 @@ import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 
@@ -31,7 +32,7 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
-  public Plan findFirstByUserOrderByIdDesc(User user) {
+  public Plan findByUser(User user) {
     return planRepository.findByUser(user);
   }
 
@@ -41,7 +42,7 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
-  public String getRequestUrl(MealType mealType, UserDetails userDetails) {
+  public String getUserUrl(MealType mealType, UserDetails userDetails) {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     url += "&mealType=" + mealType.getName();
     if (userDetails.getCuisineType() != null) {
@@ -62,6 +63,39 @@ public class PlanServiceImpl implements PlanService {
     Long calories = getMealCalories(mealType, userDetails);
     double precision = 0.05;
     url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
+    return url;
+  }
+
+  @Override
+  public String getSingleUrl(RecipeQuery recipeQuery, UserDetails userDetails) {
+    String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
+    if (recipeQuery.getMealType() != null) {
+      url += "&mealType=" + recipeQuery.getMealType().getName();
+      Long calories = getMealCalories(recipeQuery.getMealType(), userDetails);
+      double precision = 0.05;
+      url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
+    }
+    if (recipeQuery.getCuisineType() != null) {
+      url += "&cuisineType=" + recipeQuery.getCuisineType().getName();
+    }
+    if (recipeQuery.getDishType() != null) {
+      url += "&dishType=" + recipeQuery.getDishType().getName();
+    }
+    if (recipeQuery.getQuery() != null) {
+      url += "&q=" + recipeQuery.getQuery();
+    }
+    List<Health> healths = userDetails.getHealths();
+    if (healths != null) {
+      for (Health health : healths) {
+        url += "&health=" + health.getName();
+      }
+    }
+    List<Diet> diets = userDetails.getDiets();
+    if (diets != null) {
+      for (Diet diet : diets) {
+        url += "&diet=" + diet.getName();
+      }
+    }
     return url;
   }
 

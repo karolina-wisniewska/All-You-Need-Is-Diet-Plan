@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
+import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.repository.DietPlanItemRepository;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
@@ -23,8 +24,8 @@ public class DietPlanItemServiceImpl implements DietPlanItemService {
   }
 
   @Override
-  public List<DietPlanItem> findByPlanOrderByIdAsc(Plan plan) {
-    return dietPlanItemRepository.findByPlanOrderByIdAsc(plan);
+  public List<DietPlanItem> findByPlanAndMealTypeOrderByIdAsc(Plan plan, MealType mealType) {
+    return dietPlanItemRepository.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
   }
 
   @Override

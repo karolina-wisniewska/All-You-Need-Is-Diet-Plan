@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User Details Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<form th:if="${detailsError != null}" th:action="@{/user/details/edit}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Edit User Details</button>
+</form>
+<form th:if="${chooseError != null}" th:object="${recipeQuery}" th:action="@{/user/plan/choose}" method="get">
+    <input type="hidden" th:name="id" th:value="*{dietPlanItem.getId()}">
+    <input type="hidden" th:name="mealId" th:value="*{mealType.getId()}">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Edit Search Preferences</button>
+</form>
+<br/>
+
+<div class="container">
+    <h2>Sorry, we could not match any results for your preferences :( </h2>
+    <h3>Please change your preferences and try again</h3>
+</div>
+</body>
+</html>

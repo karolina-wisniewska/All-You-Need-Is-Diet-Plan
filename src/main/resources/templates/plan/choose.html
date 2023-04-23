@@ -17,25 +17,25 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/user/plan/choose}" method="post" class="form-signin" th:object="${recipeDetails}">
+    <form th:action="@{/user/plan/choose}" method="post" class="form-signin" th:object="${recipeQuery}">
         <h3 class="form-signin-heading">What would you like to eat?</h3>
-        <input type="hidden" th:field="*{id}">
-        <label>Dish Type:
+        <input type="hidden" th:field="*{dietPlanItem}" >
+        <label>Meal Type:
             <div>
-                <select th:field="*{dishType}">
-                    <option th:value="0">no preference
-                    <option th:each="type : ${dishTypes}"
+                <select th:field="*{mealType}">
+                    <option th:value="0">no preference - Cheat Day!
+                    <option th:each="type : ${mealTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">
                 </select>
             </div>
         </label>
         <br/><br/>
-        <label>Meal Type:
+        <label>Dish Type:
             <div>
-                <select th:field="*{mealType}">
+                <select th:field="*{dishType}">
                     <option th:value="0">no preference
-                    <option th:each="type : ${mealTypes}"
+                    <option th:each="type : ${dishTypes}"
                             th:text="${type.name}"
                             th:value="${type.id}">
                 </select>

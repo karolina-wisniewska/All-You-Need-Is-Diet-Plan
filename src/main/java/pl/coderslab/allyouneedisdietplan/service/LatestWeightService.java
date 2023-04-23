@@ -12,6 +12,7 @@ public interface LatestWeightService {
   void save(LatestWeight latestWeight);
   LatestWeight findFirstByUserOrderByIdDesc(User user);
   LatestWeight findById(Long id);
-  void deleteById(Long id);
+  void deleteById(Long id, User user);
+  long countByUser(User user);
 
 }

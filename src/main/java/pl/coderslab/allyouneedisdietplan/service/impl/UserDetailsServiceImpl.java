@@ -1,21 +1,16 @@
 package pl.coderslab.allyouneedisdietplan.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.allyouneedisdietplan.entity.Health;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.repository.HealthRepository;
 import pl.coderslab.allyouneedisdietplan.repository.UserDetailsRepository;
-import pl.coderslab.allyouneedisdietplan.service.HealthService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Service
 @Transactional
@@ -65,7 +60,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public String calculateSuccessDate(UserDetails userDetails) {
     Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
     Double weightDifference = currentWeight - userDetails.getDreamWeight();
-    Long daysToSuccess = Math.round((weightDifference * caloricDeficitPerKg) / caloricDeficit);
+    Long daysToSuccess = Math.abs(Math.round((weightDifference * caloricDeficitPerKg) / caloricDeficit));
     LocalDateTime successDate = LocalDateTime.now().plusDays(daysToSuccess);
     return successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }

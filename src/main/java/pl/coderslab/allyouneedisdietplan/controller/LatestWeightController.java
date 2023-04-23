@@ -54,8 +54,9 @@ public class LatestWeightController {
     return "redirect:/user/weight/history";
   }
   @GetMapping(value = "/user/weight/delete")
-  public String showEditLatestWeightForm(@RequestParam Long id) {
-    latestWeightService.deleteById(id);
+  public String showEditLatestWeightForm(@RequestParam Long id, Principal principal) {
+    User currentUser = userService.findUserByUserName(principal.getName());
+    latestWeightService.deleteById(id, currentUser);
   return "redirect:/user/weight/history";
   }
 

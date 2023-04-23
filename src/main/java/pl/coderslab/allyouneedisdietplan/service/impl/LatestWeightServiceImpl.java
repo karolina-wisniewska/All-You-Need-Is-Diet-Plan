@@ -44,8 +44,15 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   }
 
   @Override
-  public void deleteById(Long id) {
+  public void deleteById(Long id, User user) {
+    if(latestWeightRepository.countByUser(user) > 1){
     latestWeightRepository.deleteById(id);
+    }
+  }
+
+  @Override
+  public long countByUser(User user) {
+    return latestWeightRepository.countByUser(user);
   }
 
 }

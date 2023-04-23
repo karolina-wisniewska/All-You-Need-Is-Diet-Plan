@@ -28,13 +28,9 @@
                     <thead>
                     <tr>
                         <th></th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
+                        <th th:each="dayName : ${dayNames}">
+                            <span th:text="${dayName.name}"></span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>

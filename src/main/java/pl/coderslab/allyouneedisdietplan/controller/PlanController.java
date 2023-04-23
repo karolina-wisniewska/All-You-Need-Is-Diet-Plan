@@ -35,10 +35,10 @@ public class PlanController {
   private final UserDetailsService userDetailsService;
   private final MealTypeService mealTypeService;
   private final RecipeService recipeService;
-  private final DayNameService dayNameService;
   private final DietPlanItemService dietPlanItemService;
   private final CuisineTypeService cuisineTypeService;
   private final DishTypeService dishTypeService;
+  private final DayNameService dayNameService;
 
   @GetMapping(value = "/user/plan/new")
   public String getRecipesForPlan(Model model, Principal principal) {
@@ -49,6 +49,7 @@ public class PlanController {
       return "plan/error";
     }
     model.addAttribute("resultItems", resultItems);
+    model.addAttribute("dayNames", dayNameService.findAll());
     return "plan/show";
   }
 
@@ -57,6 +58,7 @@ public class PlanController {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<List<DietPlanItem>> resultItems = planService.loadDietPlanItemsForPlan(currentUser);
     model.addAttribute("resultItems", resultItems);
+    model.addAttribute("dayNames", dayNameService.findAll());
     return "plan/show";
   }
 

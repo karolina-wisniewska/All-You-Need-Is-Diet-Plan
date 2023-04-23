@@ -5,11 +5,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.DayName;
-import pl.coderslab.allyouneedisdietplan.entity.Diet;
 import pl.coderslab.allyouneedisdietplan.repository.DayNameRepository;
-import pl.coderslab.allyouneedisdietplan.repository.DietRepository;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
-import pl.coderslab.allyouneedisdietplan.service.DietService;
 
 import java.util.List;
 
@@ -22,5 +19,10 @@ public class DayNameServiceImpl implements DayNameService {
   @Override
   public DayName findById(Integer id) {
     return dayNameRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+  }
+
+  @Override
+  public List<DayName> findAll() {
+    return dayNameRepository.findAll();
   }
 }

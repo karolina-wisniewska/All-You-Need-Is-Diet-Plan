@@ -29,7 +29,7 @@ public class WebSecurityConfiguration {
     http.
             authorizeHttpRequests()
             .requestMatchers("/", "/login", "/registration").permitAll()
-            .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**").permitAll()
+            .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
             .requestMatchers("/user/**").hasRole("USER").anyRequest()
             .authenticated().and()
             .formLogin()

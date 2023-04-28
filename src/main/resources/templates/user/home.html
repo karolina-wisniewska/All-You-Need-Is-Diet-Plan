@@ -6,6 +6,7 @@
 <head>
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -58,13 +59,13 @@
                     <li>allergies and health issues:
                         <span th:if="${userDetails.healths.isEmpty()}">none</span>
                         <b th:each="health : ${userDetails.healths}">
-                        <div th:text="${health.name}"></div>
+                            <div th:text="${health.name}"></div>
                         </b>
                     </li>
                     <li>diets:
                         <span th:if="${userDetails.diets.isEmpty()}">none</span>
                         <b th:each="diet : ${userDetails.diets}">
-                        <div th:text="${diet.name}"></div>
+                            <div th:text="${diet.name}"></div>
                         </b>
                     </li>
                 </ul>
@@ -86,7 +87,7 @@
                 <br>
                 <form th:action="@{/user/call}" method="get">
                     Need professional advice? Start video call with our dietician
-                    <button class="btn" name="Submit" type="Submit">Start Video Call
+                    <button id="register" class="btn" name="Submit" type="Submit">Go To Video Call
                     </button>
                 </form>
             </div>

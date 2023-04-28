@@ -21,9 +21,9 @@ html {
 	min-height: 100%;
 }
 
-body {
+/*body {
 	padding-top: 40px;
-}
+}*/
 
 video, #console {
 	display: block;

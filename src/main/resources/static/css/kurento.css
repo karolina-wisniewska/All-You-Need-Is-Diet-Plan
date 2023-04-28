@@ -77,3 +77,12 @@ div.dragged {
 	border-color: blue !important;
 	z-index: 10 !important;
 }
+
+.video-panel {
+	max-width: 1400px;
+	padding: 30px 38px 66px;
+	margin: auto;
+	background-color: #eee;
+	border: 3px dotted rgba(0,0,0,0.1);
+
+}

@@ -4,8 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
 import pl.coderslab.allyouneedisdietplan.repository.RecipeRepository;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -17,8 +20,7 @@ public class RecipeServiceImpl implements RecipeService {
   public Recipe save(Recipe recipe) {
     Recipe foundRecipe = findByExternalLink(recipe.getExternalLink());
     if(foundRecipe == null){
-      recipeRepository.save(recipe);
-      return findByExternalLink(recipe.getExternalLink());
+      return recipeRepository.save(recipe);
     }
     return foundRecipe;
   }
@@ -26,6 +28,13 @@ public class RecipeServiceImpl implements RecipeService {
   @Override
   public Recipe findByExternalLink(String externalLink) {
     return recipeRepository.findByExternalLink(externalLink);
+  }
+  @Override
+  public Recipe createFromResourceListByPosition(int position, List<RecipeResource> recipes) {
+    Recipe recipe = new Recipe();
+    recipe.setLabel(recipes.get(position).getRecipe().getLabel());
+    recipe.setExternalLink(recipes.get(position).getLinks().getSelf().getHref());
+    return recipe;
   }
 }
 

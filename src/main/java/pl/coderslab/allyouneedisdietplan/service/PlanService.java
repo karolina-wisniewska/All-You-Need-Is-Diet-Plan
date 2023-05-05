@@ -14,15 +14,18 @@ public interface PlanService {
 
   void save(Plan plan);
   Plan findByUser(User user);
+
   String getUserUrl(MealType mealType, UserDetails userDetails);
   String getSingleUrl(RecipeQuery recipeQuery, UserDetails userDetails);
+  String getUrlToShowRecipeDetails(String url);
   Long getMealCalories(MealType mealType, UserDetails userDetails);
+
   List<List<DietPlanItem>> getDietPlanItemsForPlan(User user);
   List<List<DietPlanItem>> loadDietPlanItemsForPlan(User user);
-  String getUrlToShowRecipeDetails(String url);
+
   List<RecipeResource> getRecipesPerMealType(MealType mealType, User user);
-  void replaceRecipeInDietPlanItem(List<RecipeResource> recipes, DietPlanItem itemToEdit);
   List<RecipeResource> getRecipeResourcesFromApi(String url);
+  List<RecipeResource> getRecipesForRecipeQuery(RecipeQuery recipeQuery, User user);
 
-
+  void replaceRecipeInDietPlanItem(List<RecipeResource> recipes, DietPlanItem itemToEdit);
 }

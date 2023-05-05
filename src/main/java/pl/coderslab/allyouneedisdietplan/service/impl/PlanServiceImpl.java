@@ -152,6 +152,13 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
+  public List<RecipeResource> getRecipesForRecipeQuery(RecipeQuery recipeQuery, User user) {
+    UserDetails currentUserDetails = userDetailsService.findByUser(user);
+    String url = getSingleUrl(recipeQuery, currentUserDetails);
+    return getRecipeResourcesFromApi(url);
+  }
+
+  @Override
   public String getUserUrl(MealType mealType, UserDetails userDetails) {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     url += "&mealType=" + mealType.getName();

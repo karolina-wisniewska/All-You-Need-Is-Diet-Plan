@@ -9,6 +9,5 @@ import java.util.List;
 public interface DietPlanItemService {
   void save(DietPlanItem dietPlanItem);
   List<DietPlanItem> findByPlanAndMealTypeOrderByIdAsc(Plan plan, MealType mealType);
-
   DietPlanItem findById(Long id);
 }

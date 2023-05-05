@@ -63,51 +63,43 @@ public class PlanServiceImpl implements PlanService {
     Plan plan = findByUser(currentUser);
     if (plan == null) {
       plan = new Plan();
+      plan.setUser(currentUser);
+      save(plan);
     }
-    plan.setUser(currentUser);
-    save(plan);
 
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
     List<MealType> mealTypes = mealTypeService.findAll();
-    List<List<DietPlanItem>> resultItems = new ArrayList<>();
+    List<List<DietPlanItem>> allResultItems = new ArrayList<>();
 
-    for (Integer j = 0; j < mealTypes.size(); j++) {
-      MealType mealType = mealTypes.get(j);
-      String url = getUserUrl(mealType, currentUserDetails);
-      RestTemplate restTemplate = new RestTemplate();
-      RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
-      List<RecipeResource> recipes = response.getHits();
-
-      if (recipes.size() < dayNameService.count()) {
-        return resultItems;
+    for (MealType mealType : mealTypes) {
+      List<RecipeResource> recipeResources = getRecipesPerMealType(mealType, currentUser);
+      if (recipeResources.size() < dayNameService.count()) {
+        return new ArrayList<>();
       }
-      List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
 
+      List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
       List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
-      for (Integer i = 0; i <= 6; i++) {
-        Recipe recipe = new Recipe();
-        recipe.setLabel(recipes.get(i).getRecipe().getLabel());
-        recipe.setExternalLink(recipes.get(i).getLinks().getSelf().getHref());
-        Recipe finalRecipe = recipeService.save(recipe);
+
+      for (int i = 0; i < dayNameService.count(); i++) {
+        Recipe recipe = recipeService.createFromResourceListByPosition(i, recipeResources);
+        recipe = recipeService.save(recipe);
 
         DayName dayName = dayNameService.findById(i + 1);
 
         DietPlanItem dietPlanItem = new DietPlanItem();
         if (!dietPlanItems.isEmpty()) {
-          dietPlanItem = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType).get(i);
+          dietPlanItem = dietPlanItems.get(i);
         }
-
         dietPlanItem.setPlan(plan);
         dietPlanItem.setMealType(mealType);
-        dietPlanItem.setRecipe(finalRecipe);
+        dietPlanItem.setRecipe(recipe);
         dietPlanItem.setDayName(dayName);
         dietPlanItemService.save(dietPlanItem);
 
         resultItemsPerMeal.add(dietPlanItem);
       }
-      resultItems.add(resultItemsPerMeal);
+      allResultItems.add(resultItemsPerMeal);
     }
-    return resultItems;
+    return allResultItems;
   }
 
   @Override
@@ -115,19 +107,55 @@ public class PlanServiceImpl implements PlanService {
     Plan plan = findByUser(currentUser);
 
     List<MealType> mealTypes = mealTypeService.findAll();
-    List<List<DietPlanItem>> resultItems = new ArrayList<>();
+    List<List<DietPlanItem>> allResultItems = new ArrayList<>();
 
-    for (Integer j = 0; j < mealTypes.size(); j++) {
-      List<DietPlanItem> dietPlanItems = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealTypes.get(j));
+    for (MealType mealType : mealTypes) {
+      List<DietPlanItem> dietPlanItemsPerMeal = dietPlanItemService.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
       List<DietPlanItem> resultItemsPerMeal = new ArrayList<>();
 
-      for (Integer i = 0; i < dayNameService.count(); i++) {
-        DietPlanItem dietPlanItem = dietPlanItems.get(i);
+      for (int i = 0; i < dayNameService.count(); i++) {
+        DietPlanItem dietPlanItem = dietPlanItemsPerMeal.get(i);
         resultItemsPerMeal.add(dietPlanItem);
       }
-      resultItems.add(resultItemsPerMeal);
+      allResultItems.add(resultItemsPerMeal);
     }
-    return resultItems;
+    return allResultItems;
+  }
+
+  @Override
+  public String getUrlToShowRecipeDetails(String url) {
+    RestTemplate restTemplate = new RestTemplate();
+    RecipeResource recipeResource = restTemplate.getForObject(url, RecipeResource.class);
+    return recipeResource.getRecipe().getShareAs();
+  }
+
+  @Override
+  public List<RecipeResource> getRecipesPerMealType(MealType mealType, User user) {
+    UserDetails currentUserDetails = userDetailsService.findByUser(user);
+    String url = getUserUrl(mealType, currentUserDetails);
+    return getRecipeResourcesFromApi(url);
+  }
+
+  @Override
+  public void replaceRecipeInDietPlanItem(List<RecipeResource> recipeResources, DietPlanItem itemToEdit) {
+    Recipe recipe = recipeService.createFromResourceListByPosition(0, recipeResources);
+    recipe = recipeService.save(recipe);
+    itemToEdit.setRecipe(recipe);
+    dietPlanItemService.save(itemToEdit);
+  }
+
+  @Override
+  public List<RecipeResource> getRecipeResourcesFromApi(String url) {
+    RestTemplate restTemplate = new RestTemplate();
+    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
+    return response.getHits();
+  }
+
+  @Override
+  public List<RecipeResource> getRecipesForRecipeQuery(RecipeQuery recipeQuery, User user) {
+    UserDetails currentUserDetails = userDetailsService.findByUser(user);
+    String url = getSingleUrl(recipeQuery, currentUserDetails);
+    return getRecipeResourcesFromApi(url);
   }
 
   @Override
@@ -185,8 +213,6 @@ public class PlanServiceImpl implements PlanService {
         url += "&diet=" + diet.getName();
       }
     }
-
     return url;
   }
-
 }

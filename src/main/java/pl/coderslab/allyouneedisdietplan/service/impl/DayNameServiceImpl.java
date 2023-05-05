@@ -20,7 +20,6 @@ public class DayNameServiceImpl implements DayNameService {
   public DayName findById(Integer id) {
     return dayNameRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
-
   @Override
   public List<DayName> findAll() {
     return dayNameRepository.findAll();

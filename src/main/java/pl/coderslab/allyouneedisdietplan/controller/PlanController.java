@@ -6,22 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.Recipe;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceList;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
 import pl.coderslab.allyouneedisdietplan.service.DishTypeService;
 import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
-import pl.coderslab.allyouneedisdietplan.service.RecipeService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -32,9 +26,7 @@ import java.util.List;
 public class PlanController {
   private final UserService userService;
   private final PlanService planService;
-  private final UserDetailsService userDetailsService;
   private final MealTypeService mealTypeService;
-  private final RecipeService recipeService;
   private final DietPlanItemService dietPlanItemService;
   private final CuisineTypeService cuisineTypeService;
   private final DishTypeService dishTypeService;
@@ -64,30 +56,15 @@ public class PlanController {
 
   @PostMapping(value = "/user/plan/showDetails")
   public String getSingleRecipe(@RequestParam String url) {
-    RestTemplate restTemplate = new RestTemplate();
-    RecipeResource recipe = restTemplate.getForObject(url, RecipeResource.class);
-    String redirectUrl = recipe.getRecipe().getShareAs();
-    return "redirect:" + redirectUrl;
+    return "redirect:" + planService.getUrlToShowRecipeDetails(url);
   }
 
   @GetMapping(value = "/user/plan/reload")
   public String reloadSingleRecipe(@RequestParam Long id, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     DietPlanItem itemToEdit = dietPlanItemService.findById(id);
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
-
-    String url = planService.getUserUrl(itemToEdit.getMealType(), currentUserDetails);
-    RestTemplate restTemplate = new RestTemplate();
-    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
-    List<RecipeResource> recipes = response.getHits();
-
-    Recipe recipe = new Recipe();
-    recipe.setLabel(recipes.get(0).getRecipe().getLabel());
-    recipe.setExternalLink(recipes.get(0).getLinks().getSelf().getHref());
-    Recipe finalRecipe = recipeService.save(recipe);
-
-    itemToEdit.setRecipe(finalRecipe);
-    dietPlanItemService.save(itemToEdit);
+    List<RecipeResource> recipeResources = planService.getRecipesPerMealType(itemToEdit.getMealType(), currentUser);
+    planService.replaceRecipeInDietPlanItem(recipeResources, itemToEdit);
     return "redirect:load";
   }
 
@@ -108,24 +85,14 @@ public class PlanController {
   public String processSingleRecipeForm(RecipeQuery recipeQuery, Principal principal, Model model) {
     DietPlanItem itemToEdit = recipeQuery.getDietPlanItem();
     User currentUser = userService.findUserByUserName(principal.getName());
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
-    String url = planService.getSingleUrl(recipeQuery, currentUserDetails);
-    RestTemplate restTemplate = new RestTemplate();
-    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
-    List<RecipeResource> recipes = response.getHits();
+    List<RecipeResource> recipes = planService.getRecipesForRecipeQuery(recipeQuery, currentUser);
+
     if(recipes.isEmpty()){
       model.addAttribute("chooseError", true);
       model.addAttribute("recipeQuery", recipeQuery);
       return "plan/error";
     }
-
-    Recipe recipe = new Recipe();
-    recipe.setLabel(recipes.get(0).getRecipe().getLabel());
-    recipe.setExternalLink(recipes.get(0).getLinks().getSelf().getHref());
-    Recipe finalRecipe = recipeService.save(recipe);
-
-    itemToEdit.setRecipe(finalRecipe);
-    dietPlanItemService.save(itemToEdit);
+    planService.replaceRecipeInDietPlanItem(recipes, itemToEdit);
     return "redirect:load";
   }
 }

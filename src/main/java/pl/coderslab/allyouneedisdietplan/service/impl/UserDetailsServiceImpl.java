@@ -9,7 +9,9 @@ import pl.coderslab.allyouneedisdietplan.repository.UserDetailsRepository;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -53,7 +55,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     } else if (weightDifference == 0) {
       e = 0;
     }
-    double basalMetabolicRate = a + (b * currentWeight) + (c * userDetails.getHeight()) - (d * userDetails.getAge());
+    int userAge = Period.between(userDetails.getDateOfBirth(), LocalDate.now()).getYears();
+    double basalMetabolicRate = a + (b * currentWeight) + (c * userDetails.getHeight()) - (d * userAge);
     return Math.round(basalMetabolicRate * userDetails.getActivityLevel().getValue() + e * calculateCaloricDifference(weightDifference));
   }
 

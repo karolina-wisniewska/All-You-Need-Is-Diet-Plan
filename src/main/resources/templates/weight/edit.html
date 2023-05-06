@@ -29,7 +29,7 @@
             </label>
             <br/><br/>
             <label>Weighting date:
-                <input type="datetime-local" th:value="*{weightingDate}"/><br/>
+                <input type="datetime-local" th:value="${latestWeight.weightingDate}" th:name="weightingDate"/><br/>
                 <label th:if="${#fields.hasErrors('weightingDate')}" th:errors="*{weightingDate}"
                        class="validation-message"></label>
             </label>

@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     int e = -1;
     Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
     Double dreamWeight = userDetails.getDreamWeight();
-    Double weightDifference = currentWeight - dreamWeight;
+    double weightDifference = currentWeight - dreamWeight;
     String userGender = userDetails.getGender().getName();
     if ("male".equals(userGender)) {
       a = 66.5;
@@ -64,15 +64,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public String calculateSuccessDate(UserDetails userDetails) {
     Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
     Double dreamWeight = userDetails.getDreamWeight();
-    Double weightDifference = currentWeight - dreamWeight;
-    Long daysToSuccess = Math.abs(Math.round((weightDifference * CALORIC_DEFICIT_PER_KG) / calculateCaloricDifference(weightDifference)));
+    double weightDifference = currentWeight - dreamWeight;
+    long daysToSuccess = Math.abs(Math.round((weightDifference * CALORIC_DEFICIT_PER_KG) / calculateCaloricDifference(weightDifference)));
     LocalDateTime successDate = LocalDateTime.now().plusDays(daysToSuccess);
     return successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }
 
-  private int calculateCaloricDifference(Double weightDifference){
+  private int calculateCaloricDifference(double weightDifference){
     int caloricDifference = 500;
-    if(Math.abs(weightDifference) >= 10.0){
+    if(Math.abs(weightDifference) >= 15.0){
       caloricDifference = 1000;
     }
     return caloricDifference;

@@ -1,4 +1,4 @@
-insert into roles(name) VALUES ('ROLE_USER');
+insert into roles(name) values ('ROLE_USER'), ('ROLE_ADMIN');
 
 insert into cuisine_types(name) values ('american'), ('asian'), ('british'), ('caribbean'), ('central europe'), ('chinese'), ('eastern europe'), ('french'),('greek'), ('indian'), ('italian'), ('japanese'), ('korean'), ('kosher'), ('mediterranean'), ('mexican'), ('middle eastern'), ('nordic'), ('south american'), ('south east asian'), ('world');
 

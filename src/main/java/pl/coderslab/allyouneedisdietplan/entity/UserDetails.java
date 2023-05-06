@@ -13,13 +13,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.validator.IsAdult;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +42,10 @@ public class UserDetails {
   @NotNull
   private Gender gender;
 
-  @Column(columnDefinition="tinyint unsigned")
-  @Range(min = 18, max = 100, message = "{age.out.of.range.error}")
+  @IsAdult
   @NotNull
-  private Integer age;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private LocalDate dateOfBirth;
 
   @Column(columnDefinition="tinyint unsigned")
   @Range(min = 100, max = 200, message = "{height.out.of.range.error}")

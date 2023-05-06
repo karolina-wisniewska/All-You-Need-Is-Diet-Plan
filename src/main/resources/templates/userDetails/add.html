@@ -28,9 +28,9 @@
                    class="validation-message"></label>
         </label>
         <br/><br/>
-        <label>Age:
-            <input type="number" th:field="*{age}" min="0" max="150" step="1"/><br/>
-            <label th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+        <label>Date of birth:
+            <input type="date" th:field="*{dateOfBirth}"/><br/>
+            <label th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
                    class="validation-message"></label>
         </label>
         <br/><br/>

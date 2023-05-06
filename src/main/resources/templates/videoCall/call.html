@@ -9,7 +9,7 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/kurento.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/plan.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -28,8 +28,12 @@
 </head>
 
 <body>
-<form th:action="@{/user/home}" method="get">
+<form th:if="${!userName.equals('Dietician')}" th:action="@{/user/home}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
+</form>
+<form th:if="${userName.equals('Dietician')}" th:action="@{/logout}" method="get">
+    <button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout
+    </button>
 </form>
 
 <div class="container">
@@ -42,12 +46,12 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-4">
-                    <br /> <br />
+                    <br/> <br/>
                     <label class="control-label" for="name">Name</label>
                     <div class="row">
                         <div class="col-md-6">
                             <input id="name" name="name" class="form-control" type="text" th:value="${userName}"
-                                   onkeydown="if (keyCode === 13) register();" />
+                                   onkeydown="if (keyCode === 13) register();"/>
                         </div>
                         <div class="col-md-6 text-right">
                             <a id="register" href="#" class="btn btn-primary"><span
@@ -61,11 +65,12 @@
                         <div class="col-md-6 text-right">
                             <a id="call" href="#" class="btn btn-success"><span
                                     class="glyphicon glyphicon-play"></span> Call dietician</a> <a id="terminate"
-                                                                                         href="#" class="btn btn-danger"><span
+                                                                                                   href="#"
+                                                                                                   class="btn btn-danger"><span
                                 class="glyphicon glyphicon-stop"></span> Stop</a>
                         </div>
                     </div>
-                    <br /> <label class="control-label" for="console">Console</label><br>
+                    <br/> <label class="control-label" for="console">Console</label><br>
                     <br>
                     <div id="console" class="democonsole">
                         <ul></ul>

@@ -1,37 +1,58 @@
 $(document).ready(
-    function() {
+    function () {
         $.ajax({
-            url : "/get-data",
-            success : function(result) {
-                const date = JSON.parse(result).date;
+            url: "/get-data",
+            success: function (result) {
+                const weightingDate = JSON.parse(result).weightingDate;
                 const weight = JSON.parse(result).weight;
-                drawLineChart(date, weight);
+                const dreamWeight = JSON.parse(result).dreamWeight;
+                drawLineChart(weightingDate, weight, dreamWeight);
             }
         });
     });
-function drawLineChart(date, weight) {
+
+function drawLineChart(weightingDate, weight, dreamWeight) {
     Highcharts.chart('container-bar', {
-        chart : {
-            type : 'line',
-            styledMode : true,
-            width: 500
+        chart: {
+            type: 'line',
+            styledMode: true,
         },
-        title : {
-            text : 'Weight history'
+        title: {
+            text: 'Weight history chart'
         },
-        xAxis : [ {
-            title : {
-                text : 'Date'
+        xAxis: [{
+            title: {
+                text: 'Weighting Date'
             },
-            categories : date
-        } ],
-        yAxis : [ {
-            title : {
-                text : 'Weight'
+            categories: weightingDate
+        }],
+        yAxis: [{
+            title: {
+                text: 'Weight [kg]'
+            },
+            plotLines: [{
+                width: 3,
+                value: dreamWeight,
+                zIndex: 3,
+                label: {
+                    text: 'Dream weight',
+                    style: {
+                        fontWeight: 'bold'
+                    }
+                }
+            }]
+        }],
+        series: [{
+            data: weight,
+            showInLegend: false
+        }],
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true
+                }
             }
-        } ],
-        series : [ {
-            data : weight
-        } ]
+        },
+
     });
 }

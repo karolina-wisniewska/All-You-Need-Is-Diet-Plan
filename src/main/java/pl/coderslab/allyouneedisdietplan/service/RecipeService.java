@@ -1,13 +1,13 @@
 package pl.coderslab.allyouneedisdietplan.service;
 
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
 
 import java.util.List;
 
 public interface RecipeService {
   Recipe save(Recipe recipe);
   Recipe findByExternalLink(String externalLink);
-  Recipe createFromResourceListByPosition(int position, List<RecipeResource>recipeResources);
+  Recipe createFromResourceListByPosition(int position, List<RecipeResourceDto>recipeResources);
 
 }

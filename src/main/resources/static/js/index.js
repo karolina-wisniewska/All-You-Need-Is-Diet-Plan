@@ -164,7 +164,7 @@ function incomingCall(message) {
 			id : 'incomingCallResponse',
 			from : message.from,
 			callResponse : 'reject',
-			message : 'bussy'
+			message : 'busy'
 		};
 		return sendMessage(response);
 	}

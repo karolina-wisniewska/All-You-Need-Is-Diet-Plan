@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
+import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
@@ -63,14 +63,14 @@ public class PlanController {
   public String reloadSingleRecipe(@RequestParam Long id, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     DietPlanItem itemToEdit = dietPlanItemService.findById(id);
-    List<RecipeResource> recipeResources = planService.getRecipesPerMealType(itemToEdit.getMealType(), currentUser);
+    List<RecipeResourceDto> recipeResources = planService.getRecipesPerMealType(itemToEdit.getMealType(), currentUser);
     planService.replaceRecipeInDietPlanItem(recipeResources, itemToEdit);
     return "redirect:load";
   }
 
   @GetMapping(value = "/user/plan/choose")
   public String showSingleRecipeForm(Model model, @RequestParam Long id, @RequestParam Integer mealId) {
-    RecipeQuery recipeQuery = new RecipeQuery();
+    RecipeQueryDto recipeQuery = new RecipeQueryDto();
     recipeQuery.setDietPlanItem(dietPlanItemService.findById(id));
     recipeQuery.setMealType(mealTypeService.findById(mealId));
 
@@ -82,10 +82,10 @@ public class PlanController {
   }
 
   @PostMapping(value = "/user/plan/choose")
-  public String processSingleRecipeForm(RecipeQuery recipeQuery, Principal principal, Model model) {
+  public String processSingleRecipeForm(RecipeQueryDto recipeQuery, Principal principal, Model model) {
     DietPlanItem itemToEdit = recipeQuery.getDietPlanItem();
     User currentUser = userService.findUserByUserName(principal.getName());
-    List<RecipeResource> recipes = planService.getRecipesForRecipeQuery(recipeQuery, currentUser);
+    List<RecipeResourceDto> recipes = planService.getRecipesForRecipeQuery(recipeQuery, currentUser);
 
     if(recipes.isEmpty()){
       model.addAttribute("chooseError", true);

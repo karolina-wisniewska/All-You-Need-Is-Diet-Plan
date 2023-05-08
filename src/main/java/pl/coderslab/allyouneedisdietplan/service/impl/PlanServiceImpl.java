@@ -13,9 +13,9 @@ import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.model.RecipeQuery;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResource;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceList;
+import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceListDto;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
 import pl.coderslab.allyouneedisdietplan.service.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
@@ -71,7 +71,7 @@ public class PlanServiceImpl implements PlanService {
     List<List<DietPlanItem>> allResultItems = new ArrayList<>();
 
     for (MealType mealType : mealTypes) {
-      List<RecipeResource> recipeResources = getRecipesPerMealType(mealType, currentUser);
+      List<RecipeResourceDto> recipeResources = getRecipesPerMealType(mealType, currentUser);
       if (recipeResources.size() < dayNameService.count()) {
         return new ArrayList<>();
       }
@@ -125,19 +125,19 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public String getUrlToShowRecipeDetails(String url) {
     RestTemplate restTemplate = new RestTemplate();
-    RecipeResource recipeResource = restTemplate.getForObject(url, RecipeResource.class);
+    RecipeResourceDto recipeResource = restTemplate.getForObject(url, RecipeResourceDto.class);
     return recipeResource.getRecipe().getShareAs();
   }
 
   @Override
-  public List<RecipeResource> getRecipesPerMealType(MealType mealType, User user) {
+  public List<RecipeResourceDto> getRecipesPerMealType(MealType mealType, User user) {
     UserDetails currentUserDetails = userDetailsService.findByUser(user);
     String url = getUserUrl(mealType, currentUserDetails);
     return getRecipeResourcesFromApi(url);
   }
 
   @Override
-  public void replaceRecipeInDietPlanItem(List<RecipeResource> recipeResources, DietPlanItem itemToEdit) {
+  public void replaceRecipeInDietPlanItem(List<RecipeResourceDto> recipeResources, DietPlanItem itemToEdit) {
     Recipe recipe = recipeService.createFromResourceListByPosition(0, recipeResources);
     recipe = recipeService.save(recipe);
     itemToEdit.setRecipe(recipe);
@@ -145,14 +145,14 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
-  public List<RecipeResource> getRecipeResourcesFromApi(String url) {
+  public List<RecipeResourceDto> getRecipeResourcesFromApi(String url) {
     RestTemplate restTemplate = new RestTemplate();
-    RecipeResourceList response = restTemplate.getForObject(url, RecipeResourceList.class);
+    RecipeResourceListDto response = restTemplate.getForObject(url, RecipeResourceListDto.class);
     return response.getHits();
   }
 
   @Override
-  public List<RecipeResource> getRecipesForRecipeQuery(RecipeQuery recipeQuery, User user) {
+  public List<RecipeResourceDto> getRecipesForRecipeQuery(RecipeQueryDto recipeQuery, User user) {
     UserDetails currentUserDetails = userDetailsService.findByUser(user);
     String url = getSingleUrl(recipeQuery, currentUserDetails);
     return getRecipeResourcesFromApi(url);
@@ -184,7 +184,7 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
-  public String getSingleUrl(RecipeQuery recipeQuery, UserDetails userDetails) {
+  public String getSingleUrl(RecipeQueryDto recipeQuery, UserDetails userDetails) {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     if (recipeQuery.getMealType() != null) {
       url += "&mealType=" + recipeQuery.getMealType().getName();

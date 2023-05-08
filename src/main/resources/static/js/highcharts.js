@@ -46,13 +46,5 @@ function drawLineChart(weightingDate, weight, dreamWeight) {
             data: weight,
             showInLegend: false
         }],
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true
-                }
-            }
-        },
-
     });
 }

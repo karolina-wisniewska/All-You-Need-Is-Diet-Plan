@@ -41,52 +41,69 @@
             <div th:if="${userDetails != null}" class="panel-body">
                 <div>Suggested daily intake of calories: <b th:text="${userDetails.dailyCalories}"></b> kcal</div>
                 <br/>
-                <div>Your latest weight: <b th:text="${latestWeight.weight}"></b> kg</div>
-                <div>Your dream weight: <b th:text="${userDetails.dreamWeight}"></b> kg</div>
-                <div>Your activity level: <b th:text="${userDetails.activityLevel.name}"></b></div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div>Your latest weight: <b th:text="${latestWeight.weight}"></b> kg</div>
+                        <div>Your dream weight: <b th:text="${userDetails.dreamWeight}"></b> kg</div>
+                        <div>Your activity level: <b th:text="${userDetails.activityLevel.name}"></b></div>
+                    </div>
+                    <div class="col-md-5">
+                        <form th:action="@{/user/weight/history}" method="get">
+                            <button class="btn" name="Submit" type="Submit">Show Weight History
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <br/>
                 <div>You will achieve your dream weight on <b th:text="${successDate}"></b></div>
                 <br/>
-                <form th:action="@{/user/weight/history}" method="get">
-                    <button class="btn" name="Submit" type="Submit">Show Weight History
-                    </button>
-                </form>
+                <div class="row">
+                    <div class="col-md-5">
+                        <ul>Your preferences:
+                            <li>cuisine type: <span th:if="${userDetails.cuisineType == null}">none</span>
+                                <b th:if="${userDetails.cuisineType != null}"
+                                   th:text="${userDetails.cuisineType.name}"/>
+                            </li>
+                            <li>allergies and health issues:
+                                <span th:if="${userDetails.healths.isEmpty()}">none</span>
+                                <b th:each="health : ${userDetails.healths}">
+                                    <div th:text="${health.name}"></div>
+                                </b>
+                            </li>
+                            <li>diets:
+                                <span th:if="${userDetails.diets.isEmpty()}">none</span>
+                                <b th:each="diet : ${userDetails.diets}">
+                                    <div th:text="${diet.name}"></div>
+                                </b>
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <div class="col-md-5">
+                        <form th:action="@{/user/details/edit}" method="get">
+                            <button class="btn" name="Submit" type="Submit">Edit User Details
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <br/>
-                <ul>Your preferences:
-                    <li>cuisine type: <span th:if="${userDetails.cuisineType == null}">none</span>
-                        <b th:if="${userDetails.cuisineType != null}" th:text="${userDetails.cuisineType.name}"/>
-                    </li>
-                    <li>allergies and health issues:
-                        <span th:if="${userDetails.healths.isEmpty()}">none</span>
-                        <b th:each="health : ${userDetails.healths}">
-                            <div th:text="${health.name}"></div>
-                        </b>
-                    </li>
-                    <li>diets:
-                        <span th:if="${userDetails.diets.isEmpty()}">none</span>
-                        <b th:each="diet : ${userDetails.diets}">
-                            <div th:text="${diet.name}"></div>
-                        </b>
-                    </li>
-                </ul>
-                <br/>
-                <form th:action="@{/user/details/edit}" method="get">
-                    <button class="btn" name="Submit" type="Submit">Edit User Details
-                    </button>
-                </form>
-                <br/>
-                <form th:if="${userPlan != null}" th:action="@{/user/plan/load}" method="get">
-                    <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
-                    </button>
-                </form>
-                <br>
-                <form th:action="@{/user/plan/new}" method="get">
-                    <button class="btn" name="Submit" type="Submit">New Diet Plan
-                    </button>
-                </form>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-5">
+                            <form th:action="@{/user/plan/new}" method="get">
+                                <button class="btn btn-primary" name="Submit" type="Submit">New Diet Plan
+                                </button>
+                            </form>
+                        </div>
+                        <form th:if="${userPlan != null}" th:action="@{/user/plan/load}" method="get">
+                            <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <br>
                 <form th:action="@{/user/call}" method="get">
-                    Need professional advice? Start video call with our dietician
+                    Need professional advice? Start video call with our Dietitian
                     <button id="register" class="btn" name="Submit" type="Submit">Go To Video Call
                     </button>
                 </form>

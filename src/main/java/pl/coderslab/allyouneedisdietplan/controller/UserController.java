@@ -21,18 +21,18 @@ public class UserController {
   private final UserService userService;
   private final LatestWeightService latestWeightService;
   private final PlanService planService;
-  private final String DIETICIAN_USERNAME = "Dietician";
+  private final String DIETITIAN_USERNAME = "Dietitian";
 
   @GetMapping(value = "/user/home")
   public String home(Model model, Principal principal) {
     String userName = principal.getName();
     User currentUser = userService.findUserByUserName(userName);
-
-    if(DIETICIAN_USERNAME.equals(userName)){
+    if(DIETITIAN_USERNAME.equals(userName)){
       return "redirect:/user/call";
     }
 
     UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+
     model.addAttribute("userDetails", currentUserDetails);
 
     if (currentUser.getUserDetails() != null) {

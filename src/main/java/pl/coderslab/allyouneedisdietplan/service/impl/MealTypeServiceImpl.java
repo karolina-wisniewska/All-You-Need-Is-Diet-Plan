@@ -19,7 +19,6 @@ public class MealTypeServiceImpl implements MealTypeService {
   public List<MealType> findAll(){
     return mealTypeRepository.findAll();
   }
-
   @Override
   public MealType findById(Integer id) {
     return mealTypeRepository.findById(id).orElseThrow(EntityNotFoundException::new);

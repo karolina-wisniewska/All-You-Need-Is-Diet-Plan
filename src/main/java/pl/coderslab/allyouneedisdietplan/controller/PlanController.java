@@ -16,6 +16,7 @@ import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
 import pl.coderslab.allyouneedisdietplan.service.DishTypeService;
 import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
+import pl.coderslab.allyouneedisdietplan.service.ProviderService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -31,6 +32,7 @@ public class PlanController {
   private final CuisineTypeService cuisineTypeService;
   private final DishTypeService dishTypeService;
   private final DayNameService dayNameService;
+  private final ProviderService providerService;
 
   @GetMapping(value = "/user/plan/new")
   public String getRecipesForPlan(Model model, Principal principal) {
@@ -56,7 +58,7 @@ public class PlanController {
 
   @PostMapping(value = "/user/plan/showDetails")
   public String getSingleRecipe(@RequestParam String url) {
-    return "redirect:" + planService.getUrlToShowRecipeDetails(url);
+    return "redirect:" + providerService.getUrlToShowRecipeDetails(url);
   }
 
   @GetMapping(value = "/user/plan/reload")

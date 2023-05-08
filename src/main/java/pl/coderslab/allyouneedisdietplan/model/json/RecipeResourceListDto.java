@@ -8,9 +8,9 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class RecipeResourceList {
-  private List<RecipeResource> hits;
-  public  RecipeResourceList(){
+public class RecipeResourceListDto {
+  private List<RecipeResourceDto> hits;
+  public RecipeResourceListDto(){
     hits = new ArrayList<>();
 
   }

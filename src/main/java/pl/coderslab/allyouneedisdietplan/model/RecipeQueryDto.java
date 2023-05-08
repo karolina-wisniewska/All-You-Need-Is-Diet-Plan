@@ -7,7 +7,7 @@ import pl.coderslab.allyouneedisdietplan.entity.DishType;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
 
 @Data
-public class RecipeQuery {
+public class RecipeQueryDto {
 
   private DietPlanItem dietPlanItem;
   private MealType mealType;

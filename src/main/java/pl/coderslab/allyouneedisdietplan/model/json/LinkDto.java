@@ -5,8 +5,6 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Recipe {
-  private String label;
-  private String shareAs;
-
+public class LinkDto {
+  private SelfDto self;
 }

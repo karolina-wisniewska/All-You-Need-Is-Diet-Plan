@@ -5,8 +5,8 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Self {
-  private String title;
-  private String href;
+public class RecipeDto {
+  private String label;
+  private String shareAs;
 
 }

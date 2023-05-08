@@ -6,11 +6,11 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class RecipeResource {
+public class RecipeResourceDto {
 
-  private Recipe recipe;
+  private RecipeDto recipe;
 
   @JsonProperty("_links")
-  private Link links;
+  private LinkDto links;
 
 }

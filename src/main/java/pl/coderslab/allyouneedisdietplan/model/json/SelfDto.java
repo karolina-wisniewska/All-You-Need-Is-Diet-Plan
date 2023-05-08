@@ -5,7 +5,8 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Link {
-  private Self self;
+public class SelfDto {
+  private String title;
+  private String href;
 
 }

@@ -23,4 +23,10 @@ public class MealTypeServiceImpl implements MealTypeService {
   public MealType findById(Integer id) {
     return mealTypeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
+
+  @Override
+  public long count() {
+    return mealTypeRepository.count();
+  }
+
 }

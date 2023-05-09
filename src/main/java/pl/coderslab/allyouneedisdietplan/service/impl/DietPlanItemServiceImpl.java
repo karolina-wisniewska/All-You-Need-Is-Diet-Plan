@@ -17,19 +17,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DietPlanItemServiceImpl implements DietPlanItemService {
   private final DietPlanItemRepository dietPlanItemRepository;
-
   @Override
   public void save(DietPlanItem dietPlanItem) {
     dietPlanItemRepository.save(dietPlanItem);
   }
-
   @Override
   public List<DietPlanItem> findByPlanAndMealTypeOrderByIdAsc(Plan plan, MealType mealType) {
     return dietPlanItemRepository.findByPlanAndMealTypeOrderByIdAsc(plan, mealType);
   }
-
   @Override
   public DietPlanItem findById(Long id) {
     return dietPlanItemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
+  @Override
+  public int countByPlan(Plan plan) {
+    return dietPlanItemRepository.countByPlan(plan);
+  }
+
 }

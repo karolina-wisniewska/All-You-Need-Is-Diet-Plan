@@ -47,11 +47,6 @@ public class PlanServiceImpl implements PlanService {
   }
 
   @Override
-  public Long getMealCalories(MealType mealType, UserDetails userDetails) {
-    return Math.round(userDetails.getDailyCalories() * mealType.getFraction());
-  }
-
-  @Override
   public List<List<DietPlanItem>> getDietPlanItemsForPlan(User currentUser) {
     Plan plan = findByUser(currentUser);
     if (plan == null) {
@@ -129,6 +124,12 @@ public class PlanServiceImpl implements PlanService {
     itemToEdit.setRecipe(recipe);
     dietPlanItemService.save(itemToEdit);
   }
+
+  @Override
+  public boolean isPlanComplete(Plan plan) {
+    return dietPlanItemService.countByPlan(plan) == (dayNameService.count() * mealTypeService.count());
+  }
+
   @Override
   public List<RecipeResourceDto> getRecipesForRecipeQuery(RecipeQueryDto recipeQuery, User user) {
     UserDetails currentUserDetails = userDetailsService.findByUser(user);

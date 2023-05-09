@@ -7,4 +7,5 @@ import java.util.List;
 public interface MealTypeService {
   List<MealType> findAll();
   MealType findById(Integer id);
+  long count();
 }

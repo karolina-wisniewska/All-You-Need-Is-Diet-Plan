@@ -11,7 +11,6 @@ import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceListDto;
-import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.ProviderService;
 
 import java.util.List;
@@ -21,12 +20,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProviderServiceImpl implements ProviderService {
 
-  private final PlanService planService;
   private final String API_URL_PART = "https://api.edamam.com/api/recipes/v2?type=public";
   private final String APP_KEY_PART = "&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
   private final String RANDOM_PART = "&random=true";
   private final String RESULT_FIELDS_PART = "&field=label&field=shareAs&field=externalId";
-
 
   @Override
   public String getUrlToShowRecipeDetails(String url) {
@@ -61,7 +58,7 @@ public class ProviderServiceImpl implements ProviderService {
         url += "&diet=" + diet.getName();
       }
     }
-    Long calories = planService.getMealCalories(mealType, userDetails);
+    Long calories = getMealCalories(mealType, userDetails);
     double precision = 0.05;
     url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
     return url;
@@ -72,7 +69,7 @@ public class ProviderServiceImpl implements ProviderService {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     if (recipeQuery.getMealType() != null) {
       url += "&mealType=" + recipeQuery.getMealType().getName();
-      Long calories = planService.getMealCalories(recipeQuery.getMealType(), userDetails);
+      Long calories = getMealCalories(recipeQuery.getMealType(), userDetails);
       double precision = 0.05;
       url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
     }
@@ -98,5 +95,9 @@ public class ProviderServiceImpl implements ProviderService {
       }
     }
     return url;
+  }
+
+  private Long getMealCalories(MealType mealType, UserDetails userDetails) {
+    return Math.round(userDetails.getDailyCalories() * mealType.getFraction());
   }
 }

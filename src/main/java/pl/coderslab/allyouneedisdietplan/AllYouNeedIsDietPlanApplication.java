@@ -1,6 +1,7 @@
 package pl.coderslab.allyouneedisdietplan;
 
 import org.kurento.client.KurentoClient;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,10 @@ import pl.coderslab.allyouneedisdietplan.one2onecall.UserRegistry;
 @EnableWebSocket
 public class AllYouNeedIsDietPlanApplication implements WebSocketConfigurer {
 
+  @Bean
+  public ModelMapper modelMapper() {
+    return new ModelMapper();
+  }
   @Bean
   public CallHandler callHandler() {
     return new CallHandler();

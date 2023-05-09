@@ -1,12 +1,15 @@
 package pl.coderslab.allyouneedisdietplan.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.model.LatestWeightDto;
+import pl.coderslab.allyouneedisdietplan.model.UserDetailsDto;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
@@ -21,6 +24,7 @@ public class UserController {
   private final UserService userService;
   private final LatestWeightService latestWeightService;
   private final PlanService planService;
+  private final ModelMapper modelMapper;
   private final String DIETITIAN_USERNAME = "Dietitian";
 
   @GetMapping(value = "/user/home")
@@ -31,17 +35,22 @@ public class UserController {
       return "redirect:/user/call";
     }
 
-    UserDetails currentUserDetails = userDetailsService.findByUser(currentUser);
+    UserDetails userDetails = userDetailsService.findByUser(currentUser);
+      UserDetailsDto userDetailsDto = null;
 
-    model.addAttribute("userDetails", currentUserDetails);
+    if (userDetails != null) {
+      userDetailsDto = modelMapper.map(userDetails, UserDetailsDto.class);
+      userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
 
-    if (currentUser.getUserDetails() != null) {
-      currentUserDetails.setDailyCalories(userDetailsService.calculateDailyCalories(currentUserDetails));
       LatestWeight latestWeight = latestWeightService.findFirstByUserOrderByIdDesc(currentUser);
-      model.addAttribute("latestWeight", latestWeight);
+      LatestWeightDto latestWeightDto = modelMapper.map(latestWeight, LatestWeightDto.class);
+      model.addAttribute("latestWeight", latestWeightDto);
+
       model.addAttribute("successDate", userDetailsService.calculateSuccessDate(currentUser.getUserDetails()));
-      model.addAttribute("userPlan", planService.findByUser(currentUser));
+
+      model.addAttribute("isPlanComplete", planService.isPlanComplete(planService.findByUser(currentUser)));
     }
+    model.addAttribute("userDetails", userDetailsDto);
     return "user/home";
   }
 }

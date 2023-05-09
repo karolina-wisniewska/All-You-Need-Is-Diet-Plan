@@ -90,6 +90,7 @@ public class PlanController {
     List<RecipeResourceDto> recipes = planService.getRecipesForRecipeQuery(recipeQuery, currentUser);
 
     if(recipes.isEmpty()){
+      recipeQuery.setMealType(itemToEdit.getMealType());
       model.addAttribute("chooseError", true);
       model.addAttribute("recipeQuery", recipeQuery);
       return "plan/error";

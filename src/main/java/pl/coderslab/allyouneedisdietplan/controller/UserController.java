@@ -47,7 +47,6 @@ public class UserController {
       model.addAttribute("latestWeight", latestWeightDto);
 
       model.addAttribute("successDate", userDetailsService.calculateSuccessDate(currentUser.getUserDetails()));
-
       model.addAttribute("isPlanComplete", planService.isPlanComplete(planService.findByUser(currentUser)));
     }
     model.addAttribute("userDetails", userDetailsDto);

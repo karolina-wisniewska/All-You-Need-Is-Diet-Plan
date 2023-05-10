@@ -1,13 +1,23 @@
 package pl.coderslab.allyouneedisdietplan.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.DayName;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
+import pl.coderslab.allyouneedisdietplan.entity.DishType;
+import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.model.CuisineTypeDto;
+import pl.coderslab.allyouneedisdietplan.model.DayNameDto;
+import pl.coderslab.allyouneedisdietplan.model.DietPlanItemDto;
+import pl.coderslab.allyouneedisdietplan.model.DishTypeDto;
+import pl.coderslab.allyouneedisdietplan.model.MealTypeDto;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
@@ -21,6 +31,7 @@ import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -33,17 +44,29 @@ public class PlanController {
   private final DishTypeService dishTypeService;
   private final DayNameService dayNameService;
   private final ProviderService providerService;
+  private final ModelMapper modelMapper;
 
   @GetMapping(value = "/user/plan/new")
   public String getRecipesForPlan(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<List<DietPlanItem>> resultItems = planService.getDietPlanItemsForPlan(currentUser);
-    if(resultItems.isEmpty()){
+    if (resultItems.isEmpty()) {
       model.addAttribute("detailsError", true);
       return "plan/error";
     }
-    model.addAttribute("resultItems", resultItems);
-    model.addAttribute("dayNames", dayNameService.findAll());
+    List<List<DietPlanItemDto>> resultItemsDtos = resultItems.stream()
+            .map(innerList -> innerList.stream()
+                    .map(resultItem ->
+                            modelMapper.map(resultItem, DietPlanItemDto.class))
+                    .collect(Collectors.toList()))
+            .collect(Collectors.toList());
+    model.addAttribute("resultItems", resultItemsDtos);
+
+    List<DayName> dayNames = dayNameService.findAll();
+    List<DayNameDto> dayNameDtos = dayNames.stream()
+                    .map(dayName -> modelMapper.map(dayName, DayNameDto.class))
+            .collect(Collectors.toList());
+    model.addAttribute("dayNames", dayNameDtos);
     return "plan/show";
   }
 
@@ -51,8 +74,19 @@ public class PlanController {
   public String loadPlan(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<List<DietPlanItem>> resultItems = planService.loadDietPlanItemsForPlan(currentUser);
-    model.addAttribute("resultItems", resultItems);
-    model.addAttribute("dayNames", dayNameService.findAll());
+    List<List<DietPlanItemDto>> resultItemsDtos = resultItems.stream()
+            .map(innerList -> innerList.stream()
+                    .map(resultItem ->
+                            modelMapper.map(resultItem, DietPlanItemDto.class))
+                    .collect(Collectors.toList()))
+            .collect(Collectors.toList());
+    model.addAttribute("resultItems", resultItemsDtos);
+
+    List<DayName> dayNames = dayNameService.findAll();
+    List<DayNameDto> dayNameDtos = dayNames.stream()
+            .map(dayName -> modelMapper.map(dayName, DayNameDto.class))
+            .collect(Collectors.toList());
+    model.addAttribute("dayNames", dayNameDtos);
     return "plan/show";
   }
 
@@ -72,27 +106,41 @@ public class PlanController {
 
   @GetMapping(value = "/user/plan/choose")
   public String showSingleRecipeForm(Model model, @RequestParam Long id, @RequestParam Integer mealId) {
-    RecipeQueryDto recipeQuery = new RecipeQueryDto();
-    recipeQuery.setDietPlanItem(dietPlanItemService.findById(id));
-    recipeQuery.setMealType(mealTypeService.findById(mealId));
+    RecipeQueryDto recipeQueryDto = new RecipeQueryDto();
+    recipeQueryDto.setDietPlanItem(dietPlanItemService.findById(id));
+    recipeQueryDto.setMealType(mealTypeService.findById(mealId));
+    model.addAttribute("recipeQuery", recipeQueryDto);
 
-    model.addAttribute("recipeQuery", recipeQuery);
-    model.addAttribute("cuisineTypes", cuisineTypeService.findAll());
-    model.addAttribute("dishTypes", dishTypeService.findAll());
-    model.addAttribute("mealTypes", mealTypeService.findAll());
+    List<CuisineType> cuisineTypes = cuisineTypeService.findAll();
+    List<CuisineTypeDto> cuisineTypeDtos = cuisineTypes.stream()
+                    .map(cuisineType -> modelMapper.map(cuisineType, CuisineTypeDto.class))
+                            .collect(Collectors.toList());
+    model.addAttribute("cuisineTypes", cuisineTypeDtos);
+
+    List<DishType> dishTypes = dishTypeService.findAll();
+    List<DishTypeDto> dishTypeDtos = dishTypes.stream()
+                    .map(dishType -> modelMapper.map(dishType, DishTypeDto.class))
+                            .collect(Collectors.toList());
+    model.addAttribute("dishTypes", dishTypeDtos);
+
+    List<MealType> mealTypes = mealTypeService.findAll();
+    List<MealTypeDto> mealTypeDtos = mealTypes.stream()
+                    .map(mealType -> modelMapper.map(mealType, MealTypeDto.class))
+                            .collect(Collectors.toList());
+    model.addAttribute("mealTypes", mealTypeDtos);
     return "plan/choose";
   }
 
   @PostMapping(value = "/user/plan/choose")
-  public String processSingleRecipeForm(RecipeQueryDto recipeQuery, Principal principal, Model model) {
-    DietPlanItem itemToEdit = recipeQuery.getDietPlanItem();
+  public String processSingleRecipeForm(RecipeQueryDto recipeQueryDto, Principal principal, Model model) {
+    DietPlanItem itemToEdit = recipeQueryDto.getDietPlanItem();
     User currentUser = userService.findUserByUserName(principal.getName());
-    List<RecipeResourceDto> recipes = planService.getRecipesForRecipeQuery(recipeQuery, currentUser);
+    List<RecipeResourceDto> recipes = planService.getRecipesForRecipeQuery(recipeQueryDto, currentUser);
 
-    if(recipes.isEmpty()){
-      recipeQuery.setMealType(itemToEdit.getMealType());
+    if (recipes.isEmpty()) {
+      recipeQueryDto.setMealType(itemToEdit.getMealType());
       model.addAttribute("chooseError", true);
-      model.addAttribute("recipeQuery", recipeQuery);
+      model.addAttribute("recipeQuery", recipeQueryDto);
       return "plan/error";
     }
     planService.replaceRecipeInDietPlanItem(recipes, itemToEdit);

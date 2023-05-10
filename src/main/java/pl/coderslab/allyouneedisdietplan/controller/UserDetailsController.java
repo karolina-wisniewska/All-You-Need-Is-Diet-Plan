@@ -53,11 +53,11 @@ public class UserDetailsController {
 
   @GetMapping(value = "/user/details/add")
   public String showAddUserDetailsForm(Model model) {
-    model.addAttribute("userDetails", new UserDetailsDto());
+    model.addAttribute("userDetailsDto", new UserDetailsDto());
 
     LatestWeightDto latestWeightDto = new LatestWeightDto();
     latestWeightDto.setWeightingDate(LocalDateTime.now());
-    model.addAttribute("latestWeight", latestWeightDto);
+    model.addAttribute("latestWeightDto", latestWeightDto);
     return "userDetails/add";
   }
   @PostMapping(value = "/user/details/add")
@@ -83,7 +83,7 @@ public class UserDetailsController {
     User currentUser = userService.findUserByUserName(principal.getName());
     UserDetails userDetails = userDetailsService.findByUser(currentUser);
     UserDetailsDto userDetailsDto = modelMapper.map(userDetails, UserDetailsDto.class);
-    model.addAttribute("userDetails", userDetailsDto);
+    model.addAttribute("userDetailsDto", userDetailsDto);
     return "userDetails/edit";
   }
 
@@ -97,35 +97,35 @@ public class UserDetailsController {
     userDetailsService.save(userDetails);
     return "redirect:/user/home";
   }
-  @ModelAttribute("genders")
+  @ModelAttribute("gendersDto")
   List<GenderDto> genders() {
     List<Gender> genders = genderService.findAll();
     return genders.stream()
             .map(gender -> modelMapper.map(gender, GenderDto.class))
             .collect(Collectors.toList());
   }
-  @ModelAttribute("activityLevels")
+  @ModelAttribute("activityLevelsDto")
   List<ActivityLevelDto> activityLevels() {
     List<ActivityLevel> activityLevels = activityLevelService.findAll();
     return activityLevels.stream()
             .map(activityLevel -> modelMapper.map(activityLevel, ActivityLevelDto.class))
             .collect(Collectors.toList());
   }
-  @ModelAttribute("cuisineTypes")
+  @ModelAttribute("cuisineTypesDto")
   List<CuisineTypeDto> cuisineTypes() {
     List<CuisineType> cuisineTypes = cuisineTypeService.findAll();
     return cuisineTypes.stream()
             .map(cuisineType -> modelMapper.map(cuisineType, CuisineTypeDto.class))
             .collect(Collectors.toList());
   }
-  @ModelAttribute("healths")
+  @ModelAttribute("healthsDto")
   List<HealthDto> healths() {
     List<Health> healths = healthService.findAll();
     return healths.stream()
             .map(health -> modelMapper.map(health, HealthDto.class))
             .collect(Collectors.toList());
   }
-  @ModelAttribute("diets")
+  @ModelAttribute("dietsDto")
   List<DietDto> diets() {
     List<Diet> diets = dietService.findAll();
     return diets.stream()

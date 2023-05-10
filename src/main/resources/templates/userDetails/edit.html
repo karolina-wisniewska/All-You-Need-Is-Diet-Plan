@@ -17,13 +17,13 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/user/details/edit}" method="post" class="form-signin" th:object="${userDetails}">
+    <form th:action="@{/user/details/edit}" method="post" class="form-signin" th:object="${userDetailsDto}">
         <h3 class="form-signin-heading">Edit User Details</h3>
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{user}">
         <input type="hidden" th:field="*{dailyCalories}">
         <label>Gender:
-            <div th:each="gender: ${genders}">
+            <div th:each="gender: ${gendersDto}">
                 <input type="radio" th:field="*{gender}" th:value="${gender.id}">
                 <label th:text="${gender.name}"></label>
             </div>
@@ -32,7 +32,7 @@
         </label>
         <br/><br/>
         <label>Date of birth:
-            <input type="date" th:value="${userDetails.dateOfBirth}" th:name="dateOfBirth"/><br/>
+            <input type="date" th:value="${userDetailsDto.dateOfBirth}" th:name="dateOfBirth"/><br/>
             <label th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
             class="validation-message"></label>
         </label>
@@ -52,7 +52,7 @@
         <label>Activity Level:
             <div>
                 <select th:field="*{activityLevel}">
-                    <option th:each="level : ${activityLevels}"
+                    <option th:each="level : ${activityLevelsDto}"
                             th:text="${level.name + ' - ' + level.description}"
                             th:value="${level.id}">
                 </select>
@@ -63,7 +63,7 @@
             <div>
                 <select th:field="*{cuisineType}">
                     <option th:value="0">no preference
-                    <option th:each="type : ${cuisineTypes}"
+                    <option th:each="type : ${cuisineTypesDto}"
                             th:text="${type.name}"
                             th:value="${type.id}">
                 </select>
@@ -73,7 +73,7 @@
         <label>Health and allergies (multiple choice):
             <div>
                 <select th:field="*{healths}" multiple="multiple" size="10">
-                    <option th:each="health : ${healths}"
+                    <option th:each="health : ${healthsDto}"
                             th:text="${health.name}"
                             th:value="${health.id}">
                 </select>
@@ -83,7 +83,7 @@
         <label>Diets (multiple choice):
             <div>
                 <select th:field="*{diets}" multiple="multiple" size="4">
-                    <option th:each="diet : ${diets}"
+                    <option th:each="diet : ${dietsDto}"
                             th:text="${diet.name}"
                             th:value="${diet.id}">
                 </select>

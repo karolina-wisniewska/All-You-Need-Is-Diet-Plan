@@ -6,18 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.service.HighChartService;
+import pl.coderslab.allyouneedisdietplan.service.HighchartService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
-public class HighChartController {
-
+public class HighchartController {
   private final UserService userService;
-  private final HighChartService highChartService;
-
+  private final HighchartService highChartService;
   @GetMapping(value = "/get-data")
   @ResponseBody
   public String getDataFromDB(Principal principal) {

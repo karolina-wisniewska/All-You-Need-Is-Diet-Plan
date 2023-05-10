@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.service.HighChartService;
+import pl.coderslab.allyouneedisdietplan.service.HighchartService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class HighChartServiceImpl implements HighChartService {
+public class HighchartServiceImpl implements HighchartService {
 
   private final LatestWeightService latestWeightService;
   private final UserDetailsService userDetailsService;

@@ -42,7 +42,7 @@ public class UserController {
       userDetailsDto = modelMapper.map(userDetails, UserDetailsDto.class);
       userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
 
-      LatestWeight latestWeight = latestWeightService.findFirstByUserOrderByIdDesc(currentUser);
+      LatestWeight latestWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(currentUser);
       LatestWeightDto latestWeightDto = modelMapper.map(latestWeight, LatestWeightDto.class);
       model.addAttribute("latestWeight", latestWeightDto);
 

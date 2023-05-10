@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     double c = 1.85;
     double d = 4.676;
     int e = -1;
-    Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
+    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userDetails.getUser()).getWeight();
     Double dreamWeight = userDetails.getDreamWeight();
     double weightDifference = currentWeight - dreamWeight;
     String userGender = userDetails.getGender().getName();
@@ -62,7 +62,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public String calculateSuccessDate(UserDetails userDetails) {
-    Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
+    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userDetails.getUser()).getWeight();
     Double dreamWeight = userDetails.getDreamWeight();
     double weightDifference = currentWeight - dreamWeight;
     if(weightDifference == 0){

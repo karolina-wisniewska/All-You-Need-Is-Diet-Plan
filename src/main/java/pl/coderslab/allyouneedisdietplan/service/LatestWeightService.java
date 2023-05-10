@@ -10,7 +10,7 @@ public interface LatestWeightService {
   List<LatestWeight> findByUserOrderByWeightingDateAsc(User user);
   List<LatestWeight> findByUserOrderByWeightingDateDesc(User user);
   void save(LatestWeight latestWeight);
-  LatestWeight findFirstByUserOrderByIdDesc(User user);
+  LatestWeight findFirstByUserOrderByWeightingDateDesc(User user);
   LatestWeight findById(Long id);
   void deleteById(Long id, User user);
   long countByUser(User user);

@@ -34,8 +34,8 @@ public class LatestWeightServiceImpl implements LatestWeightService {
   }
 
   @Override
-  public LatestWeight findFirstByUserOrderByIdDesc(User user) {
-    return latestWeightRepository.findFirstByUserOrderByIdDesc(user);
+  public LatestWeight findFirstByUserOrderByWeightingDateDesc(User user) {
+    return latestWeightRepository.findFirstByUserOrderByWeightingDateDesc(user);
   }
 
   @Override

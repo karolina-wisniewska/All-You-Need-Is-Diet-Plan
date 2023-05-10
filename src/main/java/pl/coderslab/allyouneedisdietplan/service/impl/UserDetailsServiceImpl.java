@@ -65,9 +65,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     Double currentWeight = latestWeightService.findFirstByUserOrderByIdDesc(userDetails.getUser()).getWeight();
     Double dreamWeight = userDetails.getDreamWeight();
     double weightDifference = currentWeight - dreamWeight;
+    if(weightDifference == 0){
+      return "Congrats! You've achieved your Dream Weight! Keep it up!";
+    }
     long daysToSuccess = Math.abs(Math.round((weightDifference * CALORIC_DEFICIT_PER_KG) / calculateCaloricDifference(weightDifference)));
     LocalDateTime successDate = LocalDateTime.now().plusDays(daysToSuccess);
-    return successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    return "You will achieve your dream weight on " + successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }
 
   private int calculateCaloricDifference(double weightDifference){

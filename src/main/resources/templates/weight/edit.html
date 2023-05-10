@@ -19,7 +19,7 @@
     <form th:action="@{/user/weight/edit}" method="POST" class="form-signin">
         <h3 class="form-signin-heading">Edit weight</h3>
         <br/>
-        <div th:object="${latestWeight}">
+        <div th:object="${latestWeightDto}">
             <input type="hidden" th:field="*{id}">
             <input type="hidden" th:field="*{user}">
             <label>Current weight (kg):
@@ -29,7 +29,7 @@
             </label>
             <br/><br/>
             <label>Weighting date:
-                <input type="datetime-local" th:value="${latestWeight.weightingDate}" th:name="weightingDate"/><br/>
+                <input type="datetime-local" th:value="${latestWeightDto.weightingDate}" th:name="weightingDate"/><br/>
                 <label th:if="${#fields.hasErrors('weightingDate')}" th:errors="*{weightingDate}"
                        class="validation-message"></label>
             </label>

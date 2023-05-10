@@ -28,7 +28,7 @@ public class LatestWeightController {
 
   @GetMapping(value = "/user/weight")
   public String showAddLatestWeightForm(Model model) {
-    model.addAttribute("latestWeight", new LatestWeightDto());
+    model.addAttribute("latestWeightDto", new LatestWeightDto());
     return "weight/add";
   }
 
@@ -48,7 +48,7 @@ public class LatestWeightController {
   public String showEditLatestWeightForm(Model model, @RequestParam Long id) {
     LatestWeight latestWeight = latestWeightService.findById(id);
     LatestWeightDto latestWeightDto = modelMapper.map(latestWeight, LatestWeightDto.class);
-    model.addAttribute("latestWeight", latestWeightDto);
+    model.addAttribute("latestWeightDto", latestWeightDto);
     return "weight/edit";
   }
 
@@ -72,10 +72,10 @@ public class LatestWeightController {
   public String showWeightHistory(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<LatestWeight> latestWeightsDesc = latestWeightService.findByUserOrderByWeightingDateDesc(currentUser);
-    List<LatestWeightDto> latestWeightDescDtos = latestWeightsDesc.stream()
+    List<LatestWeightDto> latestWeightDescDto = latestWeightsDesc.stream()
                     .map(latestWeight -> modelMapper.map(latestWeight, LatestWeightDto.class))
                             .collect(Collectors.toList());
-    model.addAttribute("latestWeightsDesc", latestWeightDescDtos);
+    model.addAttribute("latestWeightsDescDto", latestWeightDescDto);
     return "weight/history";
   }
 

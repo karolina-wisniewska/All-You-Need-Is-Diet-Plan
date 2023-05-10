@@ -45,7 +45,7 @@
                 <th></th>
                 <th></th>
             </tr>
-            <tr th:each="weight : ${latestWeightsDesc}">
+            <tr th:each="weight : ${latestWeightsDescDto}">
                 <td th:text="${weight.weight}"></td>
                 <td th:text="${#temporals.format(weight.weightingDate, 'dd-MM-yyyy HH:mm')}"></td>
                 <td><a th:href="@{/user/weight/edit(id=${weight.id})}">Edit</a></td>

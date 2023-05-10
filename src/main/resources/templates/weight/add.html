@@ -19,7 +19,7 @@
      <form th:action="@{/user/weight}" method="POST" class="form-signin">
         <h3 class="form-signin-heading">Add new weight</h3>
         <br/>
-         <div th:object="${latestWeight}">
+         <div th:object="${latestWeightDto}">
              <label>Current weight (kg):
                  <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
                  <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"

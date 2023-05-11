@@ -37,37 +37,26 @@
     <div class="video-panel" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span sec:authentication="name"></span>
+                Dear Admin <span sec:authentication="name"></span>
                 <span>, now you can accept calls from Users!</span>
             </div>
             <div class="panel-body">
                 <div class="col-md-4">
-                    <br/> <br/>
-                    <label class="control-label" for="name">Name</label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input id="name" name="name" class="form-control" type="text" th:value="${userName}"
-                                   onkeydown="if (keyCode === 13) register();"/>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a id="register" href="#" class="btn btn-primary"><span
-                                    class="glyphicon glyphicon-plus"></span> Register</a>
-                        </div>
+                    <br/>
+                    <div>
+                        <label class="control-label" for="name">Please register to accept calls</label><br/>
+                        <input id="name" name="name" class="form-control" type=hidden th:value="${userName}"
+                               onkeydown="if (keyCode === 13) register();">
+                        <a id="register" href="#" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-plus"></span> Register</a>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input id="peer" name="peer" class="form-control" type="hidden" th:value="Dietitian">
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a id="call" href="#" class="btn btn-success"><span
-                                    class="glyphicon glyphicon-play"></span> Call dietician</a> <a id="terminate"
-                                                                                                   href="#"
-                                                                                                   class="btn btn-danger"><span
+                    <br/>
+                    <div>
+                        <a id="terminate" href="#" class="btn btn-danger"><span
                                 class="glyphicon glyphicon-stop"></span> Stop</a>
-                        </div>
                     </div>
-                    <br/> <label class="control-label" for="console">Console</label><br>
-                    <br>
+                    <br/>
+                    <label class="control-label" for="console">Console</label><br>
                     <div id="console" class="democonsole">
                         <ul></ul>
                     </div>

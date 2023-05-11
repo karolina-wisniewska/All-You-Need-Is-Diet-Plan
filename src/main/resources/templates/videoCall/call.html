@@ -45,32 +45,25 @@
             </div>
             <div class="panel-body">
                 <div class="col-md-4">
-                    <br/> <br/>
-                    <label class="control-label" for="name">Name</label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input id="name" name="name" class="form-control" type="text" th:value="${userName}"
-                                   onkeydown="if (keyCode === 13) register();"/>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <a id="register" href="#" class="btn btn-primary"><span
-                                    class="glyphicon glyphicon-plus"></span> Register</a>
-                        </div>
+                    <br/>
+                    <div>
+                        <label class="control-label" for="name">Please register to make a call</label><br/>
+                        <input id="name" name="name" class="form-control" type=hidden th:value="${userName}"
+                               onkeydown="if (keyCode === 13) register();"/>
+                        <a id="register" href="#" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-plus"></span> Register</a>
                     </div>
-                    <br/><br/>
-                    <div class="row">
-                            <input id="peer" name="peer" class="form-control" type=hidden th:value="${adminDto.userName}"
-                                   onkeydown="if (keyCode === 13) call();">
-                        <div class="col-md-6 text-right">
-                            <a id="call" href="#" class="btn btn-success"><span
-                                    class="glyphicon glyphicon-play"></span> Call dietician</a> <a id="terminate"
-                                                                                                   href="#"
-                                                                                                   class="btn btn-danger"><span
-                                class="glyphicon glyphicon-stop"></span> Stop</a>
-                        </div>
+                    <br/>
+                    <div>
+                        <input id="peer" name="peer" class="form-control" type=hidden th:value="${adminDto.userName}"
+                               onkeydown="if (keyCode === 13) call();">
+                        <a id="call" href="#" class="btn btn-success"><span
+                                class="glyphicon glyphicon-play"></span> Call dietician</a>
+                        <a id="terminate" href="#" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-stop"></span> Stop</a>
                     </div>
-                    <br/> <label class="control-label" for="console">Console</label><br>
-                    <br>
+                    <br/>
+                    <label class="control-label" for="console">Console</label><br>
                     <div id="console" class="democonsole">
                         <ul></ul>
                     </div>

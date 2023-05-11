@@ -11,14 +11,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.validator.IsAdult;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,19 +38,19 @@ public class UserDetails {
   @NotNull
   private Gender gender;
 
-  @IsAdult
+//  @IsAdult
   @NotNull
   @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateOfBirth;
 
   @Column(columnDefinition="tinyint unsigned")
-  @Range(min = 100, max = 200, message = "{height.out.of.range.error}")
+//  @Range(min = 100, max = 200, message = "{height.out.of.range.error}")
   @NotNull
   private Integer height;
 
   @Column(columnDefinition="double(5,2)")
-  @DecimalMax(value = "200.0", message = "{weight.too.high.error}")
-  @DecimalMin(value = "0.0", message = "{weight.too.low.error}")
+//  @DecimalMax(value = "200.0", message = "{weight.too.high.error}")
+//  @DecimalMin(value = "0.0", message = "{weight.too.low.error}")
   @NotNull
   private Double dreamWeight;
 

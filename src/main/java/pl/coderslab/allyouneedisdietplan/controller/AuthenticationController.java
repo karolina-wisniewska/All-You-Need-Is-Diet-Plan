@@ -25,6 +25,7 @@ public class AuthenticationController {
     return "login";
   }
 
+
   @GetMapping(value="/registration")
   public String registration(Model model){
     model.addAttribute("userDto", new UserDto());

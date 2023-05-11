@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 @Configuration
 @EnableWebSecurity
@@ -19,24 +18,23 @@ public class WebSecurityConfiguration {
   }
 
   @Bean
-  public SpringSecurityDialect securityDialect() {
-    return new SpringSecurityDialect();
-  }
-
-  @Bean
   protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
     httpSecurity.
             authorizeHttpRequests(authorization -> authorization
                     .requestMatchers("/", "/login", "/registration").permitAll()
                     .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                    .requestMatchers("/user/**").hasRole("USER").anyRequest()
-                    .authenticated())
+                    .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest()
+                    .authenticated()
+            )
             .formLogin(form -> form
                     .loginPage("/login").failureUrl("/login?error=true")
                     .defaultSuccessUrl("/user/home")
                     .usernameParameter("user_name")
-                    .passwordParameter("password"))
+                    .passwordParameter("password")
+            )
             .logout(logout -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login"))

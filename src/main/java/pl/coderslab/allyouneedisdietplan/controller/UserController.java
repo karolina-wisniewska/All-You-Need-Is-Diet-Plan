@@ -2,6 +2,8 @@ package pl.coderslab.allyouneedisdietplan.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +31,16 @@ public class UserController {
 
   @GetMapping(value = "/user/home")
   public String home(Model model, Principal principal) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+      return "redirect:/admin/call";
+    }
+
     String userName = principal.getName();
     User currentUser = userService.findUserByUserName(userName);
-    if(DIETITIAN_USERNAME.equals(userName)){
-      return "redirect:/user/call";
-    }
+//    if(DIETITIAN_USERNAME.equals(userName)){
+//      return "redirect:/user/call";
+//    }
 
     UserParams userParams = userParamsService.findByUser(currentUser);
     UserParamsDto userParamsDto = null;

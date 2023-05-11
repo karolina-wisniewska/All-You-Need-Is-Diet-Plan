@@ -95,15 +95,21 @@
                     </div>
                     <br/>
 
-                    <form th:action="@{/user/plan/new}" method="get">
-                        <button class="btn btn-primary" name="Submit" type="Submit">New Diet Plan
-                        </button>
-                    </form>
-                    <form th:if="${isPlanComplete == true}" th:action="@{/templates/user/plan/load}" method="get">
-                        <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
-                        </button>
-                    </form>
-
+                    <div class="row">
+                        <div class="col-md-2">
+                            <form th:action="@{/user/plan/new}" method="get">
+                                <button class="btn btn-primary" name="Submit" type="Submit">New Diet Plan
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-2">
+                            <form th:if="${isPlanComplete == true}" th:action="@{/templates/user/plan/load}"
+                                  method="get">
+                                <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                     <br>
                     <form th:action="@{/user/call}" method="get">
                         Need professional advice? Start video call with our dietitian

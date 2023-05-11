@@ -22,15 +22,10 @@ public class LatestWeight {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-//  @Column(columnDefinition = "double(5,2)")
-//  @DecimalMax(value = "200.0", message = "{weight.too.high.error}")
-//  @DecimalMin(value = "0.0", message = "{weight.too.low.error}")
   @NotNull
   private Double weight;
 
-//  @PastOrPresent(message = "{date.from.future.error}")
   @NotNull
-//  @DateTimeFormat(pattern = "MM.dd.yyyy HH:mm a")
   private LocalDateTime weightingDate;
 
   @ManyToOne(fetch = FetchType.LAZY)

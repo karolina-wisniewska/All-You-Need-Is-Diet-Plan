@@ -13,7 +13,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDate;
@@ -40,17 +39,13 @@ public class UserParams {
 
 //  @IsAdult
   @NotNull
-  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate dateOfBirth;
 
   @Column(columnDefinition="tinyint unsigned")
-//  @Range(min = 100, max = 200, message = "{height.out.of.range.error}")
   @NotNull
   private Integer height;
 
   @Column(columnDefinition="double(5,2)")
-//  @DecimalMax(value = "200.0", message = "{weight.too.high.error}")
-//  @DecimalMin(value = "0.0", message = "{weight.too.low.error}")
   @NotNull
   private Double dreamWeight;
 

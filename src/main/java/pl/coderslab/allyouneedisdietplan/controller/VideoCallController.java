@@ -21,4 +21,11 @@ public class VideoCallController {
     model.addAttribute("userName", principal.getName());
     return "videoCall/call";
   }
+
+  @GetMapping(value = "/admin/call")
+  public String home(Model model, Principal principal) {
+    model.addAttribute("userName", principal.getName());
+    return "videoCall/adminCall";
+  }
+
 }

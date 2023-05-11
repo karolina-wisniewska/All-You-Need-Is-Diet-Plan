@@ -21,13 +21,12 @@ import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
-public class UserController {
+public class HomeController {
   private final UserParamsService userParamsService;
   private final UserService userService;
   private final LatestWeightService latestWeightService;
   private final PlanService planService;
   private final ModelMapper modelMapper;
-  private final String DIETITIAN_USERNAME = "Dietitian";
 
   @GetMapping(value = "/user/home")
   public String home(Model model, Principal principal) {
@@ -38,10 +37,6 @@ public class UserController {
 
     String userName = principal.getName();
     User currentUser = userService.findUserByUserName(userName);
-//    if(DIETITIAN_USERNAME.equals(userName)){
-//      return "redirect:/user/call";
-//    }
-
     UserParams userParams = userParamsService.findByUser(currentUser);
     UserParamsDto userParamsDto = null;
 
@@ -57,6 +52,6 @@ public class UserController {
       model.addAttribute("isPlanComplete", planService.isPlanComplete(planService.findByUser(currentUser)));
     }
     model.addAttribute("userParamsDto", userParamsDto);
-    return "user/home";
+    return "home/home";
   }
 }

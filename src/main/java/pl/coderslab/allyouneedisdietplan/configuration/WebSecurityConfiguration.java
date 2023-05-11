@@ -24,27 +24,26 @@ public class WebSecurityConfiguration {
   }
 
   @Bean
-  protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
-    http.
-            authorizeHttpRequests()
-            .requestMatchers("/", "/login", "/registration").permitAll()
-            .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-            .requestMatchers("/user/**").hasRole("USER").anyRequest()
-            .authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login").failureUrl("/login?error=true")
-            .defaultSuccessUrl("/user/home")
-            .usernameParameter("user_name")
-            .passwordParameter("password")
-            .and()
-            .logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login").and().exceptionHandling()
-            .accessDeniedPage("/access-denied");
+    httpSecurity.
+            authorizeHttpRequests(authorization -> authorization
+                    .requestMatchers("/", "/login", "/registration").permitAll()
+                    .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                    .requestMatchers("/user/**").hasRole("USER").anyRequest()
+                    .authenticated())
+            .formLogin(form -> form
+                    .loginPage("/login").failureUrl("/login?error=true")
+                    .defaultSuccessUrl("/user/home")
+                    .usernameParameter("user_name")
+                    .passwordParameter("password"))
+            .logout(logout -> logout
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login"))
+            .exceptionHandling(exception -> exception
+            .accessDeniedPage("/access-denied"));
 
-    return http.build();
+    return httpSecurity.build();
   }
 
 }

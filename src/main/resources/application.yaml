@@ -17,21 +17,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        # OUTPUT
-        # Terminal color output; one of [ALWAYS, DETECT, NEVER]
-  output:
-    ansi:
-      enable: DETECT
-  security:
-    user:
-      name: admin
-      password: admin
-
-      # BANNER
-banner:
-  location: classpath:banner.txt
-
-      # LOGGING
 logging:
   level:
     root: INFO

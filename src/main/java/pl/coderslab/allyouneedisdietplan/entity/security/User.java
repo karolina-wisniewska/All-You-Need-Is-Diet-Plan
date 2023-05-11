@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 
 import java.util.Set;
 
@@ -54,5 +54,5 @@ public class User {
   @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
   @PrimaryKeyJoinColumn
   @ToString.Exclude
-  private UserDetails userDetails;
+  private UserParams userParams;
 }

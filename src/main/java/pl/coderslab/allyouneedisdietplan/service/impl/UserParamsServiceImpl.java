@@ -3,11 +3,11 @@ package pl.coderslab.allyouneedisdietplan.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.repository.UserDetailsRepository;
+import pl.coderslab.allyouneedisdietplan.repository.UserParamsRepository;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
+import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,33 +17,33 @@ import java.time.format.DateTimeFormatter;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserParamsServiceImpl implements UserParamsService {
 
-  private final UserDetailsRepository userDetailsRepository;
+  private final UserParamsRepository userParamsRepository;
   private final LatestWeightService latestWeightService;
   private final long CALORIC_DEFICIT_PER_KG = 7000L;
 
   @Override
-  public void save(UserDetails userDetails) {
-    userDetailsRepository.save(userDetails);
+  public void save(UserParams userParams) {
+    userParamsRepository.save(userParams);
   }
 
   @Override
-  public UserDetails findByUser(User user) {
-    return userDetailsRepository.findByUser(user);
+  public UserParams findByUser(User user) {
+    return userParamsRepository.findByUser(user);
   }
 
   @Override
-  public Long calculateDailyCalories(UserDetails userDetails) {
+  public Long calculateDailyCalories(UserParams userParams) {
     double a = 655.1;
     double b = 9.563;
     double c = 1.85;
     double d = 4.676;
     int e = -1;
-    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userDetails.getUser()).getWeight();
-    Double dreamWeight = userDetails.getDreamWeight();
+    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userParams.getUser()).getWeight();
+    Double dreamWeight = userParams.getDreamWeight();
     double weightDifference = currentWeight - dreamWeight;
-    String userGender = userDetails.getGender().getName();
+    String userGender = userParams.getGender().getName();
     if ("male".equals(userGender)) {
       a = 66.5;
       b = 13.75;
@@ -55,15 +55,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     } else if (weightDifference == 0) {
       e = 0;
     }
-    int userAge = Period.between(userDetails.getDateOfBirth(), LocalDate.now()).getYears();
-    double basalMetabolicRate = a + (b * currentWeight) + (c * userDetails.getHeight()) - (d * userAge);
-    return Math.round(basalMetabolicRate * userDetails.getActivityLevel().getValue() + e * calculateCaloricDifference(weightDifference));
+    int userAge = Period.between(userParams.getDateOfBirth(), LocalDate.now()).getYears();
+    double basalMetabolicRate = a + (b * currentWeight) + (c * userParams.getHeight()) - (d * userAge);
+    return Math.round(basalMetabolicRate * userParams.getActivityLevel().getValue() + e * calculateCaloricDifference(weightDifference));
   }
 
   @Override
-  public String calculateSuccessDate(UserDetails userDetails) {
-    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userDetails.getUser()).getWeight();
-    Double dreamWeight = userDetails.getDreamWeight();
+  public String calculateSuccessDate(UserParams userParams) {
+    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userParams.getUser()).getWeight();
+    Double dreamWeight = userParams.getDreamWeight();
     double weightDifference = currentWeight - dreamWeight;
     if(weightDifference == 0){
       return "Congrats! You've achieved your Dream Weight! Keep it up!";

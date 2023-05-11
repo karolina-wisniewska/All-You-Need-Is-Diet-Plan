@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class UserDetailsDto {
+public class UserParamsDto {
 
   private Long id;
 

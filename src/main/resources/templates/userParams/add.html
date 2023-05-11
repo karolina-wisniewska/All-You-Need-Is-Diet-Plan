@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>User Details Form</title>
+    <title>User Parameters Form</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -17,11 +17,8 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/user/details/edit}" method="post" class="form-signin" th:object="${userDetailsDto}">
-        <h3 class="form-signin-heading">Edit User Details</h3>
-        <input type="hidden" th:field="*{id}">
-        <input type="hidden" th:field="*{user}">
-        <input type="hidden" th:field="*{dailyCalories}">
+    <form th:action="@{/user/params/add}" method="post" class="form-signin" th:object="${userParamsDto}">
+        <h3 class="form-signin-heading">Add User Details</h3>
         <label>Gender:
             <div th:each="gender: ${gendersDto}">
                 <input type="radio" th:field="*{gender}" th:value="${gender.id}">
@@ -32,9 +29,9 @@
         </label>
         <br/><br/>
         <label>Date of birth:
-            <input type="date" th:value="${userDetailsDto.dateOfBirth}" th:name="dateOfBirth"/><br/>
+            <input type="date" th:field="*{dateOfBirth}"/><br/>
             <label th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
-            class="validation-message"></label>
+                   class="validation-message"></label>
         </label>
         <br/><br/>
         <label>Height (cm):
@@ -43,6 +40,15 @@
                    class="validation-message"></label>
         </label>
         <br/><br/>
+        <div th:object="${latestWeightDto}">
+            <label>Current weight (kg):
+                <input type="hidden" th:field="*{weightingDate}">
+                <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
+                <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
+                       class="validation-message"></label>
+            </label>
+        </div>
+        <br/>
         <label>Dream weight (kg):
             <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
             <label th:if="${#fields.hasErrors('dreamWeight')}" th:errors="*{dreamWeight}"
@@ -90,7 +96,7 @@
             </div>
         </label>
         <br/><br/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Save User Details</button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" type="Submit">Save User Parameters</button>
     </form>
 </div>
 </body>

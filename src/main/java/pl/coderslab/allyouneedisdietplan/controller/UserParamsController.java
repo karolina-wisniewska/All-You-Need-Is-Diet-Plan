@@ -15,7 +15,7 @@ import pl.coderslab.allyouneedisdietplan.entity.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.Health;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.ActivityLevelDto;
 import pl.coderslab.allyouneedisdietplan.model.CuisineTypeDto;
@@ -23,14 +23,14 @@ import pl.coderslab.allyouneedisdietplan.model.DietDto;
 import pl.coderslab.allyouneedisdietplan.model.GenderDto;
 import pl.coderslab.allyouneedisdietplan.model.HealthDto;
 import pl.coderslab.allyouneedisdietplan.model.LatestWeightDto;
-import pl.coderslab.allyouneedisdietplan.model.UserDetailsDto;
+import pl.coderslab.allyouneedisdietplan.model.UserParamsDto;
 import pl.coderslab.allyouneedisdietplan.service.ActivityLevelService;
 import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.DietService;
 import pl.coderslab.allyouneedisdietplan.service.GenderService;
 import pl.coderslab.allyouneedisdietplan.service.HealthService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
+import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -40,61 +40,61 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
-public class UserDetailsController {
+public class UserParamsController {
   private final GenderService genderService;
   private final ActivityLevelService activityLevelService;
   private final CuisineTypeService cuisineTypeService;
   private final HealthService healthService;
   private final DietService dietService;
   private final UserService userService;
-  private final UserDetailsService userDetailsService;
+  private final UserParamsService userParamsService;
   private final LatestWeightService latestWeightService;
   private final ModelMapper modelMapper;
 
-  @GetMapping(value = "/user/details/add")
+  @GetMapping(value = "/user/params/add")
   public String showAddUserDetailsForm(Model model) {
-    model.addAttribute("userDetailsDto", new UserDetailsDto());
+    model.addAttribute("userParamsDto", new UserParamsDto());
 
     LatestWeightDto latestWeightDto = new LatestWeightDto();
     latestWeightDto.setWeightingDate(LocalDateTime.now());
     model.addAttribute("latestWeightDto", latestWeightDto);
-    return "userDetails/add";
+    return "userParams/add";
   }
-  @PostMapping(value = "/user/details/add")
-  public String processAddUserDetailsForm(@Valid UserDetailsDto userDetailsDto, BindingResult userDetailsResult, @Valid LatestWeightDto latestWeightDto, BindingResult latestWeightResult, Principal principal) {
+  @PostMapping(value = "/user/params/add")
+  public String processAddUserDetailsForm(@Valid UserParamsDto userParamsDto, BindingResult userDetailsResult, @Valid LatestWeightDto latestWeightDto, BindingResult latestWeightResult, Principal principal) {
     if(userDetailsResult.hasErrors() || latestWeightResult.hasErrors()){
-      return "userDetails/add";
+      return "userParams/add";
     }
     User currentUser = userService.findUserByUserName(principal.getName());
     LatestWeight latestWeight = modelMapper.map(latestWeightDto, LatestWeight.class);
     latestWeight.setUser(currentUser);
     latestWeightService.save(latestWeight);
 
-    UserDetails userDetails = modelMapper.map(userDetailsDto, UserDetails.class);
-    userDetails.setUser(userService.findUserByUserName(principal.getName()));
-    userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
-    userDetailsService.save(userDetails);
+    UserParams userParams = modelMapper.map(userParamsDto, UserParams.class);
+    userParams.setUser(userService.findUserByUserName(principal.getName()));
+    userParams.setDailyCalories(userParamsService.calculateDailyCalories(userParams));
+    userParamsService.save(userParams);
 
     return "redirect:/user/home";
   }
 
-  @GetMapping(value = "/user/details/edit")
+  @GetMapping(value = "/user/params/edit")
   public String showEditUserDetailsForm(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
-    UserDetails userDetails = userDetailsService.findByUser(currentUser);
-    UserDetailsDto userDetailsDto = modelMapper.map(userDetails, UserDetailsDto.class);
-    model.addAttribute("userDetailsDto", userDetailsDto);
-    return "userDetails/edit";
+    UserParams userParams = userParamsService.findByUser(currentUser);
+    UserParamsDto userParamsDto = modelMapper.map(userParams, UserParamsDto.class);
+    model.addAttribute("userParamsDto", userParamsDto);
+    return "userParams/edit";
   }
 
-  @PostMapping(value = "/user/details/edit")
-  public String processEditUserDetailsForm(@Valid UserDetailsDto userDetailsDto, BindingResult userDetailsResult) {
+  @PostMapping(value = "/user/params/edit")
+  public String processEditUserDetailsForm(@Valid UserParamsDto userParamsDto, BindingResult userDetailsResult) {
     if(userDetailsResult.hasErrors()){
-      return "userDetails/edit";
+      return "userParams/edit";
     }
-    UserDetails userDetails = modelMapper.map(userDetailsDto, UserDetails.class);
-    userDetails.setDailyCalories(userDetailsService.calculateDailyCalories(userDetails));
-    userDetailsService.save(userDetails);
+    UserParams userParams = modelMapper.map(userParamsDto, UserParams.class);
+    userParams.setDailyCalories(userParamsService.calculateDailyCalories(userParams));
+    userParamsService.save(userParams);
     return "redirect:/user/home";
   }
   @ModelAttribute("gendersDto")

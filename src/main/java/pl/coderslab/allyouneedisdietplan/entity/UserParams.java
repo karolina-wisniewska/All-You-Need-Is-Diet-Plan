@@ -22,8 +22,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user_details")
-public class UserDetails {
+@Table(name = "user_params")
+public class UserParams {
 
   @Id
   @Column(name = "user_id")

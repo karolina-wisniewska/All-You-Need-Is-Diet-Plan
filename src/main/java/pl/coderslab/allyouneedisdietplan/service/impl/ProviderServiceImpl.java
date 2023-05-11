@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import pl.coderslab.allyouneedisdietplan.entity.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.Health;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceListDto;
@@ -40,36 +40,36 @@ public class ProviderServiceImpl implements ProviderService {
   }
 
   @Override
-  public String getUserUrl(MealType mealType, UserDetails userDetails) {
+  public String getUserUrl(MealType mealType, UserParams userParams) {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     url += "&mealType=" + mealType.getName();
-    if (userDetails.getCuisineType() != null) {
-      url += "&cuisineType=" + userDetails.getCuisineType().getName();
+    if (userParams.getCuisineType() != null) {
+      url += "&cuisineType=" + userParams.getCuisineType().getName();
     }
-    List<Health> healths = userDetails.getHealths();
+    List<Health> healths = userParams.getHealths();
     if (healths != null) {
       for (Health health : healths) {
         url += "&health=" + health.getName();
       }
     }
-    List<Diet> diets = userDetails.getDiets();
+    List<Diet> diets = userParams.getDiets();
     if (diets != null) {
       for (Diet diet : diets) {
         url += "&diet=" + diet.getName();
       }
     }
-    Long calories = getMealCalories(mealType, userDetails);
+    Long calories = getMealCalories(mealType, userParams);
     double precision = 0.05;
     url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
     return url;
   }
 
   @Override
-  public String getSingleUrl(RecipeQueryDto recipeQuery, UserDetails userDetails) {
+  public String getSingleUrl(RecipeQueryDto recipeQuery, UserParams userParams) {
     String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     if (recipeQuery.getMealType() != null) {
       url += "&mealType=" + recipeQuery.getMealType().getName();
-      Long calories = getMealCalories(recipeQuery.getMealType(), userDetails);
+      Long calories = getMealCalories(recipeQuery.getMealType(), userParams);
       double precision = 0.05;
       url += "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
     }
@@ -82,13 +82,13 @@ public class ProviderServiceImpl implements ProviderService {
     if (recipeQuery.getQuery() != null) {
       url += "&q=" + recipeQuery.getQuery();
     }
-    List<Health> healths = userDetails.getHealths();
+    List<Health> healths = userParams.getHealths();
     if (healths != null) {
       for (Health health : healths) {
         url += "&health=" + health.getName();
       }
     }
-    List<Diet> diets = userDetails.getDiets();
+    List<Diet> diets = userParams.getDiets();
     if (diets != null) {
       for (Diet diet : diets) {
         url += "&diet=" + diet.getName();
@@ -97,7 +97,7 @@ public class ProviderServiceImpl implements ProviderService {
     return url;
   }
 
-  private Long getMealCalories(MealType mealType, UserDetails userDetails) {
-    return Math.round(userDetails.getDailyCalories() * mealType.getFraction());
+  private Long getMealCalories(MealType mealType, UserParams userParams) {
+    return Math.round(userParams.getDailyCalories() * mealType.getFraction());
   }
 }

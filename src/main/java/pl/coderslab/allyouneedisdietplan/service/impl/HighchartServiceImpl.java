@@ -9,7 +9,7 @@ import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.service.HighchartService;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
+import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,11 +20,11 @@ import java.util.List;
 public class HighchartServiceImpl implements HighchartService {
 
   private final LatestWeightService latestWeightService;
-  private final UserDetailsService userDetailsService;
+  private final UserParamsService userParamsService;
   @Override
   public JSONObject getWeightDataJson(User user) {
     List<LatestWeight> userWeights = latestWeightService.findByUserOrderByWeightingDateAsc(user);
-    Double dreamWeight = userDetailsService.findByUser(user)
+    Double dreamWeight = userParamsService.findByUser(user)
             .getDreamWeight();
     JSONArray jsonWeightingDate = new JSONArray();
     JSONArray jsonWeight = new JSONArray();

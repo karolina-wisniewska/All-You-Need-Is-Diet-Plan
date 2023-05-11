@@ -17,8 +17,11 @@
 <br/>
 
 <div class="container">
-    <form th:action="@{/user/details/add}" method="post" class="form-signin" th:object="${userDetailsDto}">
-        <h3 class="form-signin-heading">Add User Details</h3>
+    <form th:action="@{/user/params/edit}" method="post" class="form-signin" th:object="${userParamsDto}">
+        <h3 class="form-signin-heading">Edit User Details</h3>
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{user}">
+        <input type="hidden" th:field="*{dailyCalories}">
         <label>Gender:
             <div th:each="gender: ${gendersDto}">
                 <input type="radio" th:field="*{gender}" th:value="${gender.id}">
@@ -29,9 +32,9 @@
         </label>
         <br/><br/>
         <label>Date of birth:
-            <input type="date" th:field="*{dateOfBirth}"/><br/>
+            <input type="date" th:value="${userParamsDto.dateOfBirth}" th:name="dateOfBirth"/><br/>
             <label th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
-                   class="validation-message"></label>
+            class="validation-message"></label>
         </label>
         <br/><br/>
         <label>Height (cm):
@@ -40,15 +43,6 @@
                    class="validation-message"></label>
         </label>
         <br/><br/>
-        <div th:object="${latestWeightDto}">
-            <label>Current weight (kg):
-                <input type="hidden" th:field="*{weightingDate}">
-                <input type="number" th:field="*{weight}" min="0" max="200" step="0.1"/><br/>
-                <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"
-                       class="validation-message"></label>
-            </label>
-        </div>
-        <br/>
         <label>Dream weight (kg):
             <input type="number" th:field="*{dreamWeight}" min="0" max="200" step="0.1"/><br/>
             <label th:if="${#fields.hasErrors('dreamWeight')}" th:errors="*{dreamWeight}"

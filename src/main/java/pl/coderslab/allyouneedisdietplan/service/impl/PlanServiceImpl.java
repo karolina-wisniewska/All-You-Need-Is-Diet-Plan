@@ -8,7 +8,7 @@ import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
-import pl.coderslab.allyouneedisdietplan.entity.UserDetails;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
@@ -19,7 +19,7 @@ import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.ProviderService;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
-import pl.coderslab.allyouneedisdietplan.service.UserDetailsService;
+import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
 public class PlanServiceImpl implements PlanService {
 
   private final PlanRepository planRepository;
-  private final UserDetailsService userDetailsService;
+  private final UserParamsService userParamsService;
   private final MealTypeService mealTypeService;
   private final DietPlanItemService dietPlanItemService;
   private final RecipeService recipeService;
@@ -112,8 +112,8 @@ public class PlanServiceImpl implements PlanService {
 
   @Override
   public List<RecipeResourceDto> getRecipesPerMealType(MealType mealType, User user) {
-    UserDetails currentUserDetails = userDetailsService.findByUser(user);
-    String url = providerService.getUserUrl(mealType, currentUserDetails);
+    UserParams currentUserParams = userParamsService.findByUser(user);
+    String url = providerService.getUserUrl(mealType, currentUserParams);
     return providerService.getRecipeResourcesFromApi(url);
   }
 
@@ -132,8 +132,8 @@ public class PlanServiceImpl implements PlanService {
 
   @Override
   public List<RecipeResourceDto> getRecipesForRecipeQuery(RecipeQueryDto recipeQuery, User user) {
-    UserDetails currentUserDetails = userDetailsService.findByUser(user);
-    String url = providerService.getSingleUrl(recipeQuery, currentUserDetails);
+    UserParams currentUserParams = userParamsService.findByUser(user);
+    String url = providerService.getSingleUrl(recipeQuery, currentUserParams);
     return providerService.getRecipeResourcesFromApi(url);
   }
 }

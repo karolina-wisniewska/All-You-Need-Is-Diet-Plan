@@ -24,28 +24,33 @@
             <div class="panel-heading">
                 <span th:utext="Welcome"></span> <span sec:authentication="name"></span>
             </div>
-            <div th:if="${userDetails == null}" class="panel-body">
-                <div>What is your dream weight?</div>
+            <div th:if="${userParamsDto == null}" class="panel-body">
+                <h3>What is your dream weight?</h3>
                 <br/>
-                <div>
-                    <ul>Let us know you better so that we can:
-                        <li>suggest you a diet plan that suits your needs</li>
-                        <li>show you when you will achieve your dream weight</li>
-                    </ul>
+                <div class="row">
+                    <div class="col-md-9">
+                        <ul><b>Let us know you better so that we can:</b>
+                            <li>suggest you a diet plan that suits your needs</li>
+                            <li>show you when you will achieve your dream weight</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/user/params/add}" method="get">
+                            <button class="btn" name="Submit" type="Submit">Add User Details
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <form th:action="@{/user/details/add}" method="get">
-                    <button class="btn" name="Submit" type="Submit">Add User Details
-                    </button>
-                </form>
             </div>
-            <div th:if="${userDetails != null}" class="panel-body">
-                <div>Suggested daily intake of calories: <b th:text="${userDetails.dailyCalories}"></b> kcal</div>
+
+            <div th:if="${userParamsDto != null}" class="panel-body">
+                <div>Suggested daily intake of calories: <b th:text="${userParamsDto.dailyCalories}"></b> kcal</div>
                 <br/>
                 <div class="row">
                     <div class="col-md-5">
-                        <div>Your recent weight: <b th:text="${latestWeight.weight}"></b> kg</div>
-                        <div>Your dream weight: <b th:text="${userDetails.dreamWeight}"></b> kg</div>
-                        <div>Your activity level: <b th:text="${userDetails.activityLevel.name}"></b></div>
+                        <div>Your recent weight: <b th:text="${latestWeightDto.weight}"></b> kg</div>
+                        <div>Your dream weight: <b th:text="${userParamsDto.dreamWeight}"></b> kg</div>
+                        <div>Your activity level: <b th:text="${userParamsDto.activityLevel.name}"></b></div>
                     </div>
                     <div class="col-md-5">
                         <form th:action="@{/user/weight/history}" method="get">
@@ -60,19 +65,19 @@
                 <div class="row">
                     <div class="col-md-5">
                         <ul>Your preferences:
-                            <li>cuisine type: <span th:if="${userDetails.cuisineType == null}">none</span>
-                                <b th:if="${userDetails.cuisineType != null}"
-                                   th:text="${userDetails.cuisineType.name}"/>
+                            <li>cuisine type: <span th:if="${userParamsDto.cuisineType == null}">none</span>
+                                <b th:if="${userParamsDto.cuisineType != null}"
+                                   th:text="${userParamsDto.cuisineType.name}"/>
                             </li>
                             <li>allergies and health issues:
-                                <span th:if="${userDetails.healths.isEmpty()}">none</span>
-                                <b th:each="health : ${userDetails.healths}">
+                                <span th:if="${userParamsDto.healths.isEmpty()}">none</span>
+                                <b th:each="health : ${userParamsDto.healths}">
                                     <div th:text="${health.name}"></div>
                                 </b>
                             </li>
                             <li>diets:
-                                <span th:if="${userDetails.diets.isEmpty()}">none</span>
-                                <b th:each="diet : ${userDetails.diets}">
+                                <span th:if="${userParamsDto.diets.isEmpty()}">none</span>
+                                <b th:each="diet : ${userParamsDto.diets}">
                                     <div th:text="${diet.name}"></div>
                                 </b>
                             </li>
@@ -80,7 +85,7 @@
                     </div>
                     <br/>
                     <div class="col-md-5">
-                        <form th:action="@{/user/details/edit}" method="get">
+                        <form th:action="@{/user/params/edit}" method="get">
                             <button class="btn" name="Submit" type="Submit">Edit User Details
                             </button>
                         </form>
@@ -89,12 +94,12 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-5">
-                        <div class="col-md-5">
-                            <form th:action="@{/user/plan/new}" method="get">
-                                <button class="btn btn-primary" name="Submit" type="Submit">New Diet Plan
-                                </button>
-                            </form>
-                        </div>
+                        <form th:action="@{/user/plan/new}" method="get">
+                            <button class="btn btn-primary" name="Submit" type="Submit">New Diet Plan
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-5">
                         <form th:if="${isPlanComplete == true}" th:action="@{/user/plan/load}" method="get">
                             <button class="btn" name="Submit" type="Submit">Your Last Diet Plan
                             </button>
@@ -110,7 +115,6 @@
             </div>
         </div>
     </div>
-
 </div>
 </body>
 </html>

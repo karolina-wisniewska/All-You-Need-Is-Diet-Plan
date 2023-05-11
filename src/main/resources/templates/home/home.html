@@ -112,11 +112,10 @@
                     </form>
                 </div>
             </div>
-            <div sec:authorize="hasRole('ADMIN')">
-                <form th:action="@{/admin/call}" method="get">
-                    <button class="btn" name="Submit" type="Submit">Video Call Panel
-                    </button>
-                </form>
+            <div sec:authorize="hasRole('ADMIN')" class="panel-body">
+                <a th:href="@{/admin/call}">Video Call Panel</a>
+                <br>
+                <a th:href="@{/}">Manage Users</a>
             </div>
         </div>
     </div>

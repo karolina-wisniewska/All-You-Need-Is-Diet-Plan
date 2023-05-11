@@ -37,9 +37,7 @@ public class WebSecurityConfiguration {
             )
             .logout(logout -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login"))
-            .exceptionHandling(exception -> exception
-            .accessDeniedPage("/access-denied"));
+                    .logoutSuccessUrl("/login"));
 
     return httpSecurity.build();
   }

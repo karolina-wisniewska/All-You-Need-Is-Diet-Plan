@@ -41,8 +41,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span sec:authentication="name"></span>
-                <span th:if="${userName.equals('Dietitian')}">, now you can accept calls from Users!</span>
-                <span th:if="${!userName.equals('Dietitian')}">, now you can make a call to our dietician!</span>
+                <span>, now you can make a call to our dietician!</span>
             </div>
             <div class="panel-body">
                 <div class="col-md-4">
@@ -58,10 +57,10 @@
                                     class="glyphicon glyphicon-plus"></span> Register</a>
                         </div>
                     </div>
+                    <br/><br/>
                     <div class="row">
-                        <div class="col-md-6">
-                            <input id="peer" name="peer" class="form-control" type="hidden" th:value="Dietitian">
-                        </div>
+                            <input id="peer" name="peer" class="form-control" type=hidden th:value="${adminDto.userName}"
+                                   onkeydown="if (keyCode === 13) call();">
                         <div class="col-md-6 text-right">
                             <a id="call" href="#" class="btn btn-success"><span
                                     class="glyphicon glyphicon-play"></span> Call dietician</a> <a id="terminate"

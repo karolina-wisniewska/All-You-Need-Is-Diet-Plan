@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.repository.RecipeRepository;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
 

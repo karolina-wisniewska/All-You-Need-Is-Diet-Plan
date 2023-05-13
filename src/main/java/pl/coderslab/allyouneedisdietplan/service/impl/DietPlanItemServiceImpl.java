@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.repository.DietPlanItemRepository;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;

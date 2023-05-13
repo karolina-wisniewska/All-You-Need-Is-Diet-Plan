@@ -7,26 +7,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
-import pl.coderslab.allyouneedisdietplan.entity.DayName;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.DayName;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.DishType;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.DishType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.model.CuisineTypeDto;
-import pl.coderslab.allyouneedisdietplan.model.DayNameDto;
+import pl.coderslab.allyouneedisdietplan.model.dictionary.CuisineTypeDto;
+import pl.coderslab.allyouneedisdietplan.model.dictionary.DayNameDto;
 import pl.coderslab.allyouneedisdietplan.model.DietPlanItemDto;
-import pl.coderslab.allyouneedisdietplan.model.DishTypeDto;
-import pl.coderslab.allyouneedisdietplan.model.MealTypeDto;
+import pl.coderslab.allyouneedisdietplan.model.dictionary.DishTypeDto;
+import pl.coderslab.allyouneedisdietplan.model.dictionary.MealTypeDto;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
-import pl.coderslab.allyouneedisdietplan.service.CuisineTypeService;
-import pl.coderslab.allyouneedisdietplan.service.DayNameService;
+import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.CuisineTypeService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
-import pl.coderslab.allyouneedisdietplan.service.DishTypeService;
-import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.DishTypeService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
-import pl.coderslab.allyouneedisdietplan.service.ProviderService;
+import pl.coderslab.allyouneedisdietplan.service.external.EdamamService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -43,7 +43,7 @@ public class PlanController {
   private final CuisineTypeService cuisineTypeService;
   private final DishTypeService dishTypeService;
   private final DayNameService dayNameService;
-  private final ProviderService providerService;
+  private final EdamamService edamamService;
   private final ModelMapper modelMapper;
 
   @GetMapping(value = "/user/plan/new")
@@ -92,7 +92,7 @@ public class PlanController {
 
   @PostMapping(value = "/user/plan/showDetails")
   public String getSingleRecipe(@RequestParam String url) {
-    return "redirect:" + providerService.getUrlToShowRecipeDetails(url);
+    return "redirect:" + edamamService.getUrlToShowRecipeDetails(url);
   }
 
   @GetMapping(value = "/user/plan/reload")

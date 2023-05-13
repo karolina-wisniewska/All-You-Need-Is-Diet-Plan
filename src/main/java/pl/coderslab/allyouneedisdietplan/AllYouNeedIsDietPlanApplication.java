@@ -9,8 +9,8 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
-import pl.coderslab.allyouneedisdietplan.one2onecall.CallHandler;
-import pl.coderslab.allyouneedisdietplan.one2onecall.UserRegistry;
+import pl.coderslab.allyouneedisdietplan.external.one2onecall.CallHandler;
+import pl.coderslab.allyouneedisdietplan.external.one2onecall.UserRegistry;
 
 @SpringBootApplication
 @EnableWebSocket

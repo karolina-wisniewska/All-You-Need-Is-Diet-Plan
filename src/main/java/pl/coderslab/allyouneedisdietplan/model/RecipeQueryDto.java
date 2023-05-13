@@ -1,10 +1,10 @@
 package pl.coderslab.allyouneedisdietplan.model;
 
 import lombok.Data;
-import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.DishType;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.DishType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 
 @Data
 public class RecipeQueryDto {

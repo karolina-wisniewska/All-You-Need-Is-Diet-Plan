@@ -2,8 +2,8 @@ package pl.coderslab.allyouneedisdietplan.model;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import pl.coderslab.allyouneedisdietplan.entity.DayName;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.DayName;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 

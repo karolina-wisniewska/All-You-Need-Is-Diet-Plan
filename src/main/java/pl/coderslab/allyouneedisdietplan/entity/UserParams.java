@@ -13,6 +13,11 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDate;

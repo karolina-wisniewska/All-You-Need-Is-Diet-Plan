@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.coderslab.allyouneedisdietplan.entity.security.Role;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
-import pl.coderslab.allyouneedisdietplan.model.CurrentUser;
+import pl.coderslab.allyouneedisdietplan.model.security.CurrentUser;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.util.ArrayList;

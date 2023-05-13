@@ -1,11 +1,11 @@
 package pl.coderslab.allyouneedisdietplan.service;
 
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 
 import java.util.List;
 

@@ -3,21 +3,21 @@ package pl.coderslab.allyouneedisdietplan.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.allyouneedisdietplan.entity.DayName;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.DayName;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
-import pl.coderslab.allyouneedisdietplan.service.DayNameService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
-import pl.coderslab.allyouneedisdietplan.service.MealTypeService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
-import pl.coderslab.allyouneedisdietplan.service.ProviderService;
+import pl.coderslab.allyouneedisdietplan.service.external.EdamamService;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
 import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 
@@ -35,7 +35,7 @@ public class PlanServiceImpl implements PlanService {
   private final DietPlanItemService dietPlanItemService;
   private final RecipeService recipeService;
   private final DayNameService dayNameService;
-  private final ProviderService providerService;
+  private final EdamamService edamamService;
   @Override
   public void save(Plan plan) {
     planRepository.save(plan);
@@ -113,8 +113,8 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public List<RecipeResourceDto> getRecipesPerMealType(MealType mealType, User user) {
     UserParams currentUserParams = userParamsService.findByUser(user);
-    String url = providerService.getUserUrl(mealType, currentUserParams);
-    return providerService.getRecipeResourcesFromApi(url);
+    String url = edamamService.getUserUrl(mealType, currentUserParams);
+    return edamamService.getRecipeResourcesFromApi(url);
   }
 
   @Override
@@ -133,7 +133,7 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public List<RecipeResourceDto> getRecipesForRecipeQuery(RecipeQueryDto recipeQuery, User user) {
     UserParams currentUserParams = userParamsService.findByUser(user);
-    String url = providerService.getSingleUrl(recipeQuery, currentUserParams);
-    return providerService.getRecipeResourcesFromApi(url);
+    String url = edamamService.getSingleUrl(recipeQuery, currentUserParams);
+    return edamamService.getRecipeResourcesFromApi(url);
   }
 }

@@ -1,7 +1,7 @@
 package pl.coderslab.allyouneedisdietplan.service;
 
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
-import pl.coderslab.allyouneedisdietplan.model.json.RecipeResourceDto;
+import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 
 import java.util.List;
 

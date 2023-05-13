@@ -8,11 +8,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
-import pl.coderslab.allyouneedisdietplan.entity.ActivityLevel;
-import pl.coderslab.allyouneedisdietplan.entity.CuisineType;
-import pl.coderslab.allyouneedisdietplan.entity.Diet;
-import pl.coderslab.allyouneedisdietplan.entity.Gender;
-import pl.coderslab.allyouneedisdietplan.entity.Health;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.validator.IsAdult;
 

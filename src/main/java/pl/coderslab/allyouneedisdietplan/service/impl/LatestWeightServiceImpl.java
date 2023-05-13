@@ -50,9 +50,4 @@ public class LatestWeightServiceImpl implements LatestWeightService {
     }
   }
 
-  @Override
-  public long countByUser(User user) {
-    return latestWeightRepository.countByUser(user);
-  }
-
 }

@@ -13,6 +13,5 @@ public interface LatestWeightService {
   LatestWeight findFirstByUserOrderByWeightingDateDesc(User user);
   LatestWeight findById(Long id);
   void deleteById(Long id, User user);
-  long countByUser(User user);
 
 }

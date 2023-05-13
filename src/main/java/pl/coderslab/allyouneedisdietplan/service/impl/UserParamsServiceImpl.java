@@ -3,8 +3,12 @@ package pl.coderslab.allyouneedisdietplan.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.external.harrisbenedictequation.HarrisBenedictEquation;
 import pl.coderslab.allyouneedisdietplan.repository.UserParamsRepository;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
@@ -35,50 +39,63 @@ public class UserParamsServiceImpl implements UserParamsService {
 
   @Override
   public Long calculateDailyCalories(UserParams userParams) {
-    double a = 655.1;
-    double b = 9.563;
-    double c = 1.85;
-    double d = 4.676;
-    int e = -1;
-    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userParams.getUser()).getWeight();
-    Double dreamWeight = userParams.getDreamWeight();
-    double weightDifference = currentWeight - dreamWeight;
-    String userGender = userParams.getGender().getName();
-    if ("male".equals(userGender)) {
-      a = 66.5;
-      b = 13.75;
-      c = 5.0;
-      d = 6.775;
-    }
-    if (weightDifference < 0) {
-      e = 1;
-    } else if (weightDifference == 0) {
-      e = 0;
-    }
-    int userAge = Period.between(userParams.getDateOfBirth(), LocalDate.now()).getYears();
-    double basalMetabolicRate = a + (b * currentWeight) + (c * userParams.getHeight()) - (d * userAge);
-    return Math.round(basalMetabolicRate * userParams.getActivityLevel().getValue() + e * calculateCaloricDifference(weightDifference));
+    Gender userGender = userParams.getGender();
+    LocalDate userBirthDate = userParams.getDateOfBirth();
+    int userAge = getUserAge(userBirthDate);
+    ActivityLevel userActivityLevel = userParams.getActivityLevel();
+
+    HarrisBenedictEquation hBEquation = new HarrisBenedictEquation(userGender);
+
+    double weightDifference = getWeightDifference(userParams);
+    int gainOrLoseCoeff = getGainOrLoseCoeff(weightDifference);
+
+    double basalMetabolicRate = hBEquation.getFreeCoeff() + (hBEquation.getWeightCoeff() * getUserWeight(userParams.getUser()) + (hBEquation.getHeightCoeff() * userParams.getHeight()) - (hBEquation.getAgeCoeff() * userAge));
+    double totalMetabolicRate = basalMetabolicRate * userActivityLevel.getValue() + gainOrLoseCoeff * getCaloricDifference(weightDifference);
+    return Math.round(totalMetabolicRate);
   }
 
   @Override
   public String calculateSuccessDate(UserParams userParams) {
-    Double currentWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(userParams.getUser()).getWeight();
-    Double dreamWeight = userParams.getDreamWeight();
-    double weightDifference = currentWeight - dreamWeight;
-    if(weightDifference == 0){
+    double weightDifference = getWeightDifference(userParams);
+    if (weightDifference == 0) {
       return "Congrats! You've achieved your Dream Weight! Keep it up!";
     }
-    long daysToSuccess = Math.abs(Math.round((weightDifference * CALORIC_DEFICIT_PER_KG) / calculateCaloricDifference(weightDifference)));
+    long daysToSuccess = Math.abs(Math.round((weightDifference * CALORIC_DEFICIT_PER_KG) / getCaloricDifference(weightDifference)));
     LocalDateTime successDate = LocalDateTime.now().plusDays(daysToSuccess);
     return "You will achieve your dream weight on " + successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }
 
-  private int calculateCaloricDifference(double weightDifference){
+  public double getWeightDifference(UserParams userParams){
+    Double currentWeight = getUserWeight(userParams.getUser());
+    Double dreamWeight = userParams.getDreamWeight();
+    return currentWeight - dreamWeight;
+  }
+
+  private int getCaloricDifference(double weightDifference) {
     int caloricDifference = 500;
-    if(Math.abs(weightDifference) >= 15.0){
+    if (Math.abs(weightDifference) >= 15.0) {
       caloricDifference = 1000;
     }
     return caloricDifference;
   }
 
+  private int getGainOrLoseCoeff(double weightDifference) {
+    int gainLossCoeff = -1;
+    if (weightDifference < 0) {
+      gainLossCoeff = 1;
+    } else if (weightDifference == 0) {
+      gainLossCoeff = 0;
+    }
+    return gainLossCoeff;
+  }
+
+  private int getUserAge(LocalDate userBirthDate) {
+    Period period = Period.between(userBirthDate, LocalDate.now());
+    return period.getYears();
+  }
+
+  private double getUserWeight(User user){
+    LatestWeight userLatestWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(user);
+      return userLatestWeight.getWeight();
+  }
 }

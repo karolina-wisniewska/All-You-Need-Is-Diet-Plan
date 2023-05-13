@@ -8,5 +8,5 @@ public interface UserParamsService {
   void save(UserParams userParams);
   UserParams findByUser(User user);
   Long calculateDailyCalories(UserParams userParams);
-  String calculateSuccessDate(UserParams userParams);
+  String getSuccessDateMessage(UserParams userParams);
 }

@@ -48,7 +48,7 @@ public class HomeController {
       LatestWeightDto latestWeightDto = modelMapper.map(latestWeight, LatestWeightDto.class);
       model.addAttribute("latestWeightDto", latestWeightDto);
 
-      model.addAttribute("successDate", userParamsService.calculateSuccessDate(currentUser.getUserParams()));
+      model.addAttribute("successDate", userParamsService.getSuccessDateMessage(currentUser.getUserParams()));
       model.addAttribute("isPlanComplete", planService.isPlanComplete(planService.findByUser(currentUser)));
     }
     model.addAttribute("userParamsDto", userParamsDto);

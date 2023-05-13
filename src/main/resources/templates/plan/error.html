@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<form th:if="${detailsError != null}" th:action="@{/user/details/edit}" method="get">
+<form th:if="${detailsError != null}" th:action="@{/user/params/edit}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">Edit User Details</button>
 </form>
 <form th:if="${chooseError != null}" th:object="${recipeQuery}" th:action="@{/user/plan/choose}" method="get">

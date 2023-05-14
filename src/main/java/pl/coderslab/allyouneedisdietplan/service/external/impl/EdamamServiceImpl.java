@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.MealType;
 import pl.coderslab.allyouneedisdietplan.external.edamam.EdamamProperties;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceListDto;
@@ -37,25 +36,16 @@ public class EdamamServiceImpl implements EdamamService {
   }
 
   @Override
-  public String getUserUrl(MealType mealType, UserParams userParams) {
+  public String getUserUrlPerMeal(MealType mealType, UserParams userParams) {
     String url = getUrlFromProperties();
-    url += "&mealType=" + mealType.getName();
-    if (userParams.getCuisineType() != null) {
-      url += userParams.getCuisineType().getUrlPart();
-    }
-    List<Health> healths = userParams.getHealths();
-    if (healths != null) {
-      for (Health health : healths) {
-        url += health.getUrlPart();
+    List<UrlElement> userUrlElements = userParams.getAllUserUrlElements();
+    if(userUrlElements != null){
+      for(UrlElement urlElement : userUrlElements) {
+        url += urlElement.getUrlPart();
       }
     }
-    List<Diet> diets = userParams.getDiets();
-    if (diets != null) {
-      for (Diet diet : diets) {
-        url += diet.getUrlPart();
-      }
-    }
-    Long calories = getMealCalories(mealType, userParams);
+    url += mealType.getUrlPart();
+    Long calories = getMealCalories(mealType.getFraction(), userParams.getDailyCalories());
     url += getCaloriesUrlPart(calories, edamamProperties.getPrecision());
     return url;
   }
@@ -63,45 +53,33 @@ public class EdamamServiceImpl implements EdamamService {
   @Override
   public String getSingleUrl(RecipeQueryDto recipeQuery, UserParams userParams) {
     String url = getUrlFromProperties();
-    if (recipeQuery.getMealType() != null) {
-      url += recipeQuery.getMealType().getUrlPart();
-      Long calories = getMealCalories(recipeQuery.getMealType(), userParams);
+    List<UrlElement> userUrlElements = userParams.getHealthsAndDietsUrlElements();
+    if(userUrlElements != null){
+      for(UrlElement urlElement : userUrlElements) {
+        url += urlElement.getUrlPart();
+      }
+    }
+    List<UrlElement> queryUrlElements = recipeQuery.getQueryUrlElements();
+    if(queryUrlElements != null){
+      for(UrlElement urlElement : queryUrlElements) {
+        url += urlElement.getUrlPart();
+      }
+    }
+    MealType queryMealType = recipeQuery.getMealType();
+    if (queryMealType != null) {
+      double mealTypeFraction = queryMealType.getFraction();
+      Long calories = getMealCalories(mealTypeFraction, userParams.getDailyCalories());
       url += getCaloriesUrlPart(calories, edamamProperties.getPrecision());
-    }
-    if (recipeQuery.getCuisineType() != null) {
-      url += recipeQuery.getCuisineType().getUrlPart();
-    }
-    if (recipeQuery.getDishType() != null) {
-      url += recipeQuery.getDishType().getUrlPart();
-    }
-    if (recipeQuery.getQuery() != null) {
-      url += getQueryUrlPart(recipeQuery);
-    }
-    List<Health> healths = userParams.getHealths();
-    if (healths != null) {
-      for (Health health : healths) {
-        url += health.getUrlPart();
-      }
-    }
-    List<Diet> diets = userParams.getDiets();
-    if (diets != null) {
-      for (Diet diet : diets) {
-        url += diet.getUrlPart();
-      }
     }
     return url;
   }
 
-  private Long getMealCalories(MealType mealType, UserParams userParams) {
-    return Math.round(userParams.getDailyCalories() * mealType.getFraction());
+  private Long getMealCalories(double mealTypeFraction, Long dailyCalories) {
+    return Math.round(dailyCalories * mealTypeFraction);
   }
 
   private String getCaloriesUrlPart(long calories, double precision){
     return "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
-  }
-
-  private String getQueryUrlPart(RecipeQueryDto recipeQuery){
-    return "&q=" + recipeQuery.getQuery();
   }
 
   public String getUrlFromProperties(){

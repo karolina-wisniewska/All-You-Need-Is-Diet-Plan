@@ -2,13 +2,13 @@ package pl.coderslab.allyouneedisdietplan.service.external.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
+import pl.coderslab.allyouneedisdietplan.external.edamam.EdamamProperties;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceListDto;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
@@ -20,22 +20,8 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class EdamamServiceImpl implements EdamamService {
-  @Value("${edamam.url}")
-  private final String API_URL_PART;
-  @Value("${edamam.app-key}")
-  private final String APP_KEY_PART;
-  @Value("${edamam.random}")
-  private final String RANDOM_PART;
-  @Value("${edamam.result-fields}")
-  private final String RESULT_FIELDS_PART;
 
-  public EdamamServiceImpl() {
-    this.API_URL_PART = "";
-    this.APP_KEY_PART = "";
-    this.RANDOM_PART = "";
-    this.RESULT_FIELDS_PART = "";
-  }
-
+  private final EdamamProperties edamamProperties;
   @Override
   public String getUrlToShowRecipeDetails(String url) {
     RestTemplate restTemplate = new RestTemplate();
@@ -52,7 +38,16 @@ public class EdamamServiceImpl implements EdamamService {
 
   @Override
   public String getUserUrl(MealType mealType, UserParams userParams) {
-    String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
+
+    String url = edamamProperties.getUrl();
+    List<EdamamProperties.Param> params = edamamProperties.getParams();
+    for(EdamamProperties.Param param : params){
+      url += param.getUrlPart();
+    }
+    List<EdamamProperties.Field> fields = edamamProperties.getFields();
+    for(EdamamProperties.Field field : fields){
+      url += field.getUrlPart();
+    }
     url += "&mealType=" + mealType.getName();
     if (userParams.getCuisineType() != null) {
       url += "&cuisineType=" + userParams.getCuisineType().getName();
@@ -77,7 +72,8 @@ public class EdamamServiceImpl implements EdamamService {
 
   @Override
   public String getSingleUrl(RecipeQueryDto recipeQuery, UserParams userParams) {
-    String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
+    String url="";
+//    String url = API_URL_PART + APP_KEY_PART + RANDOM_PART + RESULT_FIELDS_PART;
     if (recipeQuery.getMealType() != null) {
       url += "&mealType=" + recipeQuery.getMealType().getName();
       Long calories = getMealCalories(recipeQuery.getMealType(), userParams);

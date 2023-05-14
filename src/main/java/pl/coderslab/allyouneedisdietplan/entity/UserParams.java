@@ -14,16 +14,17 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Diet;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -80,9 +81,7 @@ public class UserParams {
 
   public List<UrlElement> getAllUserUrlElements(){
     List<UrlElement> urlElements = getHealthsAndDietsUrlElements();
-    if(cuisineType != null){
-      urlElements.add(cuisineType);
-    }
+    Optional.ofNullable(cuisineType).map(urlElements::add);
     return urlElements;
   }
 

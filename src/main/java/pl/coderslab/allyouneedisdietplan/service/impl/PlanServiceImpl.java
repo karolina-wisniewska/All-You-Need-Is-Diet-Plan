@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.DayName;
 import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.MealType;
 import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.Recipe;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
@@ -15,7 +15,7 @@ import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.repository.PlanRepository;
 import pl.coderslab.allyouneedisdietplan.service.dictionary.DayNameService;
 import pl.coderslab.allyouneedisdietplan.service.DietPlanItemService;
-import pl.coderslab.allyouneedisdietplan.service.dictionary.MealTypeService;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.MealTypeService;
 import pl.coderslab.allyouneedisdietplan.service.PlanService;
 import pl.coderslab.allyouneedisdietplan.service.external.EdamamService;
 import pl.coderslab.allyouneedisdietplan.service.RecipeService;
@@ -113,7 +113,7 @@ public class PlanServiceImpl implements PlanService {
   @Override
   public List<RecipeResourceDto> getRecipesPerMealType(MealType mealType, User user) {
     UserParams currentUserParams = userParamsService.findByUser(user);
-    String url = edamamService.getUserUrl(mealType, currentUserParams);
+    String url = edamamService.getUserUrlPerMeal(mealType, currentUserParams);
     return edamamService.getRecipeResourcesFromApi(url);
   }
 

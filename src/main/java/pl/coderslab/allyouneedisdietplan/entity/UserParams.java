@@ -14,10 +14,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.CuisineType;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 
 import java.time.LocalDate;
@@ -42,7 +43,6 @@ public class UserParams {
   @NotNull
   private Gender gender;
 
-//  @IsAdult
   @NotNull
   private LocalDate dateOfBirth;
 
@@ -77,4 +77,20 @@ public class UserParams {
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "diet_id"))
   private List<Diet> diets = new ArrayList<>();
+
+  public List<UrlElement> getAllUserUrlElements(){
+    List<UrlElement> urlElements = getHealthsAndDietsUrlElements();
+    if(cuisineType != null){
+      urlElements.add(cuisineType);
+    }
+    return urlElements;
+  }
+
+  public List<UrlElement> getHealthsAndDietsUrlElements(){
+    List<UrlElement> urlElements = new ArrayList<>();
+    urlElements.addAll(healths);
+    urlElements.addAll(diets);
+    return urlElements;
+  }
+
 }

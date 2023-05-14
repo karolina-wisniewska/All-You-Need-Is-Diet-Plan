@@ -24,3 +24,20 @@ logging:
       apache: WARN
       springframework: WARN
       kurento: INFO
+project:
+  name: AllYouNeedIsDietPlan
+  version: 0.0.1-SNAPSHOT
+edamam:
+  url: https://api.edamam.com/api/recipes/v2?type=public&
+#  params:
+#    - name: app_id
+#      value: 40fa347c
+#    - name: app_key
+#      value: 0eb977d62e50265cf4df0451172393a6
+#    - name: random
+#      value: true
+#  fields:
+
+  app-key: app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6&
+  random: random=true&
+  result-fields: field=label&field=shareAs&field=externalId

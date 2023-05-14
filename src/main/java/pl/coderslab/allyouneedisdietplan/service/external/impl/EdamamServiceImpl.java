@@ -2,15 +2,16 @@ package pl.coderslab.allyouneedisdietplan.service.external.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.MealType;
-import pl.coderslab.allyouneedisdietplan.entity.UserParams;
-import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceDto;
 import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceListDto;
+import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.service.external.EdamamService;
 
 import java.util.List;
@@ -19,11 +20,21 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class EdamamServiceImpl implements EdamamService {
+  @Value("${edamam.url}")
+  private final String API_URL_PART;
+  @Value("${edamam.app-key}")
+  private final String APP_KEY_PART;
+  @Value("${edamam.random}")
+  private final String RANDOM_PART;
+  @Value("${edamam.result-fields}")
+  private final String RESULT_FIELDS_PART;
 
-  private final String API_URL_PART = "https://api.edamam.com/api/recipes/v2?type=public";
-  private final String APP_KEY_PART = "&app_id=40fa347c&app_key=0eb977d62e50265cf4df0451172393a6";
-  private final String RANDOM_PART = "&random=true";
-  private final String RESULT_FIELDS_PART = "&field=label&field=shareAs&field=externalId";
+  public EdamamServiceImpl() {
+    this.API_URL_PART = "";
+    this.APP_KEY_PART = "";
+    this.RANDOM_PART = "";
+    this.RESULT_FIELDS_PART = "";
+  }
 
   @Override
   public String getUrlToShowRecipeDetails(String url) {

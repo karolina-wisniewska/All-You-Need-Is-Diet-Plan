@@ -26,4 +26,8 @@ public class MealType {
   @Column(columnDefinition="double(3,2)")
   @NotNull
   private Double fraction;
+
+  public String getUrlPart(){
+    return "&mealType=" + name;
+  }
 }

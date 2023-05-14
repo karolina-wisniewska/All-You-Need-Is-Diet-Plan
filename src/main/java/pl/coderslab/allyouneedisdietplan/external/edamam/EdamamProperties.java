@@ -19,12 +19,12 @@ public class EdamamProperties {
   private String url;
   private List<Param> params = new ArrayList<>();
   private List<Field> fields = new ArrayList<>();
+  private double precision;
 
   @Data
   public static class Param {
     private String name;
     private String value;
-
     public String getUrlPart(){
       return "&" + name + "=" + value;
     }
@@ -33,7 +33,6 @@ public class EdamamProperties {
   @Data
   public static class Field {
     private String value;
-
     public String getUrlPart(){
       return "&field=" + value;
     }

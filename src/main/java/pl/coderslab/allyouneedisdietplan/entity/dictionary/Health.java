@@ -22,4 +22,8 @@ public class Health {
   @Column(columnDefinition="varchar(30)")
   @NotNull
   private String name;
+
+  public String getUrlPart(){
+    return "&health=" + name;
+  }
 }

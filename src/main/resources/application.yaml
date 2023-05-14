@@ -42,3 +42,4 @@ edamam:
     - value: label
     - value: shareAs
     - value: externalId
+  precision: 0.05

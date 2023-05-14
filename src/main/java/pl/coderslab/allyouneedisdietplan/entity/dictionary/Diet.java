@@ -22,4 +22,8 @@ public class Diet {
   @Column(columnDefinition="varchar(30)")
   @NotNull
   private String name;
+
+  public String getUrlPart(){
+    return "&diet=" + name;
+  }
 }

@@ -22,4 +22,8 @@ public class DishType {
   @Column(columnDefinition="VARCHAR(30)")
   @NotNull
   private String name;
+
+  public String getUrlPart(){
+    return "&dishType=" + name;
+  }
 }

@@ -1,14 +1,15 @@
 package pl.coderslab.allyouneedisdietplan.model;
 
 import lombok.Data;
+import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
-import pl.coderslab.allyouneedisdietplan.entity.DietPlanItem;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.DishType;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.MealType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class RecipeQueryDto {
@@ -21,18 +22,10 @@ public class RecipeQueryDto {
 
   public List<UrlElement> getQueryUrlElements(){
     List<UrlElement> urlElements = new ArrayList<>();
-    if(cuisineType != null){
-      urlElements.add(cuisineType);
-    }
-    if(mealType != null){
-      urlElements.add(mealType);
-    }
-    if(dishType != null){
-      urlElements.add(dishType);
-    }
-    if(query != null){
-      urlElements.add(query);
-    }
+    Optional.ofNullable(cuisineType).map(urlElements::add);
+    Optional.ofNullable(mealType).map(urlElements::add);
+    Optional.ofNullable(dishType).map(urlElements::add);
+    Optional.ofNullable(query).map(urlElements::add);
     return urlElements;
   }
 }

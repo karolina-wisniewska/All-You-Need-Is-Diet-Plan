@@ -1,4 +1,4 @@
-package pl.coderslab.allyouneedisdietplan.entity.dictionary;
+package pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,11 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
 
 @Data
 @Entity
-@Table(name = "meal_types")
-public class MealType {
+@Table(name = "healths")
+public class Health implements UrlElement {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +24,7 @@ public class MealType {
   @NotNull
   private String name;
 
-  @Column(columnDefinition="double(3,2)")
-  @NotNull
-  private Double fraction;
-
   public String getUrlPart(){
-    return "&mealType=" + name;
+    return "&health=" + name;
   }
 }

@@ -1,4 +1,4 @@
-package pl.coderslab.allyouneedisdietplan.model.dictionary;
+package pl.coderslab.allyouneedisdietplan.model.dictionary.urlelement;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

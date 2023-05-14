@@ -1,11 +1,11 @@
-package pl.coderslab.allyouneedisdietplan.service.dictionary.impl;
+package pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Health;
-import pl.coderslab.allyouneedisdietplan.repository.dictionary.HealthRepository;
-import pl.coderslab.allyouneedisdietplan.service.dictionary.HealthService;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
+import pl.coderslab.allyouneedisdietplan.repository.dictionary.urlelement.HealthRepository;
+import pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.HealthService;
 
 import java.util.List;
 

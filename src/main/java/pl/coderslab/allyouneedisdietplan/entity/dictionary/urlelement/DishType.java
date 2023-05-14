@@ -1,4 +1,4 @@
-package pl.coderslab.allyouneedisdietplan.entity.dictionary;
+package pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,22 +8,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
 
 @Data
 @Entity
-@Table(name = "diets")
-public class Diet {
+@Table(name = "dish_types")
+public class DishType implements UrlElement {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(columnDefinition = "tinyint")
+  @Column(columnDefinition = "TINYINT")
   private Integer id;
 
-  @Column(columnDefinition="varchar(30)")
+  @Column(columnDefinition="VARCHAR(30)")
   @NotNull
   private String name;
 
   public String getUrlPart(){
-    return "&diet=" + name;
+    return "&dishType=" + name;
   }
 }

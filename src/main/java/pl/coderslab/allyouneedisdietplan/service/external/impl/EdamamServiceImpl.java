@@ -21,6 +21,7 @@ import java.util.List;
 public class EdamamServiceImpl implements EdamamService {
 
   private final EdamamProperties edamamProperties;
+
   @Override
   public String getUrlToShowRecipeDetails(String url) {
     RestTemplate restTemplate = new RestTemplate();
@@ -37,61 +38,49 @@ public class EdamamServiceImpl implements EdamamService {
 
   @Override
   public String getUserUrlPerMeal(MealType mealType, UserParams userParams) {
-    String url = getUrlFromProperties();
-    List<UrlElement> userUrlElements = userParams.getAllUserUrlElements();
-    if(userUrlElements != null){
-      for(UrlElement urlElement : userUrlElements) {
-        url += urlElement.getUrlPart();
-      }
-    }
-    url += mealType.getUrlPart();
-    Long calories = getMealCalories(mealType.getFraction(), userParams.getDailyCalories());
-    url += getCaloriesUrlPart(calories, edamamProperties.getPrecision());
-    return url;
+    StringBuilder urlBuilder = new StringBuilder(getUrlFromProperties());
+
+    List<UrlElement> urlElements = userParams.getUserUrlElementsForUserQuery();
+    urlElements.forEach(element -> urlBuilder.append(element.getUrlPart()));
+
+    double mealTypeFraction = mealType.getFraction();
+    Long dailyCalories = userParams.getDailyCalories();
+    double precision = edamamProperties.getPrecision();
+    urlBuilder.append(getCaloriesUrlPart(mealTypeFraction, dailyCalories, precision));
+
+    return urlBuilder.toString();
   }
 
   @Override
   public String getSingleUrl(RecipeQueryDto recipeQuery, UserParams userParams) {
-    String url = getUrlFromProperties();
-    List<UrlElement> userUrlElements = userParams.getHealthsAndDietsUrlElements();
-    if(userUrlElements != null){
-      for(UrlElement urlElement : userUrlElements) {
-        url += urlElement.getUrlPart();
-      }
-    }
+    StringBuilder urlBuilder = new StringBuilder(getUrlFromProperties());
+
+    List<UrlElement> userUrlElements = userParams.getUserUrlElementsForSingleQuery();
+    userUrlElements.forEach(element -> urlBuilder.append(element.getUrlPart()));
+
     List<UrlElement> queryUrlElements = recipeQuery.getQueryUrlElements();
-    if(queryUrlElements != null){
-      for(UrlElement urlElement : queryUrlElements) {
-        url += urlElement.getUrlPart();
-      }
-    }
+    queryUrlElements.forEach(element -> urlBuilder.append(element.getUrlPart()));
+
     MealType queryMealType = recipeQuery.getMealType();
-    if (queryMealType != null) {
-      double mealTypeFraction = queryMealType.getFraction();
-      Long calories = getMealCalories(mealTypeFraction, userParams.getDailyCalories());
-      url += getCaloriesUrlPart(calories, edamamProperties.getPrecision());
-    }
-    return url;
+    double mealTYpeFraction = queryMealType.getFraction();
+    Long dailyCalories = userParams.getDailyCalories();
+    double precision = edamamProperties.getPrecision();
+    urlBuilder.append(getCaloriesUrlPart(mealTYpeFraction, dailyCalories, precision));
+
+    return urlBuilder.toString();
   }
 
-  private Long getMealCalories(double mealTypeFraction, Long dailyCalories) {
-    return Math.round(dailyCalories * mealTypeFraction);
+  private String getCaloriesUrlPart(double mealTypeFraction, Long dailyCalories, double precision) {
+    long mealCalories = Math.round(dailyCalories * mealTypeFraction);
+    return "&calories=" + (mealCalories * (1 - precision)) + "-" + (mealCalories * (1 + precision));
   }
 
-  private String getCaloriesUrlPart(long calories, double precision){
-    return "&calories=" + (calories * (1 - precision)) + "-" + (calories * (1 + precision));
-  }
+  public String getUrlFromProperties() {
+    StringBuilder urlBuilder = new StringBuilder(edamamProperties.getUrl());
 
-  public String getUrlFromProperties(){
-    String url = edamamProperties.getUrl();
-    List<EdamamProperties.Param> params = edamamProperties.getParams();
-    for(EdamamProperties.Param param : params){
-      url += param.getUrlPart();
-    }
-    List<EdamamProperties.Field> fields = edamamProperties.getFields();
-    for(EdamamProperties.Field field : fields){
-      url += field.getUrlPart();
-    }
-    return url;
+    List<UrlElement> propertiesUrlElements = edamamProperties.getPropertiesUrlElements();
+    propertiesUrlElements.forEach(element -> urlBuilder.append(element.getUrlPart()));
+
+    return urlBuilder.toString();
   }
 }

@@ -79,17 +79,32 @@ public class UserParams {
           inverseJoinColumns = @JoinColumn(name = "diet_id"))
   private List<Diet> diets = new ArrayList<>();
 
-  public List<UrlElement> getAllUserUrlElements(){
-    List<UrlElement> urlElements = getHealthsAndDietsUrlElements();
-    Optional.ofNullable(cuisineType).map(urlElements::add);
+  public List<UrlElement> getUserUrlElementsForUserQuery(){
+    List<UrlElement> urlElements = new ArrayList<>();
+    urlElements = addCuisineTypeUrlElementToList(urlElements);
+    urlElements = addDietUrlElementsToList(urlElements);
+    urlElements = addHealthUrlElementsToList(urlElements);
     return urlElements;
   }
 
-  public List<UrlElement> getHealthsAndDietsUrlElements(){
+  public List<UrlElement> getUserUrlElementsForSingleQuery(){
     List<UrlElement> urlElements = new ArrayList<>();
-    urlElements.addAll(healths);
-    urlElements.addAll(diets);
+    urlElements = addDietUrlElementsToList(urlElements);
+    urlElements = addHealthUrlElementsToList(urlElements);
     return urlElements;
   }
+  public List<UrlElement> addHealthUrlElementsToList(List<UrlElement> list){
+    list.addAll(healths);
+    return list;
+  }
+  public List<UrlElement> addDietUrlElementsToList(List<UrlElement> list){
+    list.addAll(diets);
+    return list;
+  }
+  public List<UrlElement> addCuisineTypeUrlElementToList(List<UrlElement> list){
+    Optional.ofNullable(cuisineType).map(list::add);
+    return list;
+  }
+
 
 }

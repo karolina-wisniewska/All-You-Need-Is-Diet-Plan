@@ -72,12 +72,14 @@ public class LatestWeightController {
   public String showWeightHistory(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<LatestWeight> latestWeightsDesc = latestWeightService.findByUserOrderByWeightingDateDesc(currentUser);
-    List<LatestWeightDto> latestWeightDescDto = latestWeightsDesc.stream()
-                    .map(latestWeight -> modelMapper.map(latestWeight, LatestWeightDto.class))
-                            .collect(Collectors.toList());
+    List<LatestWeightDto> latestWeightDescDto = convertEntityToDtoLatestWeightList(latestWeightsDesc);
     model.addAttribute("latestWeightsDescDto", latestWeightDescDto);
     return "weight/history";
   }
 
-
+  private List<LatestWeightDto> convertEntityToDtoLatestWeightList(List<LatestWeight> latestWeights){
+    return latestWeights.stream()
+            .map(latestWeight -> modelMapper.map(latestWeight, LatestWeightDto.class))
+            .collect(Collectors.toList());
+  }
 }

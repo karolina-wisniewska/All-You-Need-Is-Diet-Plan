@@ -97,6 +97,7 @@ public class UserParamsController {
     userParamsService.save(userParams);
     return "redirect:/user/home";
   }
+
   @ModelAttribute("gendersDto")
   List<GenderDto> genders() {
     List<Gender> genders = genderService.findAll();

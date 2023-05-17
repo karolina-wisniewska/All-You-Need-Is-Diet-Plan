@@ -54,11 +54,11 @@ public class PlanController {
       model.addAttribute("detailsError", true);
       return "plan/error";
     }
-    List<List<DietPlanItemDto>> resultItemsDto = convertEntityToDtoDietPlanItem(resultItems);
+    List<List<DietPlanItemDto>> resultItemsDto = convertEntityToDtoDietPlanItemList(resultItems);
     model.addAttribute("resultItems", resultItemsDto);
 
     List<DayName> dayNames = dayNameService.findAll();
-    List<DayNameDto> dayNameDtos = convertEntityToDtoDayName(dayNames);
+    List<DayNameDto> dayNameDtos = convertEntityToDtoDayNameList(dayNames);
     model.addAttribute("dayNames", dayNameDtos);
     return "plan/show";
   }
@@ -67,11 +67,11 @@ public class PlanController {
   public String loadPlan(Model model, Principal principal) {
     User currentUser = userService.findUserByUserName(principal.getName());
     List<List<DietPlanItem>> resultItems = planService.loadDietPlanItemsForPlan(currentUser);
-    List<List<DietPlanItemDto>> resultItemsDto = convertEntityToDtoDietPlanItem(resultItems);
+    List<List<DietPlanItemDto>> resultItemsDto = convertEntityToDtoDietPlanItemList(resultItems);
     model.addAttribute("resultItems", resultItemsDto);
 
     List<DayName> dayNames = dayNameService.findAll();
-    List<DayNameDto> dayNamesDto = convertEntityToDtoDayName(dayNames);
+    List<DayNameDto> dayNamesDto = convertEntityToDtoDayNameList(dayNames);
     model.addAttribute("dayNames", dayNamesDto);
     return "plan/show";
   }
@@ -98,15 +98,15 @@ public class PlanController {
     model.addAttribute("recipeQuery", recipeQueryDto);
 
     List<CuisineType> cuisineTypes = cuisineTypeService.findAll();
-    List<CuisineTypeDto> cuisineTypeDtos = convertEntityToDtoCuisineType(cuisineTypes);
+    List<CuisineTypeDto> cuisineTypeDtos = convertEntityToDtoCuisineTypeList(cuisineTypes);
     model.addAttribute("cuisineTypes", cuisineTypeDtos);
 
     List<DishType> dishTypes = dishTypeService.findAll();
-    List<DishTypeDto> dishTypesDto = convertEntityToDtoDishType(dishTypes);
+    List<DishTypeDto> dishTypesDto = convertEntityToDtoDishTypeList(dishTypes);
     model.addAttribute("dishTypes", dishTypesDto);
 
     List<MealType> mealTypes = mealTypeService.findAll();
-    List<MealTypeDto> mealTypesDto = convertEntityToMealType(mealTypes);
+    List<MealTypeDto> mealTypesDto = convertEntityToDtoMealTypeList(mealTypes);
     model.addAttribute("mealTypes", mealTypesDto);
     return "plan/choose";
   }
@@ -127,7 +127,7 @@ public class PlanController {
     return "redirect:load";
   }
 
-  private List<List<DietPlanItemDto>> convertEntityToDtoDietPlanItem(List<List<DietPlanItem>> resultItems){
+  private List<List<DietPlanItemDto>> convertEntityToDtoDietPlanItemList(List<List<DietPlanItem>> resultItems){
     return resultItems.stream()
             .map(innerList -> innerList.stream()
                     .map(resultItem ->
@@ -136,25 +136,25 @@ public class PlanController {
             .collect(Collectors.toList());
   }
 
-  private List<DayNameDto> convertEntityToDtoDayName(List<DayName> dayNames){
+  private List<DayNameDto> convertEntityToDtoDayNameList(List<DayName> dayNames){
     return dayNames.stream()
             .map(dayName -> modelMapper.map(dayName, DayNameDto.class))
             .collect(Collectors.toList());
   }
 
-  private List<CuisineTypeDto> convertEntityToDtoCuisineType(List<CuisineType> cuisineTypes){
+  private List<CuisineTypeDto> convertEntityToDtoCuisineTypeList(List<CuisineType> cuisineTypes){
     return cuisineTypes.stream()
             .map(cuisineType -> modelMapper.map(cuisineType, CuisineTypeDto.class))
             .collect(Collectors.toList());
   }
 
-  private List<DishTypeDto> convertEntityToDtoDishType(List<DishType> dishTypes){
+  private List<DishTypeDto> convertEntityToDtoDishTypeList(List<DishType> dishTypes){
     return dishTypes.stream()
             .map(dishType -> modelMapper.map(dishType, DishTypeDto.class))
             .collect(Collectors.toList());
   }
 
-  private List<MealTypeDto> convertEntityToMealType(List<MealType> mealTypes){
+  private List<MealTypeDto> convertEntityToDtoMealTypeList(List<MealType> mealTypes){
     return mealTypes.stream()
             .map(mealType -> modelMapper.map(mealType, MealTypeDto.class))
             .collect(Collectors.toList());

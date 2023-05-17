@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
+import pl.coderslab.allyouneedisdietplan.entity.Plan;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
 import pl.coderslab.allyouneedisdietplan.model.LatestWeightDto;
@@ -18,6 +19,7 @@ import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -49,7 +51,11 @@ public class HomeController {
       model.addAttribute("latestWeightDto", latestWeightDto);
 
       model.addAttribute("successDate", userParamsService.getSuccessDateMessage(currentUser.getUserParams()));
-      model.addAttribute("isPlanComplete", planService.isPlanComplete(planService.findByUser(currentUser)));
+      Optional<Plan> userPlan = planService.findByUser(currentUser);
+      boolean isPlanComplete =
+              userPlan.map(planService::isPlanComplete)
+                      .orElse(false);
+      model.addAttribute("isPlanComplete", isPlanComplete);
     }
     model.addAttribute("userParamsDto", userParamsDto);
     return "home/home";

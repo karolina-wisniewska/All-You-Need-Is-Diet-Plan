@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 @Getter
 public class MetabolicRateCalculator {
-  private double freeCoeff;
-  private double weightCoeff;
-  private double heightCoeff;
-  private double ageCoeff;
+  private final double freeCoeff;
+  private final double weightCoeff;
+  private final double heightCoeff;
+  private final double ageCoeff;
   private final long CALORIC_DEFICIT_PER_KG = 7000L;
 
   public MetabolicRateCalculator(String genderName) {
@@ -33,11 +33,7 @@ public class MetabolicRateCalculator {
   }
 
   private int getCaloricDifference(double weightDifference) {
-    int caloricDifference = 500;
-    if (Math.abs(weightDifference) >= 15.0) {
-      caloricDifference = 1000;
-    }
-    return caloricDifference;
+    return Math.abs(weightDifference) >= 15.0 ? 1000 : 500;
   }
 
   private int getGainOrLoseCoeff(double weightDifference) {

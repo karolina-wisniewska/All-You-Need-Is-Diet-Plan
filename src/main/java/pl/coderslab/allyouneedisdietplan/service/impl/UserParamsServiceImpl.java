@@ -30,6 +30,7 @@ public class UserParamsServiceImpl implements UserParamsService {
   public void save(UserParams userParams) {
     userParamsRepository.save(userParams);
   }
+
   @Override
   public UserParams findByUser(User user) {
     return userParamsRepository.findByUser(user);
@@ -43,6 +44,7 @@ public class UserParamsServiceImpl implements UserParamsService {
     int height = userParams.getHeight();
     ActivityLevel activityLevel = userParams.getActivityLevel();
     double activityLevelValue = activityLevel.getValue();
+
     Double currentWeight = getUserWeight(userParams.getUser());
     Double dreamWeight = userParams.getDreamWeight();
 
@@ -52,7 +54,9 @@ public class UserParamsServiceImpl implements UserParamsService {
 
   @Override
   public String getSuccessDateMessage(UserParams userParams) {
-    double weightDifference = getUserWeight(userParams.getUser())-userParams.getDreamWeight();
+    Double currentWeight = getUserWeight(userParams.getUser());
+    Double dreamWeight = userParams.getDreamWeight();
+    double weightDifference = currentWeight - dreamWeight;
     if (weightDifference == 0) {
       return "Congrats! You've achieved your Dream Weight! Keep it up!";
     }
@@ -61,12 +65,14 @@ public class UserParamsServiceImpl implements UserParamsService {
     LocalDateTime successDate = metabolicRateCalculator.calculateSuccessDate(weightDifference);
     return "You will achieve your dream weight on " + successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }
+
   private int calculateUserAge(LocalDate userBirthDate) {
     Period period = Period.between(userBirthDate, LocalDate.now());
     return period.getYears();
   }
-  private double getUserWeight(User user){
+
+  private double getUserWeight(User user) {
     LatestWeight userLatestWeight = latestWeightService.findFirstByUserOrderByWeightingDateDesc(user);
-      return userLatestWeight.getWeight();
+    return userLatestWeight.getWeight();
   }
 }

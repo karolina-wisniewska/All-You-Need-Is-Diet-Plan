@@ -1,6 +1,7 @@
 package pl.coderslab.allyouneedisdietplan.calculator;
 
 import lombok.Getter;
+import pl.coderslab.allyouneedisdietplan.enums.Gender;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +14,8 @@ public class MetabolicRateCalculator {
   private final long CALORIC_DEFICIT_PER_KG = 7000L;
 
   public MetabolicRateCalculator(String genderName) {
-    if("male".equals(genderName)){
+    String maleName = Gender.MALE.name();
+    if(maleName.equalsIgnoreCase(genderName)){
       this.freeCoeff = 66.5;
       this.weightCoeff = 13.75;
       this.heightCoeff = 5.0;

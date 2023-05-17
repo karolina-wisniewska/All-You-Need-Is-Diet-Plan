@@ -79,10 +79,7 @@ public class PlanServiceImpl implements PlanService {
 
         DayName dayName = dayNameService.findById(i + 1);
 
-        DietPlanItem dietPlanItem = new DietPlanItem();
-        if (!dietPlanItems.isEmpty()) {
-          dietPlanItem = dietPlanItems.get(i);
-        }
+        DietPlanItem dietPlanItem = createOrLoadItem(dietPlanItems, i);
         dietPlanItem.setPlan(plan);
         dietPlanItem.setMealType(mealType);
         dietPlanItem.setRecipe(recipe);
@@ -141,5 +138,9 @@ public class PlanServiceImpl implements PlanService {
     UserParams currentUserParams = userParamsService.findByUser(user);
     String url = edamamService.getSingleUrl(recipeQuery, currentUserParams);
     return edamamService.getRecipeResourcesFromApi(url);
+  }
+
+  private DietPlanItem createOrLoadItem(List<DietPlanItem> dietPlanItems, int index){
+    return dietPlanItems.isEmpty() ? new DietPlanItem() : dietPlanItems.get(index);
   }
 }

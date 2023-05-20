@@ -20,7 +20,7 @@ public class AuthenticationController {
   public final String userError = "There is already a user registered with the user name provided";
   private final UserService userService;
   private final ModelMapper modelMapper;
-  @GetMapping(value={"/", "/login"})
+  @GetMapping(value="/login")
   public String login(){
     return "login";
   }

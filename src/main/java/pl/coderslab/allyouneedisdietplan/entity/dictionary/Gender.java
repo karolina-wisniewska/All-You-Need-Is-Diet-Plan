@@ -2,6 +2,8 @@ package pl.coderslab.allyouneedisdietplan.entity.dictionary;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,5 +23,6 @@ public class Gender {
 
   @Column(columnDefinition="varchar(30)")
   @NotNull
-  private String name;
+  @Enumerated(EnumType.STRING)
+  private pl.coderslab.allyouneedisdietplan.enums.Gender name;
 }

@@ -11,11 +11,12 @@ public class MetabolicRateCalculator {
   private final double weightCoeff;
   private final double heightCoeff;
   private final double ageCoeff;
+  private final Gender gender;
   private final long CALORIC_DEFICIT_PER_KG = 7000L;
 
-  public MetabolicRateCalculator(String genderName) {
-    String maleName = Gender.MALE.name();
-    if(maleName.equalsIgnoreCase(genderName)){
+  public MetabolicRateCalculator(Gender gender) {
+    this.gender = gender;
+    if(Gender.MALE.equals(gender)){
       this.freeCoeff = 66.5;
       this.weightCoeff = 13.75;
       this.heightCoeff = 5.0;

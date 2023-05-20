@@ -25,7 +25,7 @@
         <label>Gender:
             <div th:each="gender: ${gendersDto}">
                 <input type="radio" th:field="*{gender}" th:value="${gender.id}">
-                <label th:text="${gender.name}"></label>
+                <label th:text="${gender.name.name}"></label>
             </div>
             <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
                    class="validation-message"></label>

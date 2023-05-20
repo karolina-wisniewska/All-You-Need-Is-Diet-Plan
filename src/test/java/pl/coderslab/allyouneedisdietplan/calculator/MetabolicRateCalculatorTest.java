@@ -1,6 +1,7 @@
 package pl.coderslab.allyouneedisdietplan.calculator;
 
 import org.junit.jupiter.api.Test;
+import pl.coderslab.allyouneedisdietplan.enums.Gender;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 1121L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -36,7 +37,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 975L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("female");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.FEMALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -53,7 +54,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 1121L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -70,7 +71,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 1621L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -87,7 +88,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 2121L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -104,7 +105,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 1121L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -121,7 +122,7 @@ class MetabolicRateCalculatorTest {
     Long expected = 868L;
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
 
     //then
     assertEquals(expected, metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, userAge, activityLevel));
@@ -135,7 +136,7 @@ class MetabolicRateCalculatorTest {
     LocalDateTime expected = LocalDateTime.now().plusDays(70);
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
     LocalDateTime result = metabolicRateCalculator.calculateSuccessDate(weightDifference);
 
     //then
@@ -151,7 +152,7 @@ class MetabolicRateCalculatorTest {
     LocalDateTime expected = LocalDateTime.now().plusDays(119);
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
     LocalDateTime result = metabolicRateCalculator.calculateSuccessDate(weightDifference);
 
     //then
@@ -167,7 +168,7 @@ class MetabolicRateCalculatorTest {
     LocalDateTime expected = LocalDateTime.now().plusDays(70);
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
     LocalDateTime result = metabolicRateCalculator.calculateSuccessDate(weightDifference);
 
     //then
@@ -183,7 +184,7 @@ class MetabolicRateCalculatorTest {
     LocalDateTime expected = LocalDateTime.now();
 
     //when
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator("male");
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(Gender.MALE);
     LocalDateTime result = metabolicRateCalculator.calculateSuccessDate(weightDifference);
 
     //then

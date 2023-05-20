@@ -1,5 +1,9 @@
 insert into roles(name) values ('ROLE_USER'), ('ROLE_ADMIN');
 
+insert into users(user_name, password, active) values ('Admin', '$2a$10$H8betvRlG91b.P0INAsfnufN4Wc2WClZN9VvR2XpqvlXbRLTnWLpW', true);
+
+insert into users_roles(user_id, role_id) values (1, 2);
+
 insert into cuisine_types(name) values ('american'), ('asian'), ('british'), ('caribbean'), ('central europe'), ('chinese'), ('eastern europe'), ('french'),('greek'), ('indian'), ('italian'), ('japanese'), ('korean'), ('kosher'), ('mediterranean'), ('mexican'), ('middle eastern'), ('nordic'), ('south american'), ('south east asian'), ('world');
 
 insert into day_names(name) values ('Monday'), ('Tuesday'), ('Wednesday'), ('Thursday'), ('Friday'), ('Saturday'), ('Sunday');

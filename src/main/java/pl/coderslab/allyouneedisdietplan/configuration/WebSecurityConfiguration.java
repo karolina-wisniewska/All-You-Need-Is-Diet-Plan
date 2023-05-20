@@ -22,7 +22,7 @@ public class WebSecurityConfiguration {
 
     httpSecurity.
             authorizeHttpRequests(authorization -> authorization
-                    .requestMatchers("/", "/login", "/registration").permitAll()
+                    .requestMatchers("/","about", "/login", "/registration").permitAll()
                     .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                     .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                     .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -37,7 +37,7 @@ public class WebSecurityConfiguration {
             )
             .logout(logout -> logout
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/login"));
+                    .logoutSuccessUrl("/about"));
 
     return httpSecurity.build();
   }

@@ -19,10 +19,6 @@ public class VideoCallController {
   private final RoleService roleService;
   private final UserService userService;
   private final ModelMapper modelMapper;
-  @GetMapping(value = "/user/call/test")
-  public String showTestVideoCall() {
-    return "videoCall/index";
-  }
 
   @GetMapping(value = "/user/call")
   public String showVideoCall(Model model, Principal principal) {

@@ -15,7 +15,7 @@ function drawLineChart(weightingDate, weight, dreamWeight) {
     Highcharts.chart('container-bar', {
         chart: {
             type: 'line',
-            styledMode: true,
+            styledMode: true
         },
         title: {
             text: 'Weight history chart'

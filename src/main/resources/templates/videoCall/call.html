@@ -28,12 +28,8 @@
 </head>
 
 <body>
-<form th:if="${!userName.equals('Dietitian')}" th:action="@{/user/home}" method="get">
+<form th:action="@{/user/home}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Home Page</button>
-</form>
-<form th:if="${userName.equals('Dietitian')}" th:action="@{/logout}" method="get">
-    <button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout
-    </button>
 </form>
 
 <div class="container">
@@ -71,11 +67,11 @@
                 <div class="col-md-7">
                     <div id="videoBig">
                         <video id="videoOutput" autoplay width="640px" height="480px"
-                               poster="images/webrtc.png"></video>
+                               poster="/static/images/webrtc.png"></video>
                     </div>
                     <div id="videoSmall">
                         <video id="videoInput" autoplay width="240px" height="180px"
-                               poster="images/webrtc.png"></video>
+                               poster="/static/images/webrtc.png"></video>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,7 @@ import pl.coderslab.allyouneedisdietplan.external.edamam.RecipeResourceListDto;
 import pl.coderslab.allyouneedisdietplan.model.RecipeQueryDto;
 import pl.coderslab.allyouneedisdietplan.service.external.EdamamService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,9 @@ public class EdamamServiceImpl implements EdamamService {
   public List<RecipeResourceDto> getRecipeResourcesFromApi(String url) {
     RestTemplate restTemplate = new RestTemplate();
     RecipeResourceListDto response = restTemplate.getForObject(url, RecipeResourceListDto.class);
-    return response.getHits();
+    return Optional.ofNullable(response)
+            .map(RecipeResourceListDto::getHits)
+            .orElseGet(ArrayList::new);
   }
 
   @Override

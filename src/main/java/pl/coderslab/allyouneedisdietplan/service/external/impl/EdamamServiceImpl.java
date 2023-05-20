@@ -70,7 +70,9 @@ public class EdamamServiceImpl implements EdamamService {
     queryUrlElements.forEach(element -> urlBuilder.append(element.getUrlPart()));
 
     MealType queryMealType = recipeQuery.getMealType();
-    double mealTYpeFraction = queryMealType.getFraction();
+    double mealTYpeFraction = Optional.ofNullable(queryMealType)
+            .map(MealType::getFraction)
+            .orElse(0.0);
     Long dailyCalories = userParams.getDailyCalories();
     double precision = edamamProperties.getPrecision();
     urlBuilder.append(getCaloriesUrlPart(mealTYpeFraction, dailyCalories, precision));
@@ -79,6 +81,9 @@ public class EdamamServiceImpl implements EdamamService {
   }
 
   private String getCaloriesUrlPart(double mealTypeFraction, Long dailyCalories, double precision) {
+    if(mealTypeFraction == 0.0){
+      return "";
+    }
     long mealCalories = Math.round(dailyCalories * mealTypeFraction);
     return "&calories=" + (mealCalories * (1 - precision)) + "-" + (mealCalories * (1 + precision));
   }

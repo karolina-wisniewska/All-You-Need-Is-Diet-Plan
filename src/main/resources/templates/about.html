@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>All You Need Is Diet Plan</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/about.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <br/>
+    <h3 class="form-signin-heading">Achieving your dream weight can be a great adventure!</h3>
+    <img th:src="@{/images/dietplan.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo"/>
+    <h2 class="form-signin-heading">All You Need Is Diet Plan</h2>
+    <p th:align="center">In a weekly diet plan, you can explore <b th:class="green">world-wide recipes</b> that perfectly suit your taste!</p>
+    <p th:align="center">Do you have <b th:class="green">allergies</b> or special <b th:class="green">dietary
+        recommendations</b>? Don't worry! We've got it covered!</p>
+    <p th:align="center">Wanna <b th:class="green">track your weight results</b>? No problem!</p>
+    <p th:align="center">Need professional advice? <b th:class="green">meet our dietitians immediately on a video
+        call</b>! Yes, this is SO SIMPLE!</p>
+    <br/>
+
+    <form th:action="@{/register}" method="GET" class="form">
+        <button class="btn btn-lg btn-warning btn-block" type="Submit" th:align="center"
+                th:text="Register"></button>
+    </form>
+    <p th:align="center">Already registered?</p>
+    <form th:action="@{/login}" method="GET" class="form">
+        <button class="btn btn-lg btn-primary btn-block" type="Submit" th:align="center"
+                >Sign in</button>
+    </form>
+</div>
+<br/><br/><br/>
+<div th:align="center">
+    <a href="https://www.freepik.com/free-vector/diet-plan-schedule_1311539.htm#query=diet%20plan&position=13&from_view=search&track=ais">Image by iconicbestiary</a> on Freepik
+</div>
+</body>
+</html>

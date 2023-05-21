@@ -23,9 +23,9 @@
         <input type="hidden" th:field="*{user}">
         <input type="hidden" th:field="*{dailyCalories}">
         <label>Gender:
-            <div th:each="gender: ${gendersDto}">
-                <input type="radio" th:field="*{gender}" th:value="${gender.id}">
-                <label th:text="${gender.name.name}"></label>
+            <div th:each="gender: ${T(pl.coderslab.allyouneedisdietplan.enums.Gender).values()}">
+                <input type="radio" th:field="*{gender}" th:value="${gender}">
+                <label th:text="${gender}"></label>
             </div>
             <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
                    class="validation-message"></label>

@@ -11,9 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Diet;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.enums.Gender;
 import pl.coderslab.allyouneedisdietplan.validator.IsAdult;
 
 import java.time.LocalDate;

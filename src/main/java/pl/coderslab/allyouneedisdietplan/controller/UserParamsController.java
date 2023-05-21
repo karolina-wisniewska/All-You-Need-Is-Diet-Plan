@@ -9,28 +9,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
+import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Diet;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
-import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
-import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.model.LatestWeightDto;
+import pl.coderslab.allyouneedisdietplan.model.UserParamsDto;
 import pl.coderslab.allyouneedisdietplan.model.dictionary.ActivityLevelDto;
 import pl.coderslab.allyouneedisdietplan.model.dictionary.urlelement.CuisineTypeDto;
 import pl.coderslab.allyouneedisdietplan.model.dictionary.urlelement.DietDto;
-import pl.coderslab.allyouneedisdietplan.model.dictionary.GenderDto;
 import pl.coderslab.allyouneedisdietplan.model.dictionary.urlelement.HealthDto;
-import pl.coderslab.allyouneedisdietplan.model.LatestWeightDto;
-import pl.coderslab.allyouneedisdietplan.model.UserParamsDto;
+import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
+import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 import pl.coderslab.allyouneedisdietplan.service.dictionary.ActivityLevelService;
 import pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.CuisineTypeService;
 import pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.DietService;
-import pl.coderslab.allyouneedisdietplan.service.dictionary.GenderService;
 import pl.coderslab.allyouneedisdietplan.service.dictionary.urlelement.HealthService;
-import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
-import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
 import pl.coderslab.allyouneedisdietplan.service.security.UserService;
 
 import java.security.Principal;
@@ -41,7 +38,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Controller
 public class UserParamsController {
-  private final GenderService genderService;
   private final ActivityLevelService activityLevelService;
   private final CuisineTypeService cuisineTypeService;
   private final HealthService healthService;
@@ -98,13 +94,6 @@ public class UserParamsController {
     return "redirect:/user/home";
   }
 
-  @ModelAttribute("gendersDto")
-  List<GenderDto> genders() {
-    List<Gender> genders = genderService.findAll();
-    return genders.stream()
-            .map(gender -> modelMapper.map(gender, GenderDto.class))
-            .collect(Collectors.toList());
-  }
   @ModelAttribute("activityLevelsDto")
   List<ActivityLevelDto> activityLevels() {
     List<ActivityLevel> activityLevels = activityLevelService.findAll();

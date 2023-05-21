@@ -7,8 +7,8 @@ import pl.coderslab.allyouneedisdietplan.calculator.MetabolicRateCalculator;
 import pl.coderslab.allyouneedisdietplan.entity.LatestWeight;
 import pl.coderslab.allyouneedisdietplan.entity.UserParams;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.enums.Gender;
 import pl.coderslab.allyouneedisdietplan.repository.UserParamsRepository;
 import pl.coderslab.allyouneedisdietplan.service.LatestWeightService;
 import pl.coderslab.allyouneedisdietplan.service.UserParamsService;
@@ -38,7 +38,7 @@ public class UserParamsServiceImpl implements UserParamsService {
 
   @Override
   public Long calculateDailyCalories(UserParams userParams) {
-    Gender gender = userParams.getGender();
+    pl.coderslab.allyouneedisdietplan.enums.Gender gender = userParams.getGender();
     LocalDate dateOfBirth = userParams.getDateOfBirth();
     int age = calculateUserAge(dateOfBirth);
     int height = userParams.getHeight();
@@ -48,7 +48,7 @@ public class UserParamsServiceImpl implements UserParamsService {
     Double currentWeight = getUserWeight(userParams.getUser());
     Double dreamWeight = userParams.getDreamWeight();
 
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(gender.getName());
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(gender);
     return metabolicRateCalculator.calculate(currentWeight, dreamWeight, height, age, activityLevelValue);
   }
 
@@ -61,7 +61,7 @@ public class UserParamsServiceImpl implements UserParamsService {
       return "Congrats! You've achieved your Dream Weight! Keep it up!";
     }
     Gender gender = userParams.getGender();
-    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(gender.getName());
+    MetabolicRateCalculator metabolicRateCalculator = new MetabolicRateCalculator(gender);
     LocalDateTime successDate = metabolicRateCalculator.calculateSuccessDate(weightDifference);
     return "You will achieve your dream weight on " + successDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
   }

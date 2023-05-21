@@ -16,6 +16,4 @@ insert into diets(name) values ('balanced'), ('high-fiber'), ('high-protein'), (
 
 insert into dish_types(name) values ('biscuits and cookies'), ('bread'), ('cereals'), ('condiments and sauces'), ('desserts'), ('drinks'), ('egg'), ('ice cream and custard'), ('pancake'), ('pasta'), ('pastry'), ('pies and tarts'), ('pizza'), ('preps'), ('preserve'), ('salad'), ('sandwiches'), ('seafood'), ('side dish'), ('soup'), ('special occasions'), ('starter'), ('sweets');
 
-insert into genders(name) values ('male'), ('female');
-
 insert into activity_levels(name, value, description) values ('extremely inactive', 1.4, 'cerebral palsy patient'), ('sedentary', 1.6, 'office worker getting little or no exercise'), ('moderately active', 1.75, 'construction worker or person running one hour daily'), ('vigorously active', 2, 'agricultural worker (non mechanized) or person swimming two hours daily'), ('extremely active', 2.4, 'competitive cyclist');

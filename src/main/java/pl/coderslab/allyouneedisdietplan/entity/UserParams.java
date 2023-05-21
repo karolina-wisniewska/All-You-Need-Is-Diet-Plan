@@ -14,12 +14,12 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.ActivityLevel;
-import pl.coderslab.allyouneedisdietplan.entity.dictionary.Gender;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.UrlElement;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.CuisineType;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Diet;
 import pl.coderslab.allyouneedisdietplan.entity.dictionary.urlelement.Health;
 import pl.coderslab.allyouneedisdietplan.entity.security.User;
+import pl.coderslab.allyouneedisdietplan.enums.Gender;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,8 +40,6 @@ public class UserParams {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @NotNull
   private Gender gender;
 
   @NotNull

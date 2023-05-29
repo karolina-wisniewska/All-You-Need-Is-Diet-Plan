@@ -1,0 +1,44 @@
+version: "3"
+services:
+  api_service:
+    build: .
+    restart: always
+    ports:
+      - 9090:9090
+    networks:
+      - springapimysql-net
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/dietPlan?serverTimezone=UTC
+        jdbc:mysql://mysqldb:3306/dietPlan?allowPublicKeyRetrieval=true
+    depends_on:
+      - mysqldb
+      - kurento
+
+    volumes:
+      - .m2:/root/.m2
+
+  mysqldb:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - springapimysql-net
+    environment:
+      MYSQL_DATABASE: dietPlan
+      MYSQL_USER: root
+      MYSQL_PASSWORD: coderslab
+      MYSQL_ROOT_PASSWORD: coderslab
+
+  kurento:
+    image: kurento/kurento-media-server:7.0.0
+    expose:
+      - "8888"
+    ports:
+      - 8888:8888
+    networks:
+      - default
+    container_name: fiware-kurento
+
+networks:
+  springapimysql-net:

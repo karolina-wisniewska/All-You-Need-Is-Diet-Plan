@@ -92,9 +92,9 @@ Please visit the [installation guide](https://doc-kurento.readthedocs.io/en/late
 <a id="installation"></a>
 ### Installation
 
-To launch the application, you need to clone the GitHub project where this demo is hosted, and then run the main class:
+To launch the application, you need to clone the GitHub project where this demo is hosted, and then run the main class. 
 
-1. Run he latest Kurento Media Server image with default options:
+1. Run the latest Kurento Media Server image with default options:
    ```sh
    docker pull kurento/kurento-media-server:7.0.0
    

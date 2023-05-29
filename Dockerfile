@@ -5,14 +5,12 @@ RUN mkdir /code && \
     	git clone https://github.com/karolina-wisniewska/All-You-Need-Is-Diet-Plan.git . && \
     	mvn package && \
     	mkdir /opt/app && \
-    	mv /code/target/AllYouNeedIsDietPlan.jar /opt/app && \
+    	mv /code/target/AllYouNeedIsDietPlan-0.0.1-SNAPSHOT.jar /opt/app && \
     	cd / && \
     	rm -r /code
 
 WORKDIR /opt/app
 
-RUN mvn clean install
-
 EXPOSE 9090
 
-CMD mvn spring-boot:run
+CMD java -jar AllYouNeedIsDietPlan-0.0.1-SNAPSHOT.jar

@@ -4,12 +4,11 @@ services:
     build: .
     restart: always
     ports:
-      - 9090:9090
+      - "9090:9090"
     networks:
       - springapimysql-net
     environment:
       - spring.datasource.url=jdbc:mysql://mysqldb:3306/dietPlan?serverTimezone=UTC
-        jdbc:mysql://mysqldb:3306/dietPlan?allowPublicKeyRetrieval=true
     depends_on:
       - mysqldb
       - kurento
@@ -21,7 +20,7 @@ services:
     image: "mysql:8.0"
     restart: always
     ports:
-      - 3306:3306
+      - "3307:3307"
     networks:
       - springapimysql-net
     environment:
@@ -35,10 +34,10 @@ services:
     expose:
       - "8888"
     ports:
-      - 8888:8888
+      - "8888:8888"
     networks:
       - default
-    container_name: fiware-kurento
+    container_name: kurento
 
 networks:
   springapimysql-net:

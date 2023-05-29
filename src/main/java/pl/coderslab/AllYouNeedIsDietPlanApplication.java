@@ -1,4 +1,4 @@
-package pl.coderslab.allyouneedisdietplan;
+package pl.coderslab;
 
 import org.kurento.client.KurentoClient;
 import org.modelmapper.ModelMapper;

@@ -19,7 +19,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<demo.port>8443</demo.port>
-		<start-class>pl.coderslab.AllYouNeedIsDietPlan</start-class>
+		<start-class>pl.coderslab.AllYouNeedIsDietPlanApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -145,7 +145,16 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<mainClass>pl.coderslab.AllYouNeedIsDietPlanApplication</mainClass>
+					<layout>JAR</layout>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

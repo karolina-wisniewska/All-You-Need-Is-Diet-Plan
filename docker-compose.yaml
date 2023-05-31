@@ -1,8 +1,7 @@
 version: "3"
 services:
-  api_service:
-    build: .
-    restart: always
+  my-app:
+    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v1
     ports:
       - "9090:9090"
     networks:
@@ -25,8 +24,6 @@ services:
       - springapimysql-net
     environment:
       MYSQL_DATABASE: dietPlan
-      MYSQL_USER: root
-      MYSQL_PASSWORD: coderslab
       MYSQL_ROOT_PASSWORD: coderslab
 
   kurento:

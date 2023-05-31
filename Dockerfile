@@ -1,4 +1,4 @@
-FROM maven:3.8.3-openjdk-17 AS build
+FROM maven:3.8.6-openjdk-17 AS build
 
 RUN mkdir /code && \
     	cd /code && \
@@ -9,8 +9,8 @@ RUN mkdir /code && \
     	cd / && \
     	rm -r /code
 
-WORKDIR /opt/app
-
 EXPOSE 9090
 
-CMD java -jar AllYouNeedIsDietPlan-0.0.1-SNAPSHOT.jar
+WORKDIR /opt/app
+
+CMD java -jar /opt/app/AllYouNeedIsDietPlan-0.0.1-SNAPSHOT.jar

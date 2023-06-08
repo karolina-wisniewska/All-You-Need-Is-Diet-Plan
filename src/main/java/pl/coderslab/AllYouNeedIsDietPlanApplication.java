@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
@@ -13,6 +14,7 @@ import pl.coderslab.allyouneedisdietplan.external.one2onecall.CallHandler;
 import pl.coderslab.allyouneedisdietplan.external.one2onecall.UserRegistry;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"pl.coderslab.allyouneedisdietplan"})
 @EnableWebSocket
 public class AllYouNeedIsDietPlanApplication implements WebSocketConfigurer {
 

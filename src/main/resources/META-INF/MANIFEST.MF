@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
 Created-By: Apache Maven 3.6.8
+
+Archiver-Version: Plexus Archiver
 Built-By: KW
 Build-Jdk: 17.0.7
-Start-Class: pl.coderslab.AllYouNeedIsDietPlanApplication
+Start-Class: pl.coderslab.jar.AllYouNeedIsDietPlanApplication

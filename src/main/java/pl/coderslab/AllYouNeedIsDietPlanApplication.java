@@ -1,6 +1,7 @@
 package pl.coderslab;
 
 import org.kurento.client.KurentoClient;
+import org.kurento.client.Properties;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,8 +34,13 @@ public class AllYouNeedIsDietPlanApplication implements WebSocketConfigurer {
   }
 
   @Bean
+  public Properties properties(){
+    return new Properties();
+  }
+
+  @Bean
   public KurentoClient kurentoClient() {
-    return KurentoClient.create();
+    return KurentoClient.create(properties());
   }
 
   @Bean

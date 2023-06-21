@@ -1,8 +1,10 @@
-version: '3'
+version: "3.2"
 services:
   my-app:
-    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v1
+#    build: .
+    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
     restart: always
+    container_name: my-app
     ports:
       - "9090:9090"
     environment:
@@ -15,6 +17,7 @@ services:
 
   mysqldb:
     image: mysql:8.0
+    container_name: mysqldb
     restart: always
     ports:
       - "3307:3306"
@@ -25,13 +28,16 @@ services:
       MYSQL_ROOT_PASSWORD: coderslab
 
   kurento:
-    image: kurento/kurento-media-server:7.0.0
+    image: kurento/kurento-media-server:6.15.0
     restart: always
     expose:
       - "8888"
     ports:
       - "8888:8888"
-    networks:
-      - default
     container_name: kurento
+    network_mode: host
+    volumes:
+      - type: bind
+        source: ./kurento-files/
+        target: /etc/kurento/
 

@@ -37,7 +37,9 @@ services:
     ports:
       - "8888:8888"
     container_name: kurento
-    network_mode: host
+#    network_mode: host
+    networks:
+      - default
 
 networks:
   default:

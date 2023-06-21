@@ -9,6 +9,8 @@ services:
       - "9090:9090"
     environment:
       - spring.datasource.url=jdbc:mysql://mysqldb:3306/dietPlan?serverTimezone=UTC
+      - "MEDIA_SERVER_HOST=kurento"
+      - "MEDIA_SERVER_PORT=8888"
     depends_on:
       - mysqldb
       - kurento

@@ -1,7 +1,8 @@
 version: "3.2"
 services:
   my-app:
-    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
+    build: .
+#    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
     restart: always
     container_name: my-app
     ports:
@@ -13,6 +14,8 @@ services:
       - kurento
     volumes:
       - .m2:/root/.m2
+    networks:
+      - default
 
   mysqldb:
     image: mysql:8.0
@@ -35,4 +38,10 @@ services:
       - "8888:8888"
     container_name: kurento
     network_mode: host
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24
 

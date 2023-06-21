@@ -40,7 +40,7 @@ public class AllYouNeedIsDietPlanApplication implements WebSocketConfigurer {
 
   @Bean
   public KurentoClient kurentoClient() {
-    return KurentoClient.create(properties());
+    return KurentoClient.create("ws://kurento:8888/kurento");
   }
 
   @Bean

@@ -1,7 +1,6 @@
 version: "3.2"
 services:
   my-app:
-#    build: .
     image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
     restart: always
     container_name: my-app
@@ -28,7 +27,7 @@ services:
       MYSQL_ROOT_PASSWORD: coderslab
 
   kurento:
-    image: kurento/kurento-media-server:6.15.0
+    image: kurento/kurento-media-server:7.0.0
     restart: always
     expose:
       - "8888"
@@ -36,8 +35,4 @@ services:
       - "8888:8888"
     container_name: kurento
     network_mode: host
-    volumes:
-      - type: bind
-        source: ./kurento-files/
-        target: /etc/kurento/
 

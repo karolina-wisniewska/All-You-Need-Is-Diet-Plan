@@ -2,7 +2,7 @@ version: "3.2"
 services:
   my-app:
     build: .
-#    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
+#    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v1
     restart: always
     container_name: my-app
     ports:
@@ -16,19 +16,19 @@ services:
       - kurento
     volumes:
       - .m2:/root/.m2
-    networks:
-      - default
 
   mysqldb:
     image: mysql:8.0
+#    volumes:
+#      - ./init/import.sql:/docker-entrypoint-initdb.d/import.sql
     container_name: mysqldb
+#    command:
+#      --init-file /docker-entrypoint-initdb.d/import.sql
     restart: always
     ports:
       - "3307:3306"
     environment:
       MYSQL_DATABASE: dietPlan
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepass
       MYSQL_ROOT_PASSWORD: coderslab
 
   kurento:
@@ -39,13 +39,5 @@ services:
     ports:
       - "8888:8888"
     container_name: kurento
-#    network_mode: host
-    networks:
-      - default
 
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.18.1.0/24
 

@@ -12,7 +12,8 @@ services:
       - '3307:3306'
     volumes:
       - db:/var/lib/mysql
-      - ./db/init/import.sql:/docker-entrypoint-initdb.d/import.sql
+      - ./init/schema.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./init/data.sql:/docker-entrypoint-initdb.d/2.sql
 volumes:
   db:
     driver: local

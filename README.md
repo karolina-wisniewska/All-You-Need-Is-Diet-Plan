@@ -84,30 +84,39 @@ The app uses:
 <!-- GETTING STARTED -->
 ## Getting Started
 <a id="prerequisities"></a>
-### Prerequisites
-First of all, you should install Kurento Media Server to run this demo. 
+### Prerequisities
 
-Please visit the [installation guide](https://doc-kurento.readthedocs.io/en/latest/user/installation.html) for further information.
 
 <a id="installation"></a>
 ### Installation
 
-To launch the application, you need to clone the GitHub project where this demo is hosted, and then run the main class. 
-
-1. Run the latest Kurento Media Server image with default options:
-   ```sh
-   docker pull kurento/kurento-media-server:7.0.0
-   
-   docker run -d --name kurento --network host kurento/kurento-media-server:7.0.0
-      ```
-2. Create database with name 'dietPlan' on localhost:3306 
-
-3. To launch the application, you need to clone the GitHub project, open it with IDE and then run the main class:
+1. To launch the application, you need to clone the GitHub project:
    ```sh
    git clone https://github.com/karolina-wisniewska/All-You-Need-Is-Diet-Plan.git
    ```
-   The web application starts on port 9090 in the localhost by default. Therefore, open the URL https://localhost:9090/ in a WebRTC compliant browser (Chrome, Firefox).
+   
+2. Change directory to project directory:  
+   ```sh
+   cd All-You-Need-Is-Diet-Plan/
+   ```
+   
+3. Run docker-compose up in detached mode:
+   ```sh
+   docker-compose up -d
+   ```
 
+4. Import data to database:
+   ```sh
+   docker exec -i db mysql -uroot -pcoderslab dietPlan < ./init/data.sql
+   ```
+
+5. The web application starts on port 9090 in the localhost by default. Therefore, open the URL https://localhost:9090/ in a WebRTC compliant browser (Chrome, Firefox).
+
+
+6. To close the app and remove containers, run:
+   ```sh
+   docker-compose down
+   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

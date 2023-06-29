@@ -95,7 +95,7 @@ Docker
    git clone https://github.com/karolina-wisniewska/All-You-Need-Is-Diet-Plan.git
    ```
    
-2. Change directory to project directory:  
+2. Change directory to project root directory:  
    ```sh
    cd All-You-Need-Is-Diet-Plan/
    ```

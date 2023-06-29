@@ -85,7 +85,7 @@ The app uses:
 ## Getting Started
 <a id="prerequisities"></a>
 ### Prerequisities
-
+Docker
 
 <a id="installation"></a>
 ### Installation

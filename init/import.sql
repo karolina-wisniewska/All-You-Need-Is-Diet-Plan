@@ -1,5 +1,7 @@
 create database if not exists dietPlan character set utf8mb4 collate utf8mb4_unicode_ci;
 
+update mysql.user set host = '%' where user='root';
+
 use dietPlan;
 
 create table activity_levels(id tinyint auto_increment primary key, description varchar(255) null, name varchar(30) not null, value double(3, 2) not null) engine = InnoDB;
@@ -34,7 +36,7 @@ create table plans( user_id bigint not null primary key, constraint FKbybv5po44s
 
 create table latest_weights(id bigint auto_increment primary key, weight double not null, weighting_date datetime(6) not null, user_id bigint null, constraint FKmnni458fsw2d6pt7537k1p5ql        foreign key (user_id) references users (id)) engine = InnoDB;    
 
-create table diet_plan_items(id bigint auto_increment primary key, day_name_id tinyint not null, meal_type_id tinyint not null, plan_id bigint not null, recipe_id bigint not null, constraint FK1l2hoxdadjuel7otedurhu694 foreign key (meal_type_id) references meal_types (id), constraint FK62gqlmkvcd9u5g5i6gwtq4taf foreign key(day_name_id) references day_names (id), constraint FK9p4k2l60y7738c5j2a67vl8xe foreign key (plan_id) references plans (user_id), constraint FKc657k7iml8xf2sy0mh28o1933 foreignkey (recipe_id) references recipes (id)) engine = InnoDB;
+create table diet_plan_items(id bigint auto_increment primary key, day_name_id tinyint not null, meal_type_id tinyint not null, plan_id bigint not null, recipe_id bigint not null, constraint FK1l2hoxdadjuel7otedurhu694 foreign key (meal_type_id) references meal_types (id), constraint FK62gqlmkvcd9u5g5i6gwtq4taf foreign key(day_name_id) references day_names (id), constraint FK9p4k2l60y7738c5j2a67vl8xe foreign key (plan_id) references plans (user_id), constraint FKc657k7iml8xf2sy0mh28o1933 foreign key (recipe_id) references recipes (id)) engine = InnoDB;
 
 insert into roles(name) values ('ROLE_USER'), ('ROLE_ADMIN');
 

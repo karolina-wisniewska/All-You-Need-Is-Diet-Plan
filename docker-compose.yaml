@@ -8,28 +8,31 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/dietPlan?serverTimezone=UTC
+      - spring.datasource.url=jdbc:mysql://db:3306/dietPlan?serverTimezone=UTC
       - "MEDIA_SERVER_HOST=kurento"
       - "MEDIA_SERVER_PORT=8888"
     depends_on:
-      - mysqldb
+      - db
       - kurento
     volumes:
       - .m2:/root/.m2
 
-  mysqldb:
+  db:
     image: mysql:8.0
-#    volumes:
-#      - ./init/import.sql:/docker-entrypoint-initdb.d/import.sql
-    container_name: mysqldb
-#    command:
-#      --init-file /docker-entrypoint-initdb.d/import.sql
+    cap_add:
+      - SYS_NICE
+    container_name: db
     restart: always
-    ports:
-      - "3307:3306"
     environment:
       MYSQL_DATABASE: dietPlan
       MYSQL_ROOT_PASSWORD: coderslab
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3307:3306"
+    volumes:
+      - db:/var/lib/mysql/
+      - ./init/import.sql:/docker-entrypoint-initdb.d/import.sql
 
   kurento:
     image: kurento/kurento-media-server:7.0.0
@@ -40,4 +43,6 @@ services:
       - "8888:8888"
     container_name: kurento
 
-
+volumes:
+  db:
+    driver: local

@@ -33,6 +33,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
+        <li><a href="#demo">Demo</a></li>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
@@ -49,40 +50,60 @@
 
 Everyone wishes to achieve their dream weight, but many people have no idea where to start.
 
-In the App, user can track weight changes and get personalized weekly diet plan based on:
+There are two roles in the application:
+1. USER:
+
+User can track weight changes and get personalized weekly diet plan based on:
 * calculated daily calories, 
 * culinary preferences, 
 * diet type and health issues/allergies. 
 
-User can also make a video call to dietitian.
+User can also make a video call to dietitian (ADMIN).
+
+2. ADMIN:
+
+Admin can accept calls from users.
 
 The app uses:
 * Highcharts API to show weight history 
-* EDAMAM API to provide recipes with required criteria
+* Edamam API to provide recipes with required criteria
 * Kurento WebRTC Media Server to enable video call
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="built-with"></a>
 ### Built With
+* Java 17
+* MySQL
+* Maven
 * Spring Boot
 * Spring Security
 * Hibernate
-* Thymeleaf
 * Lombok
-* MySQL
-* Maven
+* Thymeleaf
 * Bootstrap (UI Presentation)
-* IntelliJ
-* Java 17
 * HighCharts
 * Edamam
 * Kurento Media Server
+* IntelliJ IDEA
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <a id="getting-started"></a>
 <!-- GETTING STARTED -->
 ## Getting Started
+
+<a id="demo"></a>
+### Demo
+1. Check out App Demo on YouTube:
+   <br />
+   <a href="https://www.youtube.com/watch?v=erH0mp8U8io"><strong>Watch App Demo »</strong></a>
+   <br />
+
+2. Check out Video Call Demo on YouTube:
+   <br />
+   <a href="https://www.youtube.com/watch?v=5qotQKvWcBk"><strong>Watch Video Call Demo »</strong></a>
+   <br />
+
 <a id="prerequisities"></a>
 ### Prerequisities
 Docker
@@ -105,15 +126,10 @@ Docker
    docker-compose up -d
    ```
 
-4. Import data to database:
-   ```sh
-   docker exec -i db mysql -uroot -pcoderslab dietPlan < ./init/data.sql
-   ```
-
-5. The web application starts on port 9090 in the localhost by default. Therefore, open the URL https://localhost:9090/ in a WebRTC compliant browser (Chrome, Firefox).
+4. The web application starts on port 9090 in the localhost by default. Therefore, open the URL https://localhost:9090/ in a WebRTC compliant browser (Chrome, Firefox).
 
 
-6. To close the app and remove containers, run:
+5To close the app and remove containers, run:
    ```sh
    docker-compose down
    ```

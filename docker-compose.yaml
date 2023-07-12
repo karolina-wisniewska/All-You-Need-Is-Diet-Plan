@@ -21,7 +21,7 @@ services:
     cap_add:
       - SYS_NICE
     container_name: db
-    command: --default-authentication-plugin=mysql_native_password
+    command: --init-file /data/application/init.sql
     restart: always
     environment:
       MYSQL_DATABASE: dietPlan
@@ -30,8 +30,7 @@ services:
       - "3307:3306"
     volumes:
       - db-data:/var/lib/mysql/
-      - ./init/schema.sql:/docker-entrypoint-initdb.d/1.sql
-      - ./init/data.sql:/docker-entrypoint-initdb.d/2.sql
+      - ./init/schema.sql:/data/application/init.sql
 
   kurento:
     image: kurento/kurento-media-server:7.0.0

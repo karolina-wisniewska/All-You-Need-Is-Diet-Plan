@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   my-app:
-    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v2
+    image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v3
     restart: always
     container_name: my-app
     ports:

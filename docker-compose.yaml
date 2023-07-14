@@ -3,7 +3,7 @@ services:
   my-app:
     image: registry.gitlab.com/karolinawisniewska/dockertest/java/allyouneedisdietplan:v3
     restart: always
-    container_name: my-app
+    container_name: my-app-driver
     ports:
       - "9090:9090"
     environment:
@@ -21,15 +21,15 @@ services:
     cap_add:
       - SYS_NICE
     container_name: db
-    command: --init-file /data/application/init.sql
+    command: --default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql
     restart: always
     environment:
-      MYSQL_DATABASE: dietPlan
+      MYSQL_DATABASE: driver
       MYSQL_ROOT_PASSWORD: coderslab
     ports:
-      - "3307:3306"
+      - "3308:3306"
     volumes:
-      - db-data:/var/lib/mysql/
+      - db-data:/var/lib/mysql
       - ./init/schema.sql:/data/application/init.sql
 
   kurento:

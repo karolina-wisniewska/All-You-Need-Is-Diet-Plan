@@ -129,9 +129,9 @@ Docker
 4. The web application starts on port 9090 in the localhost by default. Therefore, open the URL https://localhost:9090/ in a WebRTC compliant browser (Chrome, Firefox).
 
 
-5To close the app and remove containers, run:
+5. To close the app, remove containers and volumes run:
    ```sh
-   docker-compose down
+   docker-compose down -v
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
